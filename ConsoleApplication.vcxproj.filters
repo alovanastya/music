@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Исходные файлы">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Файлы заголовков">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Файлы ресурсов">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Исходные файлы\menu">
+      <UniqueIdentifier>{4aea5c27-4b22-4d4f-9c6d-632805134aa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\models">
+      <UniqueIdentifier>{f25fb3f1-db00-418c-a634-6e71181b5bed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Исходные файлы\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Song.cpp">
+      <Filter>Исходные файлы\models</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBase.cpp">
+      <Filter>Исходные файлы\models</Filter>
+    </ClCompile>
+    <ClCompile Include="Author.cpp">
+      <Filter>Исходные файлы\models</Filter>
+    </ClCompile>
+    <ClCompile Include="Album.cpp">
+      <Filter>Исходные файлы\models</Filter>
+    </ClCompile>
+    <ClCompile Include="AdminMenu.cpp">
+      <Filter>Исходные файлы\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="IMenu.cpp">
+      <Filter>Исходные файлы\menu</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Menu.h">
+      <Filter>Исходные файлы\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Song.h">
+      <Filter>Исходные файлы\models</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBase.h">
+      <Filter>Исходные файлы\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Author.h">
+      <Filter>Исходные файлы\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Album.h">
+      <Filter>Исходные файлы\models</Filter>
+    </ClInclude>
+    <ClInclude Include="AdminMenu.h">
+      <Filter>Исходные файлы\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="IMenu.h">
+      <Filter>Исходные файлы\menu</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
