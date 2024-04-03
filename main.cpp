@@ -6,6 +6,7 @@
 #include "AdminMenu.h"
 
 
+
 int main()
 {
 	SetConsoleCP(1251);
