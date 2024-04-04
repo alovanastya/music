@@ -47,11 +47,11 @@ public:
 
 	bool editAuthor(int id, Author*);
 
-	bool getSong(int id, const Song*& result) const;
+	bool getSong(int id, const Song*&) const;
 
-	bool getAlbum(int id, const Album*) const;
+	bool getAlbum(int id, const Album*&) const;
 
-	bool getAuthor(int id, const Author*) const;
+	bool getAuthor(int id, const Author*&) const;
 
 	bool addFavoriteSong(int, int);
 

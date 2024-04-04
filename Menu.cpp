@@ -1,37 +1,89 @@
-#include "Menu.h"
+п»ї#include "Menu.h"
 
 Menu::Menu() {}
 
 Menu::Menu(DataBase* database, int user_id) : IMenu(database, user_id)
 {}
 
-Selection Menu::showMenu()
+void Menu::printMenu() const
 {
-	std::cout << (int)Selection::ADD_FAVORITE_SONG << " - Добавить любимую песню" << std::endl;
-	std::cout << (int)Selection::DELETE_FAVORITE_SONG << " - Удалить любимую песню" << std::endl;
-	std::cout << (int)Selection::PRINT_FAVORITE_SONG << " - Напечатать любимые песни" << std::endl;
+	std::cout << " 0 - Р’С‹С…РѕРґ                        " << std::endl;
+	std::cout << " 1 - Р”РѕР±Р°РІРёС‚СЊ Р»СЋР±РёРјСѓСЋ РїРµСЃРЅСЋ       " << std::endl;
+	std::cout << " 2 - РЈРґР°Р»РёС‚СЊ Р»СЋР±РёРјСѓСЋ РїРµСЃРЅСЋ        " << std::endl;
+	std::cout << " 3 - РќР°РїРµС‡Р°С‚Р°С‚СЊ Р»СЋР±РёРјС‹Рµ РїРµСЃРЅРё     " << std::endl;
+	std::cout << " 4 - Р”РѕР±Р°РІРёС‚СЊ Р»СЋР±РёРјРѕРіРѕ Р°РІС‚РѕСЂР°     " << std::endl;
+	std::cout << " 5 - РЈРґР°Р»РёС‚СЊ Р»СЋР±РёРјРѕРіРѕ Р°РІС‚РѕСЂР°      " << std::endl;
+	std::cout << " 6 - РќР°РїРµС‡Р°С‚Р°С‚СЊ Р»СЋР±РёРјС‹С… Р°РІС‚РѕСЂРѕРІ   " << std::endl;
+	std::cout << " 7 - Р”РѕР±Р°РІРёС‚СЊ Р»СЋР±РёРјС‹Р№ Р°Р»СЊР±РѕРј      " << std::endl;
+	std::cout << " 8 - РЈРґР°Р»РёС‚СЊ Р»СЋР±РёРјС‹Р№ Р°Р»СЊР±РѕРј       " << std::endl;
+	std::cout << " 9 - РќР°РїРµС‡Р°С‚Р°С‚СЊ Р»СЋР±РёРјС‹Рµ Р°Р»СЊР±РѕРјС‹   " << std::endl;
+}
 
-	std::cout << (int)Selection::ADD_FAVORITE_AUTHOR << " - Добавить любимого автора" << std::endl;
-	std::cout << (int)Selection::DELETE_FAVORITE_AUTHOR << " - Удалить любимого автора" << std::endl;
-	std::cout << (int)Selection::PRINT_FAVORITE_AUTHOR << " - Напечатать любых авторов" << std::endl;
 
-	std::cout << (int)Selection::ADD_FAVORITE_ALBUM << " - Добавить любимый альбом" << std::endl;
-	std::cout << (int)Selection::DELETE_FAVORITE_ALBUM << " - Удалить любимый альбом" << std::endl;
-	std::cout << (int)Selection::PRINT_FAVORITE_ALBUM << " - Напечатать любыхе альбомы" << std::endl;
+Result Menu::runSelected(int selected)
+{
+	if (selected == 0)
+	{
+		return Result::EXIT;
+	}
 
-	std::cout << (int)Selection::EXIT << " - Выход" << std::endl;
+	else if (selected > 0 && selected <= 9)
+	{
+		switch (selected)
+		{
+		case 1:
+			addFavoriteSong();
+			return Result::DONE;
+			break;
+		case 2:
+			deleteFavoriteSong();
+			return Result::DONE;
+			break;
+		case 3:
+			printFavoriteSongs();
+			return Result::DONE;
+			break;
+		case 4:
+			addFavoriteAuthor();
+			return Result::DONE;
+			break;
+		case 5:
+			deleteFavoriteAuthor();
+			return Result::DONE;
+			break;
+		case 6:
+			printFavoriteAuthors();
+			return Result::DONE;
+				break;
+		case 7:
+			addFavoriteAlbum();
+			return Result::DONE;
+			break;
+		case 8:
+			deleteFavoriteAlbum();
+			return Result::DONE;
+			break;
+		case 9:
+			printFavoriteAlbums();
+			return Result::DONE;
+			break;
+		default:
+			break;
+		}
+	}
 
-	int selection = 0;
-	std::cin >> selection;
-	std::cin.ignore();
+	else if (selected > 9)
+	{
+		return Result::NOT_SUPPORTED;
+	}
 
-	return (Selection)selection;
+	return Result::WITH_ERROR;
 }
 
 
 bool Menu::addFavoriteSong()
 {
-	std::cout << "Введите id песни: ";
+	std::cout << "Р’РІРµРґРёС‚Рµ id РїРµСЃРЅРё: ";
 
 	int id;
 	std::cin >> id;
@@ -43,7 +95,7 @@ bool Menu::addFavoriteSong()
 
 bool Menu::addFavoriteAuthor()
 {
-	std::cout << "Введите id автора: ";
+	std::cout << "Р’РІРµРґРёС‚Рµ id Р°РІС‚РѕСЂР°: ";
 
 	int id;
 	std::cin >> id;
@@ -55,7 +107,7 @@ bool Menu::addFavoriteAuthor()
 
 bool Menu::addFavoriteAlbum()
 {
-	std::cout << "Введите id альбома: ";
+	std::cout << "Р’РІРµРґРёС‚Рµ id Р°Р»СЊР±РѕРјР°: ";
 
 	int id;
 	std::cin >> id;
@@ -112,7 +164,7 @@ bool Menu::printFavoriteAlbums()
 
 bool Menu::deleteFavoriteSong()
 {
-	std::cout << "Введите id песни: ";
+	std::cout << "Р’РІРµРґРёС‚Рµ id РїРµСЃРЅРё: ";
 
 	int id;
 	std::cin >> id;
@@ -124,7 +176,7 @@ bool Menu::deleteFavoriteSong()
 
 bool Menu::deleteFavoriteAuthor()
 {
-	std::cout << "Введите id автора: ";
+	std::cout << "Р’РІРµРґРёС‚Рµ id Р°РІС‚РѕСЂР°: ";
 
 	int id;
 	std::cin >> id;
@@ -136,7 +188,7 @@ bool Menu::deleteFavoriteAuthor()
 
 bool Menu::deleteFavoriteAlbum()
 {
-	std::cout << "Введите id альбома: ";
+	std::cout << "Р’РІРµРґРёС‚Рµ id Р°Р»СЊР±РѕРјР°: ";
 
 	int id;
 	std::cin >> id;
@@ -146,58 +198,3 @@ bool Menu::deleteFavoriteAlbum()
 	return true;
 }
 
-bool Menu::show()
-{
-	Selection selection = showMenu();
-
-	if (selection == Selection::EXIT)
-	{
-		return true;
-	}
-
-	bool ok = true;
-	switch (selection)
-	{
-	case Selection::ADD_FAVORITE_SONG:
-		ok = addFavoriteSong();
-		break;
-	case Selection::DELETE_FAVORITE_SONG:
-		ok = deleteFavoriteSong();
-		break;
-	case Selection::PRINT_FAVORITE_SONG:
-		ok = printFavoriteSongs();
-		break;
-	case Selection::ADD_FAVORITE_AUTHOR:
-		ok = addFavoriteAuthor();
-		break;
-	case Selection::DELETE_FAVORITE_AUTHOR:
-		ok = deleteFavoriteAuthor();
-		break;
-	case Selection::PRINT_FAVORITE_AUTHOR:
-		ok = printFavoriteAuthors();
-		break;
-	case Selection::ADD_FAVORITE_ALBUM:
-		ok = addFavoriteAlbum();
-		break;
-	case Selection::DELETE_FAVORITE_ALBUM:
-		ok = deleteFavoriteAlbum();
-		break;
-	case Selection::PRINT_FAVORITE_ALBUM:
-		ok = printFavoriteAlbums();
-		break;
-	case Selection::EXIT:
-		return true;
-		break;
-	default:
-		std::cout << "Ошибка";
-		break;
-	}
-
-	// TODO
-	// добавить песню, альбом, автора (без проверок)
-	// для пользователя добавить песню, альбом, автора (без проверок) 
-	// для пользователя удалить песню, альбом, автора (без проверок)
-	// для пользователя печать любимых песен, альбомов, авторов (без проверок)
-
-	return false;
-}

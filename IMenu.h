@@ -1,22 +1,30 @@
 #pragma once
 #include "DataBase.h"
 
-enum class Selection
+//enum class Selection
+//{
+//	ADD_FAVORITE_SONG = 1,
+//	DELETE_FAVORITE_SONG,
+//	PRINT_FAVORITE_SONG,
+//	ADD_FAVORITE_AUTHOR,
+//	DELETE_FAVORITE_AUTHOR,
+//	PRINT_FAVORITE_AUTHOR,
+//	ADD_FAVORITE_ALBUM,
+//	DELETE_FAVORITE_ALBUM,
+//	PRINT_FAVORITE_ALBUM,
+//	ADD_AUTHOR,
+//	ADD_ALBUM,
+//	ADD_SONG,
+//	EXIT,
+//	COUNT
+//};
+
+enum class Result
 {
-	ADD_FAVORITE_SONG = 1,
-	DELETE_FAVORITE_SONG,
-	PRINT_FAVORITE_SONG,
-	ADD_FAVORITE_AUTHOR,
-	DELETE_FAVORITE_AUTHOR,
-	PRINT_FAVORITE_AUTHOR,
-	ADD_FAVORITE_ALBUM,
-	DELETE_FAVORITE_ALBUM,
-	PRINT_FAVORITE_ALBUM,
-	ADD_AUTHOR,
-	ADD_ALBUM,
-	ADD_SONG,
+	DONE,
+	WITH_ERROR,
 	EXIT,
-	COUNT
+	NOT_SUPPORTED
 };
 
 class IMenu
@@ -30,5 +38,9 @@ protected:
 
 	IMenu();
 
-	virtual Selection showMenu() = 0;
+	virtual void printMenu() const = 0;
+
+	virtual Result runSelected(int) = 0;
+
+
 };

@@ -4,21 +4,13 @@
 #include <string>
 #include <iostream>
 
-//enum class Selection
-//{
-//	ADD_FAVORITE_SONG = 1,
-//	DELETE_FAVORITE_SONG,
-//	PRINT_FAVORITE_SONG,
-//	EXIT,
-//	COUNT
-//};
-
-// TODO: сделать абстрактный класс Imenu - родитель Menu
 
 class Menu : public IMenu {
-protected:
+public: 
 
-	Selection showMenu() override final;
+	void printMenu() const;
+
+	Result runSelected(int selected) override;
 
 	bool addFavoriteSong();
 
@@ -44,5 +36,4 @@ public:
 
 	Menu(DataBase* database, int user_id);
 
-	virtual bool show();
 };

@@ -25,7 +25,6 @@ bool DataBase::addSong(const Song& song)
 	return true;
 }
 
-//
 bool DataBase::operator +(const Song& song)
 {
 	m_songs.push_back(song);
@@ -114,7 +113,7 @@ bool DataBase::getSong(int id, const Song*& result) const
 	return false;
 }
 
-bool DataBase::getAlbum(int id, const Album* result) const
+bool DataBase::getAlbum(int id, const Album*& result) const
 {
 	int size_m_albums = m_albums.size();
 
@@ -129,7 +128,7 @@ bool DataBase::getAlbum(int id, const Album* result) const
 	return false;
 }
 
-bool DataBase::getAuthor(int id, const Author* result) const
+bool DataBase::getAuthor(int id, const Author*& result) const
 {
 	int size_m_authors = m_authors.size();
 

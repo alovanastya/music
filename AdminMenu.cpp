@@ -1,4 +1,4 @@
-#include "AdminMenu.h"
+ï»¿#include "AdminMenu.h"
 
 AdminMenu::AdminMenu()
 {
@@ -10,30 +10,62 @@ AdminMenu::AdminMenu(DataBase* database, int user_id)
 
 }
 
-Selection AdminMenu::showMenu()
+void AdminMenu::printMenu()
 {
-	IMenu::showMenu();
+	Menu::printMenu();
 
-	std::cout << (int)Selection::ADD_AUTHOR << " - Äîáàâèòü èñïîëíèòåëÿ" << std::endl;
-	std::cout << (int)Selection::ADD_ALBUM  << " - Äîáàâèòü àëüáîì" << std::endl;
-	std::cout << (int)Selection::ADD_SONG   << " - Äîáàâèòü ïåñíş" << std::endl;
 
-	int selection;
-	std::cin >> selection;
-	std::cin.ignore();
+	std::cout << " 10 - Ğ”Ğ¾Ğ±Ğ°Ğ²Ğ¸Ñ‚ÑŒ Ğ¿ĞµÑĞ½Ñ  " << std::endl;
+	std::cout << " 11 - Ğ”Ğ¾Ğ±Ğ°Ğ²Ğ¸Ñ‚ÑŒ Ğ°Ğ²Ñ‚Ğ¾Ñ€Ğ° " << std::endl;
+	std::cout << " 12 - Ğ”Ğ¾Ğ±Ğ°Ğ²Ğ¸Ñ‚ÑŒ Ğ°Ğ»ÑŒĞ±Ğ¾Ğ¼ " << std::endl;
 
-	return (Selection)selection;
 }
+
+Result AdminMenu::runSelected(int selected) 
+{
+	if ((Menu::runSelected(selected) == Result::WITH_ERROR ||
+		Menu::runSelected(selected) == Result::DONE ||
+		Menu::runSelected(selected) == Result::EXIT)) 
+	{
+		return Menu::runSelected(selected);
+	}
+
+	else if (Menu::runSelected(selected) == Result::NOT_SUPPORTED)
+	{
+		if (selected <= 12)
+		{
+			switch (selected)
+			{
+			case 10:
+				AdminMenu::addSong();
+				return Result::DONE;
+				break;
+			case 11:
+				AdminMenu::addAuthor();
+				return Result::DONE;
+				break;
+			case 12:
+				AdminMenu::addAlbum();
+				return Result::DONE;
+				break;
+			default:
+				return Result::WITH_ERROR;
+				break;
+			}
+		}
+	}
+}
+
 
 bool AdminMenu::addSong()
 {
 	Song new_song;
 
-	std::cout << "Ââåäèòå íàçâàíèå ïåñíè: ";
+	std::cout << "Ğ’Ğ²ĞµĞ´Ğ¸Ñ‚Ğµ Ğ½Ğ°Ğ·Ğ²Ğ°Ğ½Ğ¸Ğµ Ğ¿ĞµÑĞ½Ğ¸: ";
 
 	std::getline(std::cin, new_song.m_name);
 
-	std::cout << "Ââåäèòå id àëüáîìà: ";
+	std::cout << "Ğ’Ğ²ĞµĞ´Ğ¸Ñ‚Ğµ id Ğ°Ğ»ÑŒĞ±Ğ¾Ğ¼Ğ°: ";
 
 	bool flag_1 = false;
 
@@ -52,9 +84,9 @@ bool AdminMenu::addSong()
 
 		if (flag_1 == false)
 		{
-			std::cout << "Àëüáîìà ñ òàêèì id íå ñóùåñòâóåò. Õîòèòå ñîçäàòü? ";
-			std::cout << "1. Äà\n";
-			std::cout << "2. Íåò\n";
+			std::cout << "ĞĞ»ÑŒĞ±Ğ¾Ğ¼Ğ° Ñ Ñ‚Ğ°ĞºĞ¸Ğ¼ id Ğ½Ğµ ÑÑƒÑ‰ĞµÑÑ‚Ğ²ÑƒĞµÑ‚. Ğ¥Ğ¾Ñ‚Ğ¸Ñ‚Ğµ ÑĞ¾Ğ·Ğ´Ğ°Ñ‚ÑŒ? ";
+			std::cout << "1. Ğ”Ğ°\n";
+			std::cout << "2. ĞĞµÑ‚\n";
 
 			int choice;
 
@@ -67,7 +99,7 @@ bool AdminMenu::addSong()
 				break;
 
 			case 2:
-				std::cout << "Òîãäà ïîïğîáóéòå ââåñòè id ñíîâà\n";
+				std::cout << "Ğ¢Ğ¾Ğ³Ğ´Ğ° Ğ¿Ğ¾Ğ¿Ñ€Ğ¾Ğ±ÑƒĞ¹Ñ‚Ğµ Ğ²Ğ²ĞµÑÑ‚Ğ¸ id ÑĞ½Ğ¾Ğ²Ğ°\n";
 				flag_1 = false;
 				break;
 
@@ -77,15 +109,15 @@ bool AdminMenu::addSong()
 		}
 	}
 
-	std::cout << "\nÂûáåğèòå æàíğ: \n";
+	std::cout << "\nĞ’Ñ‹Ğ±ĞµÑ€Ğ¸Ñ‚Ğµ Ğ¶Ğ°Ğ½Ñ€: \n";
 
 	int selection;
 
-	std::cout << "1. Ğîê \n";
-	std::cout << "2. Äæàç \n";
-	std::cout << "3. Ïîï \n";
-	std::cout << "4. Êëàññè÷åñêàÿ \n";
-	std::cout << "5. İëåêòğîííàÿ \n";
+	std::cout << "1. Ğ Ğ¾Ğº \n";
+	std::cout << "2. Ğ”Ğ¶Ğ°Ğ· \n";
+	std::cout << "3. ĞŸĞ¾Ğ¿ \n";
+	std::cout << "4. ĞšĞ»Ğ°ÑÑĞ¸Ñ‡ĞµÑĞºĞ°Ñ \n";
+	std::cout << "5. Ğ­Ğ»ĞµĞºÑ‚Ñ€Ğ¾Ğ½Ğ½Ğ°Ñ \n";
 
 	std::cin >> selection;
 
@@ -116,7 +148,7 @@ bool AdminMenu::addSong()
 			flag = true;
 			break;
 		default:
-			std::cout << "Òàêîãî æàíğà íåò";
+			std::cout << "Ğ¢Ğ°ĞºĞ¾Ğ³Ğ¾ Ğ¶Ğ°Ğ½Ñ€Ğ° Ğ½ĞµÑ‚";
 			flag = false;
 			break;
 		}
@@ -131,14 +163,14 @@ bool AdminMenu::addAlbum()
 {
 	Album new_album;
 
-	std::cout << "\nÂâåäèòå íàçâàíèå àëüáîìà: ";
+	std::cout << "\nĞ’Ğ²ĞµĞ´Ğ¸Ñ‚Ğµ Ğ½Ğ°Ğ·Ğ²Ğ°Ğ½Ğ¸Ğµ Ğ°Ğ»ÑŒĞ±Ğ¾Ğ¼Ğ°: ";
 	getline(std::cin, new_album.m_name);
 
 	bool flag_3 = false;
 
 	while (flag_3 == false)
 	{
-		std::cout << "\nÂâåäèòå id àâòîğà èëè àâòîğîâ àëüáîìà: ";
+		std::cout << "\nĞ’Ğ²ĞµĞ´Ğ¸Ñ‚Ğµ id Ğ°Ğ²Ñ‚Ğ¾Ñ€Ğ° Ğ¸Ğ»Ğ¸ Ğ°Ğ²Ñ‚Ğ¾Ñ€Ğ¾Ğ² Ğ°Ğ»ÑŒĞ±Ğ¾Ğ¼Ğ°: ";
 
 		int authors_id;
 
@@ -154,10 +186,10 @@ bool AdminMenu::addAlbum()
 
 		if (flag_3 == false)
 		{
-			std::cout << "Àâòîğà ñ òàêèì id íåò.\nÕîòèòå äîáàâèòü íîâîãî àâòîğà?\n\n";
+			std::cout << "ĞĞ²Ñ‚Ğ¾Ñ€Ğ° Ñ Ñ‚Ğ°ĞºĞ¸Ğ¼ id Ğ½ĞµÑ‚.\nĞ¥Ğ¾Ñ‚Ğ¸Ñ‚Ğµ Ğ´Ğ¾Ğ±Ğ°Ğ²Ğ¸Ñ‚ÑŒ Ğ½Ğ¾Ğ²Ğ¾Ğ³Ğ¾ Ğ°Ğ²Ñ‚Ğ¾Ñ€Ğ°?\n\n";
 
-			std::cout << "1. Äà\n";
-			std::cout << "2. Íåò\n";
+			std::cout << "1. Ğ”Ğ°\n";
+			std::cout << "2. ĞĞµÑ‚\n";
 
 			int choice;
 
@@ -170,7 +202,7 @@ bool AdminMenu::addAlbum()
 				break;
 
 			case 2:
-				std::cout << "Òîãäà ïîïğîáóéòå ââåñòè id ñíîâà.\n";
+				std::cout << "Ğ¢Ğ¾Ğ³Ğ´Ğ° Ğ¿Ğ¾Ğ¿Ñ€Ğ¾Ğ±ÑƒĞ¹Ñ‚Ğµ Ğ²Ğ²ĞµÑÑ‚Ğ¸ id ÑĞ½Ğ¾Ğ²Ğ°.\n";
 				flag_3 = false;
 				break;
 
@@ -198,24 +230,3 @@ bool AdminMenu::addAuthor()
 	return true;
 }
 
-bool AdminMenu::show()
-{
-	Selection selection = showMenu();
-
-	switch (selection)
-	{
-	case Selection::ADD_ALBUM:
-		addAlbum();
-		break;
-	case Selection::ADD_AUTHOR:
-		addAuthor();
-		break;
-	case Selection::ADD_SONG:
-		addSong();
-		break;
-	default:
-		break;
-	}
-
-	return true;
-}
