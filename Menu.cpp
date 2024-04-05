@@ -53,7 +53,7 @@ Result Menu::runSelected(int selected)
 		case 6:
 			printFavoriteAuthors();
 			return Result::DONE;
-				break;
+			break;
 		case 7:
 			addFavoriteAlbum();
 			return Result::DONE;

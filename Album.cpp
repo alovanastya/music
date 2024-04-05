@@ -17,6 +17,5 @@ std::ostream& operator << (std::ostream& p_out, const Album& album)
 	//std::cout << "Авторы: " << album.m_authors << std::endl;
 	std::cout << "Id: " << album.m_id << std::endl;
 
-
 	return p_out;
 }

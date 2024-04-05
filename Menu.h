@@ -6,7 +6,7 @@
 
 
 class Menu : public IMenu {
-public: 
+public:
 
 	void printMenu() const override;
 
