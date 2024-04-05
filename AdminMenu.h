@@ -7,11 +7,9 @@
 class AdminMenu : public Menu
 {
 public:
-	AdminMenu();
-
 	AdminMenu(DataBase*, int);
 
-	void printMenu();
+	void printMenu() const override;
 
 	Result runSelected(int) override;
 
@@ -20,7 +18,6 @@ public:
 	bool addAlbum();
 
 	bool addAuthor();
-
 
 
 };

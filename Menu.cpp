@@ -1,6 +1,5 @@
 ﻿#include "Menu.h"
 
-Menu::Menu() {}
 
 Menu::Menu(DataBase* database, int user_id) : IMenu(database, user_id)
 {}

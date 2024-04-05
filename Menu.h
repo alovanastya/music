@@ -8,7 +8,7 @@
 class Menu : public IMenu {
 public: 
 
-	void printMenu() const;
+	void printMenu() const override;
 
 	Result runSelected(int selected) override;
 
@@ -31,8 +31,6 @@ public:
 	bool deleteFavoriteAlbum();
 
 public:
-
-	Menu();
 
 	Menu(DataBase* database, int user_id);
 

@@ -1,59 +1,56 @@
 ﻿#include "AdminMenu.h"
 
-AdminMenu::AdminMenu()
+AdminMenu::AdminMenu(DataBase* database, int user_id) : Menu(database, user_id)
 {
 
 }
 
-AdminMenu::AdminMenu(DataBase* database, int user_id)
-{
-
-}
-
-void AdminMenu::printMenu()
+void AdminMenu::printMenu() const
 {
 	Menu::printMenu();
-
 
 	std::cout << " 10 - Добавить песню  " << std::endl;
 	std::cout << " 11 - Добавить автора " << std::endl;
 	std::cout << " 12 - Добавить альбом " << std::endl;
-
 }
 
-Result AdminMenu::runSelected(int selected) 
+Result AdminMenu::runSelected(int selected)
 {
-	if ((Menu::runSelected(selected) == Result::WITH_ERROR ||
-		Menu::runSelected(selected) == Result::DONE ||
-		Menu::runSelected(selected) == Result::EXIT)) 
+	Result result = Menu::runSelected(selected);
+
+	if (result != Result::NOT_SUPPORTED)
 	{
-		return Menu::runSelected(selected);
+		return result;
 	}
 
-	else if (Menu::runSelected(selected) == Result::NOT_SUPPORTED)
+	if (selected <= 12)
 	{
-		if (selected <= 12)
+		bool ok = true;
+		switch (selected)
 		{
-			switch (selected)
-			{
-			case 10:
-				AdminMenu::addSong();
-				return Result::DONE;
-				break;
-			case 11:
-				AdminMenu::addAuthor();
-				return Result::DONE;
-				break;
-			case 12:
-				AdminMenu::addAlbum();
-				return Result::DONE;
-				break;
-			default:
-				return Result::WITH_ERROR;
-				break;
-			}
+		case 10:
+			ok = AdminMenu::addSong();
+			break;
+		case 11:
+			ok = AdminMenu::addAuthor();
+			break;
+		case 12:
+			ok = AdminMenu::addAlbum();
+			break;
+		default:
+			return Result::WITH_ERROR;
+			break;
 		}
+
+		if (ok)
+		{
+			return Result::DONE;
+		}
+
+		return Result::WITH_ERROR;
 	}
+
+	return Result::NOT_SUPPORTED;
 }
 
 
