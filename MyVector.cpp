@@ -1,125 +1,105 @@
 #include "MyVector.h"
 
-
-template <class T> MyVector<T>::MyVector()
+template <class T>
+void MyVector<T>::push_back(T data)
 {
-	vector = new T[10];
-	m_capacity = 10;
-}
-
-template <class T> void MyVector<T>::push_back(T data)
-{
-	if (m_capacity > m_size)
+	if (m_capacity == 0)
 	{
-		vector[m_size] = data;
+		m_vector = new T;
+		*m_vector = data;
+
+		m_capacity = 1;
+		m_size = 1;
+	}
+
+	else if (m_capacity > m_size)
+	{
+		m_vector[m_size] = data;
 		m_size++;
 	}
 
-	else if (m_capacity <= m_size)
+	else
 	{
 		T* vector_2 = new T[m_capacity * 2];
 
 		for (int i = 0; i < m_capacity; ++i)
 		{
-			vector_2[i] = vector[i];
+			vector_2[i] = m_vector[i];
 		}
 
-		delete[] vector;
+		delete[] m_vector;
 
-		vector = new T[m_capacity * 2];
-
-		for (int i = 0; i < m_capacity; ++i)
-		{
-			vector[i] = vector_2[i];
-		}
-
-		delete[] vector_2;
+		m_vector = vector_2;
 
 		m_capacity *= 2;
-		vector[m_size] = data;
+		m_vector[m_size] = data;
 		m_size++;
 	}
 }
 
-template<class T> T MyVector<T>::front() const
+template<class T>
+T& MyVector<T>::front()
 {
-	return vector[0];
+	return m_vector[0];
 }
 
-template<class T> T MyVector<T>::back() const
+template<class T>
+T& MyVector<T>::back()
 {
-	return vector[m_size - 1];
+	return m_vector[m_size - 1];
 }
 
-template<class T> void MyVector<T>::clear()
+template<class T>
+void MyVector<T>::clear()
 {
-	vector = new T[m_capacity];
 	m_size = 0;
 }
 
-
-
-template <class T> void MyVector<T>::deleteElement(int number)
+template <class T>
+void MyVector<T>::deleteElement(int number)
 {
-	if (m_size != 0)
+	if (number > m_size - 1 || number < 0)
 	{
-		T* vector_2 = new T[m_capacity];
-		int j = 0;
-
-		for (int i = 0; i < number; i++)
-		{
-			vector_2[j] = vector[i];
-			j += 1;
-		}
-
-		for (int i = (number + 1); i < m_size; i++)
-		{
-			vector_2[j] = vector[i];
-			j += 1;
-		}
-
-		delete[] vector;
-
-		vector = new T[m_capacity];
-
-		for (int i = 0; i < m_capacity; ++i)
-		{
-			vector[i] = vector_2[i];
-		}
-
-		delete[] vector_2;
-		m_size--;
-
+		return;
 	}
+
+	if (number != m_size - 1)
+	{
+		for (int i = number; i < m_size - 1; ++i)
+		{
+			m_vector[i] = m_vector[i + 1];
+		}
+	}
+
+	m_size--;
 }
 
-template <class T> T MyVector<T>::operator[](int number) const
+template <class T>
+T& MyVector<T>::operator[](int number)
 {
-	return vector[number];
+	return m_vector[number];
 }
 
-template<class T> void MyVector<T>::operator()(int data)
+template <class T>
+const T& MyVector<T>::operator[](int number) const
 {
-	vector[m_size] = { data };
-	m_size++;
+	return m_vector[number];
 }
 
-template<class T> int MyVector<T>::size() const
+template<class T>
+int MyVector<T>::size() const
 {
 	return m_size;
 }
 
-template<class T> int MyVector<T>::capacity() const
+template<class T>
+MyVector<T>::~MyVector()
 {
-	return m_capacity;
+	delete[] m_vector;
 }
 
-template<class T> MyVector<T>::~MyVector()
-{
-	delete[] vector;
-}
-
-template <class T> std::ostream& operator << (std::ostream& cout, const MyVector<T>& v)
+template <class T>
+std::ostream& operator << (std::ostream& cout, const MyVector<T>& v)
 {
 	for (int i = 0; i < v.size(); ++i)
 	{

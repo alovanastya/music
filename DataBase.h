@@ -1,12 +1,12 @@
 #pragma once
 
-#include <vector>
-#include "MyVector.h"
 #include <string>
+#include <iostream>
+#include "MyVector.h"
 #include "Song.h"
 #include "Album.h"
 #include "Author.h"
-#include <iostream>
+
 
 class DataBase
 {
@@ -16,9 +16,9 @@ public:
 	MyVector<Author> m_authors;
 
 private:
-	std::vector<std::vector<int>> m_favorite_songs = { {} };
-	std::vector<std::vector<int>> m_favorite_authors = { {} };
-	std::vector<std::vector<int>> m_favorite_albums = { {} };
+	MyVector<MyVector<int>> m_favorite_songs;
+	MyVector<MyVector<int>> m_favorite_authors;
+	MyVector<MyVector<int>> m_favorite_albums;
 
 	std::vector<std::string> m_name = { "admin" };
 	std::vector<std::string> m_password = { "admin" };
@@ -37,8 +37,6 @@ public:
 	bool addSong(const Song&);
 
 	bool operator +(const Song&);
-
-	//std::istream& operator >> (std::istream&);
 
 	bool addAlbum(const Album&);
 
@@ -66,11 +64,11 @@ public:
 
 	bool addFavoriteAlbum(int, int);
 
-	bool getFavoriteSongs(int, const std::vector<int>*&) const;
+	bool getFavoriteSongs(int, const MyVector<int>*&) const;
 
-	bool getFavoriteAuthors(int, const std::vector<int>*&) const;
+	bool getFavoriteAuthors(int, const MyVector<int>*&) const;
 
-	bool getFavoriteAlbums(int, const std::vector<int>*&) const;
+	bool getFavoriteAlbums(int, const MyVector<int>*&) const;
 
 	bool deleteFavoriteSong(int, int);
 

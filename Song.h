@@ -33,12 +33,8 @@ struct Song
 	friend std::istream& operator >> (std::istream&, const Song&);
 
 	bool operator > (const Song&) const;
-
-	//friend bool operator > (const Song&) const;
 };
 
 std::ostream& operator << (std::ostream& , const Song&);
 
 std::istream& operator >> (std::istream&, const Song&);
-
-//bool operator > (const Song&) const;

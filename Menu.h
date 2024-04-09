@@ -1,9 +1,5 @@
 #pragma once
-#include "DataBase.h"
 #include "IMenu.h"
-#include <string>
-#include <iostream>
-
 
 class Menu : public IMenu {
 public:

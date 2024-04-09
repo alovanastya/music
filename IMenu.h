@@ -1,6 +1,5 @@
 #pragma once
 #include "DataBase.h"
-#include "MyVector.h"
 
 enum class Result
 {

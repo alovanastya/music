@@ -1,5 +1,4 @@
 ﻿#include <string>
-//#include <vector>
 #include <iostream>
 #include <Windows.h>
 #include "Menu.h"
@@ -42,8 +41,6 @@
 
 int main()
 {
-	int* a = new int[10];
-
 	SetConsoleCP(1251);
 	setlocale(LC_ALL, "ru");
 	DataBase database;

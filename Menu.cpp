@@ -1,4 +1,5 @@
 ﻿#include "Menu.h"
+#include <iostream>
 
 
 Menu::Menu(DataBase* database, int user_id) : IMenu(database, user_id)
@@ -118,13 +119,13 @@ bool Menu::addFavoriteAlbum()
 
 bool Menu::printFavoriteSongs()
 {
-	const std::vector<int>* tmp_vec;
+	const MyVector<int>* tmp_vec;
 	m_database->getFavoriteSongs(m_user_id, tmp_vec);
 
 	const Song* tmp_song;
-	for (int item : *tmp_vec)
+	for (int i =0; i < tmp_vec->size(); ++i)
 	{
-		m_database->getSong(item, tmp_song);
+		m_database->getSong(tmp_vec->operator[](i), tmp_song);
 		std::cout << (*tmp_song);
 	}
 
@@ -133,13 +134,13 @@ bool Menu::printFavoriteSongs()
 
 bool Menu::printFavoriteAuthors()
 {
-	const std::vector<int>* tmp_vec;
+	const MyVector<int>* tmp_vec;
 	m_database->getFavoriteAuthors(m_user_id, tmp_vec);
 
 	const Author* tmp_author;
-	for (int item : *tmp_vec)
+	for (int i = 0; i < tmp_vec->size(); ++i)
 	{
-		m_database->getAuthor(item, tmp_author);
+		m_database->getAuthor(tmp_vec->operator[](i), tmp_author);
 		std::cout << (*tmp_author);
 	}
 
@@ -148,13 +149,13 @@ bool Menu::printFavoriteAuthors()
 
 bool Menu::printFavoriteAlbums()
 {
-	const std::vector<int>* tmp_vec;
+	const MyVector<int>* tmp_vec;
 	m_database->getFavoriteSongs(m_user_id, tmp_vec);
 
 	const Album* tmp_album;
-	for (int item : *tmp_vec)
+	for (int i = 0; i < tmp_vec->size(); ++i)
 	{
-		m_database->getAlbum(item, tmp_album);
+		m_database->getAlbum(tmp_vec->operator[](i), tmp_album);
 		std::cout << (*tmp_album);
 	}
 
