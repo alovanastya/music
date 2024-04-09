@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "MyVector.h"
 #include <string>
 #include "Song.h"
 #include "Album.h"
@@ -10,9 +11,9 @@
 class DataBase
 {
 public:
-	std::vector<Song> m_songs;
-	std::vector<Album> m_albums;
-	std::vector<Author> m_authors;
+	MyVector<Song> m_songs;
+	MyVector<Album> m_albums;
+	MyVector<Author> m_authors;
 
 private:
 	std::vector<std::vector<int>> m_favorite_songs = { {} };
@@ -33,13 +34,19 @@ public:
 
 	int check_user(const std::string&, const std::string&) const;
 
-	bool addSong(const Song& song);
+	bool addSong(const Song&);
 
 	bool operator +(const Song&);
 
-	bool addAlbum(const Album& new_album);
+	//std::istream& operator >> (std::istream&);
 
-	bool addAuthor(const Author& new_author);
+	bool addAlbum(const Album&);
+
+	bool operator +(const Album&);
+
+	bool addAuthor(const Author&);
+
+	bool operator +(const Author&);
 
 	bool editSong(int id, Song*);
 
@@ -73,9 +80,9 @@ public:
 
 	bool addUser(const std::string&, const std::string&);
 
-	const std::vector<Song> getSongs() const;
-
-	const std::vector<Album> getAlbums() const;
-
-	const std::vector<Author> getAuthors() const;
+	const MyVector<Song> getSongs() const;
+			
+	const MyVector<Album> getAlbums() const;
+			
+	const MyVector<Author> getAuthors() const;
 };

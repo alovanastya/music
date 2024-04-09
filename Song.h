@@ -28,7 +28,17 @@ struct Song
 	int m_album;
 	Genre m_genre;
 
-	friend std::ostream& operator << (std::ostream& p_out, const Song& song);
+	friend std::ostream& operator << (std::ostream&, const Song&);
+
+	friend std::istream& operator >> (std::istream&, const Song&);
+
+	bool operator > (const Song&) const;
+
+	//friend bool operator > (const Song&) const;
 };
 
-std::ostream& operator << (std::ostream& p_out, const Song& song);
+std::ostream& operator << (std::ostream& , const Song&);
+
+std::istream& operator >> (std::istream&, const Song&);
+
+//bool operator > (const Song&) const;

@@ -62,15 +62,14 @@ bool AdminMenu::addSong()
 
 	std::getline(std::cin, new_song.m_name);
 
-	std::cout << "Введите id альбома: ";
-
 	bool flag_1 = false;
 
 	while (flag_1 == false)
 	{
-		std::cin >> new_song.m_album;
+		std::cin >> new_song.m_album; 
 
-		const std::vector<Album>& albums = m_database->getAlbums();
+		const MyVector<Album>& albums = m_database->getAlbums();
+
 		for (int i = 0; i < albums.size(); ++i)
 		{
 			if (albums[i].m_id == new_song.m_album)

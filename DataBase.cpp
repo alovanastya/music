@@ -19,7 +19,7 @@ int DataBase::check_user(const std::string& name, const std::string& password) c
 bool DataBase::addSong(const Song& song)
 {
 	m_songs.push_back(song);
-	m_songs.back().m_id = m_new_song_id;
+	m_new_song_id = m_songs.back().m_id;
 	++m_new_song_id;
 
 	return true;
@@ -28,26 +28,86 @@ bool DataBase::addSong(const Song& song)
 bool DataBase::operator +(const Song& song)
 {
 	m_songs.push_back(song);
-	m_songs.back().m_id = m_new_song_id;
+	m_new_song_id = m_songs.back().m_id;
 	++m_new_song_id;
 
 	return true;
 }
 
+//std::istream& DataBase::operator >> (std::istream& cin)
+//{
+//	Song song;
+//	std::string name;
+//	cin >> name;
+//	song.m_name = name;
+//
+//	int album;
+//	cin >> album;
+//	song.m_album = album;
+//
+//	int genre_1;
+//	cin >> genre_1;
+//
+//
+//	switch (genre_1)
+//	{
+//	case 0:
+//		song.m_genre = Genre::ROCK;
+//		break;
+//	case 1:
+//		song.m_genre = Genre::JAZZ;
+//		break;
+//	case 2:
+//		song.m_genre = Genre::POP;
+//		break;
+//	case 3:
+//		song.m_genre = Genre::CLASSICAL;
+//		break;
+//	case 4:
+//		song.m_genre = Genre::ELECTRONIC;
+//		break;
+//	default:
+//		break;
+//	}
+//
+//	m_songs.back().m_id = m_new_song_id;
+//	++m_new_song_id;
+//
+//	return cin;
+//}
+
 
 bool DataBase::addAlbum(const Album& new_album)
 {
 	m_albums.push_back(new_album);
-	m_albums.back().m_id = m_new_album_id;
+	m_new_album_id = m_albums.back().m_id;
 	++m_new_album_id;
+	return true;
+}
+
+bool DataBase::operator +(const Album& new_album)
+{
+	m_albums.push_back(new_album);
+	m_new_album_id = m_albums.back().m_id;
+	++m_new_album_id;
+
 	return true;
 }
 
 bool DataBase::addAuthor(const Author& new_author)
 {
 	m_authors.push_back(new_author);
-	m_authors.back().m_id = m_new_author_id;
+	m_new_author_id = m_authors.back().m_id;
 	++m_new_author_id;
+	return true;
+}
+
+bool DataBase::operator +(const Author& new_author)
+{
+	m_authors.push_back(new_author);
+	m_new_author_id = m_authors.back().m_id;
+	++m_new_author_id;
+
 	return true;
 }
 
@@ -59,7 +119,8 @@ bool DataBase::editSong(int id, Song* result)
 	{
 		if (m_songs[i].m_id == id)
 		{
-			result = &m_songs[i];
+			Song new_song = m_songs[i];
+			result = &new_song;
 			return true;
 		}
 	}
@@ -75,7 +136,8 @@ bool DataBase::editAlbum(int id, Album* result)
 	{
 		if (m_albums[i].m_id == id)
 		{
-			result = &m_albums[i];
+			Album mew_album = m_albums[i];
+			result = &mew_album;
 			return true;
 		}
 	}
@@ -90,7 +152,8 @@ bool DataBase::editAuthor(int id, Author* result)
 	{
 		if (m_authors[i].m_id == id)
 		{
-			result = &m_authors[i];
+			Author new_author = m_authors[i];
+			result = &new_author;
 			return true;
 		}
 	}
@@ -105,7 +168,8 @@ bool DataBase::getSong(int id, const Song*& result) const
 	{
 		if (m_songs[i].m_id == id)
 		{
-			result = &m_songs[i];
+			Song new_song = m_songs[i];
+			result = &new_song;
 			return true;
 		}
 	}
@@ -121,7 +185,8 @@ bool DataBase::getAlbum(int id, const Album*& result) const
 	{
 		if (m_albums[i].m_id == id)
 		{
-			result = &m_albums[i];
+			Album new_album = m_albums[i];
+			result = &new_album;
 			return true;
 		}
 	}
@@ -136,6 +201,7 @@ bool DataBase::getAuthor(int id, const Author*& result) const
 	{
 		if (m_authors[i].m_id == id)
 		{
+			// 
 			result = &m_authors[i];
 			return true;
 		}
@@ -332,17 +398,17 @@ bool DataBase::addUser(const std::string& name, const std::string& password)
 	return true;
 }
 
-const std::vector<Song> DataBase::getSongs() const
+const MyVector<Song> DataBase::getSongs() const
 {
 	return m_songs;
 }
 
-const std::vector<Album> DataBase::getAlbums() const
+const MyVector<Album> DataBase::getAlbums() const
 {
 	return m_albums;
 }
 
-const std::vector<Author> DataBase::getAuthors() const
+const MyVector<Author> DataBase::getAuthors() const
 {
 	return m_authors;
 }

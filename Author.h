@@ -11,7 +11,7 @@ struct Author
 	int m_id;
 	std::string m_name;
 
-	friend std::ostream& operator << (std::ostream& p_out, const Author& author);
+	friend std::ostream& operator << (std::ostream&, const Author&);
 };
 
-std::ostream& operator << (std::ostream& p_out, const Author& author);
+std::ostream& operator << (std::ostream&, const Author&);

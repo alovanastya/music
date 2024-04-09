@@ -5,18 +5,32 @@ template <class T>
 class MyVector
 {
 private:
-	T* m_data = nullptr;
+	T* vector = nullptr;
 	int m_capacity = 0;		// сколько выделено памяти
 	int m_size = 0;			// сколько хранится
 
-public:
-	void pushBack(T);			// можно взять из прошлого семестра
 
-	void deleteElement(int);	// можно взять из database
+public:
+
+	MyVector();
+
+	void push_back(T);	
+
+	T front() const;
+
+	T back() const;
+
+	void clear();
+
+	void deleteElement(int);	
 
 	T operator[](int) const;
 
+	void operator()(int);
+
 	int size() const;
+
+	int capacity() const;
 
 	~MyVector();
 

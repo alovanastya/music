@@ -45,6 +45,9 @@
     <ClCompile Include="IMenu.cpp">
       <Filter>Исходные файлы\menu</Filter>
     </ClCompile>
+    <ClCompile Include="MyVector.cpp">
+      <Filter>Исходные файлы\models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -70,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="IMenu.h">
       <Filter>Исходные файлы\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="MyVector.h">
+      <Filter>Исходные файлы\models</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
 #pragma once
 #include "Menu.h"
 #include "DataBase.h"
-#include "Menu.h"
 
 
 class AdminMenu : public Menu
@@ -18,6 +17,5 @@ public:
 	bool addAlbum();
 
 	bool addAuthor();
-
 
 };
