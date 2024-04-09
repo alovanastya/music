@@ -1,7 +1,7 @@
 #pragma once
 #include "MyVector.h"
+#include "MyVector.cpp"
 #include <string>
-#include <iostream>
 
 struct Album
 {
@@ -9,7 +9,7 @@ struct Album
 
 	Album(int, const std::string&);
 
-	int m_id;
+	int m_id = 0;
 	MyVector <int> m_authors;
 	std::string m_name;
 

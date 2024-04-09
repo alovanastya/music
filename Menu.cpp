@@ -123,7 +123,7 @@ bool Menu::printFavoriteSongs()
 	m_database->getFavoriteSongs(m_user_id, tmp_vec);
 
 	const Song* tmp_song;
-	for (int i =0; i < tmp_vec->size(); ++i)
+	for (int i = 0; i < tmp_vec->size(); ++i)
 	{
 		m_database->getSong(tmp_vec->operator[](i), tmp_song);
 		std::cout << (*tmp_song);
@@ -198,3 +198,5 @@ bool Menu::deleteFavoriteAlbum()
 	return true;
 }
 
+Menu::~Menu()
+{}

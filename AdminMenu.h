@@ -1,7 +1,6 @@
 #pragma once
 #include "Menu.h"
 
-
 class AdminMenu : public Menu
 {
 public:
@@ -17,4 +16,5 @@ public:
 
 	bool addAuthor();
 
+	~AdminMenu() override;
 };

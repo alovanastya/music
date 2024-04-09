@@ -22,4 +22,6 @@ public:
 	virtual void printMenu() const = 0;
 
 	virtual Result runSelected(int) = 0;
+
+	virtual ~IMenu();
 };

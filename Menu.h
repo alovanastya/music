@@ -30,4 +30,5 @@ public:
 
 	Menu(DataBase* database, int user_id);
 
+	~Menu() override;
 };

@@ -66,7 +66,7 @@ bool AdminMenu::addSong()
 
 	while (flag_1 == false)
 	{
-		std::cin >> new_song.m_album; 
+		std::cin >> new_song.m_album;
 
 		const MyVector<Album>& albums = m_database->getAlbums();
 
@@ -226,3 +226,5 @@ bool AdminMenu::addAuthor()
 	return true;
 }
 
+AdminMenu::~AdminMenu()
+{}

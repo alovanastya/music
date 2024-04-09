@@ -1,12 +1,7 @@
 #pragma once
-
-#include <string>
-#include <iostream>
-#include "MyVector.h"
 #include "Song.h"
 #include "Album.h"
 #include "Author.h"
-
 
 class DataBase
 {

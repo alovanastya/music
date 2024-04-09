@@ -1,6 +1,5 @@
 #include "DataBase.h"
 
-
 int DataBase::check_user(const std::string& name, const std::string& password) const
 {
 	int quantity = m_name.size();
