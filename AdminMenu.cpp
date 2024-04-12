@@ -249,7 +249,7 @@ bool AdminMenu::addAuthor()
 	Author new_author;
 
 	std::cout << "Введите имя автора, которого хотите добавить: ";
-	
+
 	bool flag = false;
 
 	while (flag == false)

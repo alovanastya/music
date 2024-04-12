@@ -35,6 +35,6 @@ struct Song
 	bool operator > (const Song&) const;
 };
 
-std::ostream& operator << (std::ostream& , const Song&);
+std::ostream& operator << (std::ostream&, const Song&);
 
 std::istream& operator >> (std::istream&, const Song&);

@@ -161,7 +161,7 @@ bool DataBase::getAuthor(int id, const Author*& result) const
 
 bool DataBase::addFavoriteSong(int user_id, int song_id)
 {
-	if (m_songs.size() == 0) 
+	if (m_songs.size() == 0)
 	{
 		std::cout << "Ошибка!!\n";
 		std::cout << "Нет внесенных песен." << std::endl;
@@ -226,7 +226,7 @@ bool DataBase::addFavoriteAlbum(int user_id, int album_id)
 		std::cout << "Ошибка!!\n";
 		std::cout << "Нет внесенных песен." << std::endl;
 		system("pause");
-		
+
 		return false;
 	}
 

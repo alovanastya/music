@@ -172,7 +172,7 @@ bool Menu::printFavoriteSongs()
 bool Menu::printFavoriteAuthors()
 {
 	const MyVector<int>* tmp_vec;
-	
+
 	if ((m_database->getFavoriteAuthors(m_user_id, tmp_vec)) == true)
 	{
 		const Author* tmp_author;

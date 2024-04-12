@@ -2,7 +2,7 @@
 
 Author::Author()
 {
-	
+
 }
 
 Author::Author(int id, const std::string& name)

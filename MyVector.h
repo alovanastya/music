@@ -12,7 +12,7 @@ private:
 
 public:
 
-	void push_back(T);	
+	void push_back(T);
 
 	T& front();
 
@@ -20,7 +20,7 @@ public:
 
 	void clear();
 
-	void deleteElement(int);	
+	void deleteElement(int);
 
 	T& operator[](int);
 

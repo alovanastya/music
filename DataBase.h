@@ -74,8 +74,8 @@ public:
 	bool addUser(const std::string&, const std::string&);
 
 	const MyVector<Song> getSongs() const;
-			
+
 	const MyVector<Album> getAlbums() const;
-			
+
 	const MyVector<Author> getAuthors() const;
 };
