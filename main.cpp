@@ -5,12 +5,6 @@
 
 /*
 
-1. Написать для пользовательских классов дружественные функции
-перегрузки операторов ввода и вывода.
-
-2. Написать перегрузки операторов сравнения двух объектов
-пользовательского класса, как методов внутри класса.
-
 4. Создать функции взаимодействия пользователя приложения с данными:
 добавление (используя перегрузки операторов ввода) и удаление,
 сортировка (с помощью перегрузок операторов сравнения).
@@ -22,21 +16,10 @@
 
 /*
 
-2. реализовать методы класса MyVector 					  /   +
-														  /   
-3. реализовать функцию для печати MyVector в консоль	  /   +
-														  /   
-4. заменить во всем проекте std::Vector на MyVector		  /   
-														  /   
-5. обновить методы delete...() в классе DataBase		  /   
-														  /   
-6. обновить методы print...() в классе Menu				  /   
-														  /   
-7. отладить те пункты меню, которые уже есть			  /   
-														  /   
-8. для каждого пункта меню добавить проверки			  /   
-*/
+2. Добавить проверки в методы класса DataBase
 
+3. Проверить работу всех пунктов меню при корректном и некорректном вводе
+*/
 
 int main()
 {
@@ -52,12 +35,18 @@ int main()
 	while (user_id == -1)
 	{
 		std::cout << "Login: ";
-		std::cin >> login;
+		std::getline(std::cin, login);
 
 		std::cout << "Password: ";
-		std::cin >> password;
+		std::getline(std::cin, password);
 
 		user_id = database.check_user(login, password);
+
+		if (user_id == -1)
+		{
+			std::cout << "Неверный логин или пароль." << std::endl;
+			std::cout << "Попробуйте еще раз: " << std::endl;
+		}
 	}
 
 	IMenu* menu = nullptr;
@@ -71,6 +60,7 @@ int main()
 	}
 
 	bool end = false;
+
 	while (!end)
 	{
 		system("cls");
@@ -79,7 +69,23 @@ int main()
 
 		int selection = 0;
 		std::cout << " \nВведите число: ";
-		std::cin >> selection;
+		bool flag = false;
+
+		while (flag == false)
+		{
+			std::cin >> selection;
+
+			if (std::cin.fail()) {
+				std::cin.clear();
+				std::cin.ignore(INT64_MAX, '\n');
+				std::cout << "Пожалуйста, введите корректное число: ";
+			}
+
+			else
+			{
+				flag = true;
+			}
+		}
 
 		Result result = menu->runSelected(selection);
 		switch (result)
@@ -97,7 +103,25 @@ int main()
 			int choice = 0;
 			std::cout << "1 - Да\n";
 			std::cout << "2 - Нет, хочу остаться\n";
-			std::cin >> choice;
+
+			bool f = false;
+
+			while (f == false)
+			{
+				std::cin >> choice;
+
+				if (std::cin.fail())
+				{
+					std::cin.clear();
+					std::cin.ignore(INT64_MAX, '\n');
+					std::cout << "Пожалуйста, введите корректное число: ";
+				}
+
+				else
+				{
+					f = true;
+				}
+			}
 
 			if (choice == 1) {
 				std::cout << "До свидания! Хорошего дня";

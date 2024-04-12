@@ -9,9 +9,9 @@ void AdminMenu::printMenu() const
 {
 	Menu::printMenu();
 
-	std::cout << " 10 - Добавить песню  " << std::endl;
-	std::cout << " 11 - Добавить автора " << std::endl;
-	std::cout << " 12 - Добавить альбом " << std::endl;
+	std::cout << " 12 - Добавить песню  " << std::endl;
+	std::cout << " 13 - Добавить автора " << std::endl;
+	std::cout << " 14 - Добавить альбом " << std::endl;
 }
 
 Result AdminMenu::runSelected(int selected)
@@ -23,18 +23,18 @@ Result AdminMenu::runSelected(int selected)
 		return result;
 	}
 
-	if (selected <= 12)
+	if (selected <= 14)
 	{
 		bool ok = true;
 		switch (selected)
 		{
-		case 10:
+		case 12:
 			ok = AdminMenu::addSong();
 			break;
-		case 11:
+		case 13:
 			ok = AdminMenu::addAuthor();
 			break;
-		case 12:
+		case 14:
 			ok = AdminMenu::addAlbum();
 			break;
 		default:
@@ -48,8 +48,11 @@ Result AdminMenu::runSelected(int selected)
 		}
 
 		return Result::WITH_ERROR;
+
 	}
 
+	std::cout << "Неверная команда!" << std::endl;
+	system("pause");
 	return Result::NOT_SUPPORTED;
 }
 
@@ -59,18 +62,22 @@ bool AdminMenu::addSong()
 	Song new_song;
 
 	std::cout << "Введите название песни: ";
-
+	std::cin.ignore();
 	std::getline(std::cin, new_song.m_name);
 
 	bool flag_1 = false;
 
 	while (flag_1 == false)
 	{
-		std::cin >> new_song.m_album;
+		std::cout << "Введите id альбома, в который хотите внести песню: ";
+
+		inputInt(new_song.m_album);
 
 		const MyVector<Album>& albums = m_database->getAlbums();
 
-		for (int i = 0; i < albums.size(); ++i)
+		int size = albums.size();
+
+		for (int i = 0; i < size; ++i)
 		{
 			if (albums[i].m_id == new_song.m_album)
 			{
@@ -80,18 +87,19 @@ bool AdminMenu::addSong()
 
 		if (flag_1 == false)
 		{
-			std::cout << "Альбома с таким id не существует. Хотите создать? ";
+			std::cout << "Альбома с таким id не существует. Хотите создать?" << std::endl;
 			std::cout << "1. Да\n";
 			std::cout << "2. Нет\n";
 
 			int choice;
 
-			std::cin >> choice;
+			inputInt(choice);
 
 			switch (choice)
 			{
 			case 1:
 				addAlbum();
+				flag_1 = true;
 				break;
 
 			case 2:
@@ -115,7 +123,23 @@ bool AdminMenu::addSong()
 	std::cout << "4. Классическая \n";
 	std::cout << "5. Электронная \n";
 
-	std::cin >> selection;
+	bool flag_2 = false;
+
+	while (flag_2 == false)
+	{
+		std::cin >> selection;
+
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(INT64_MAX, '\n');
+			std::cout << "Введите корректное число: ";
+		}
+
+		else
+		{
+			flag_2 = true;
+		}
+	}
 
 	bool flag = false;
 
@@ -160,6 +184,7 @@ bool AdminMenu::addAlbum()
 	Album new_album;
 
 	std::cout << "\nВведите название альбома: ";
+	std::cin.ignore();
 	getline(std::cin, new_album.m_name);
 
 	bool flag_3 = false;
@@ -170,8 +195,11 @@ bool AdminMenu::addAlbum()
 
 		int authors_id;
 
-		std::cin >> authors_id;
-		for (int i = 0; i < m_database->m_authors.size(); ++i)
+		inputInt(authors_id);
+
+		int size = m_database->m_authors.size();
+
+		for (int i = 0; i < size; ++i)
 		{
 			if (m_database->m_authors[i].m_id == authors_id)
 			{
@@ -189,12 +217,13 @@ bool AdminMenu::addAlbum()
 
 			int choice;
 
-			std::cin >> choice;
+			inputInt(choice);
 
 			switch (choice)
 			{
 			case 1:
 				addAuthor();
+				flag_3 = true;
 				break;
 
 			case 2:
@@ -208,7 +237,7 @@ bool AdminMenu::addAlbum()
 		}
 	}
 
-	bool flag = false;
+	//bool flag = false;
 
 	m_database->m_albums.push_back(new_album);
 
@@ -219,9 +248,41 @@ bool AdminMenu::addAuthor()
 {
 	Author new_author;
 
-	getline(std::cin, new_author.m_name);
+	std::cout << "Введите имя автора, которого хотите добавить: ";
+	
+	bool flag = false;
 
-	m_database->m_authors.push_back(new_author);
+	while (flag == false)
+	{
+		std::cin.ignore();
+		getline(std::cin, new_author.m_name);
+
+		int size = m_database->m_authors.size();
+
+		if (size != 0)
+		{
+			for (int i = 0; i < size; ++i)
+			{
+				if (m_database->m_authors[i].m_name == new_author.m_name)
+				{
+					std::cout << "Автор с таким именем уже существует." << std::endl;
+					std::cout << "Введите другое имя." << std::endl;
+				}
+				else
+				{
+					m_database->m_authors.push_back(new_author);
+					flag = true;
+					break;
+				}
+			}
+		}
+
+		else
+		{
+			m_database->m_authors.push_back(new_author);
+			flag = true;
+		}
+	}
 
 	return true;
 }

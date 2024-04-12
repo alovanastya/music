@@ -8,6 +8,8 @@ public:
 
 	Result runSelected(int selected) override;
 
+	void inputInt(int&);
+
 	bool addFavoriteSong();
 
 	bool addFavoriteAuthor();
@@ -25,6 +27,10 @@ public:
 	bool deleteFavoriteAuthor();
 
 	bool deleteFavoriteAlbum();
+
+	void printSongs();
+
+	void sortSongsByName();
 
 public:
 

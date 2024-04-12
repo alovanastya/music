@@ -27,7 +27,7 @@ void MyVector<T>::push_back(T data)
 			vector_2[i] = m_vector[i];
 		}
 
-		delete[] m_vector;
+		//delete[] m_vector;
 
 		m_vector = vector_2;
 
@@ -95,7 +95,7 @@ int MyVector<T>::size() const
 template<class T>
 MyVector<T>::~MyVector()
 {
-	delete[] m_vector;
+	delete[] m_vector; //
 }
 
 template <class T>
