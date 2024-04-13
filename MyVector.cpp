@@ -1,6 +1,23 @@
 #include "MyVector.h"
 
 template <class T>
+MyVector<T>::MyVector()
+{}
+
+template <class T>
+MyVector<T>::MyVector(T value, int size)
+{
+	T* m_vector = new T[size];
+	int m_capacity = size;
+	int m_size = size;
+
+	for (int i = 0; i < size; ++i)
+	{
+		m_vector[i] = value;
+	}
+}
+
+template <class T>
 void MyVector<T>::push_back(T data)
 {
 	if (m_capacity == 0)

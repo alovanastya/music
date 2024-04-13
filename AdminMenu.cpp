@@ -197,11 +197,11 @@ bool AdminMenu::addAlbum()
 
 		inputInt(authors_id);
 
-		int size = m_database->m_authors.size();
+		int size = m_database->getAuthors().size();
 
 		for (int i = 0; i < size; ++i)
 		{
-			if (m_database->m_authors[i].m_id == authors_id)
+			if (m_database->getAuthors()[i].m_id == authors_id)
 			{
 				new_album.m_authors.push_back(authors_id);
 				flag_3 = true;

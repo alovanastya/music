@@ -6,6 +6,7 @@
 class DataBase
 {
 public:
+	// TODO: перенести в private
 	MyVector<Song> m_songs;
 	MyVector<Album> m_albums;
 	MyVector<Author> m_authors;
@@ -73,9 +74,42 @@ public:
 
 	bool addUser(const std::string&, const std::string&);
 
-	const MyVector<Song> getSongs() const;
+	const MyVector<Song> &getSongs() const;
 
-	const MyVector<Album> getAlbums() const;
+	const MyVector<Album> &getAlbums() const;
 
-	const MyVector<Author> getAuthors() const;
+	const MyVector<Author> &getAuthors() const;
+
+	MyVector<int> sortSongsByName() const
+	{
+		// TODO:
+		// 1) не редактировать содержимое вектора m_songs,
+		// 2) возвращать вектор с id песен, отсортированных по навазнию
+		// 3) нельзя создавать копию m_songs
+		// 4) нужно создать массив с id
+
+		// Найти минимальное имя среди всех, записать первым элементом результата
+		// найти минимальное имся среди оставшихся, записать вторым элементом результата
+		// и т.д.
+
+
+		// оставшиеся это те песни, для которых в этом векторе записан false
+		MyVector<bool> need_ignore(false, m_songs.size());
+
+		//MyVector<Song> tmp_vector = m_database->getSongs();
+		//
+		//Song song;
+		//for (int i = 0; i < tmp_vectors.size(); ++i)
+		//{
+		//	for (int j = 0; tmp_vector.size() - i - 1; ++j)
+		//	{
+		//		if (tmp_vector[j] > tmp_vector[j + 1])
+		//		{
+		//			song = tmp_vectors[j + 1];
+		//			tmp_vector[j + 1] = tmp_vector[j];
+		//			tmp_vector[j] = song;
+		//		}
+		//	}
+		//}
+	}
 };

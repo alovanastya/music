@@ -11,6 +11,9 @@ private:
 
 
 public:
+	MyVector();
+
+	MyVector(T value, int size);
 
 	void push_back(T);
 

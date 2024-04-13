@@ -388,17 +388,17 @@ bool DataBase::addUser(const std::string& name, const std::string& password)
 	return true;
 }
 
-const MyVector<Song> DataBase::getSongs() const
+const MyVector<Song> &DataBase::getSongs() const
 {
 	return m_songs;
 }
 
-const MyVector<Album> DataBase::getAlbums() const
+const MyVector<Album> &DataBase::getAlbums() const
 {
 	return m_albums;
 }
 
-const MyVector<Author> DataBase::getAuthors() const
+const MyVector<Author> &DataBase::getAuthors() const
 {
 	return m_authors;
 }
