@@ -7,9 +7,9 @@ MyVector<T>::MyVector()
 template <class T>
 MyVector<T>::MyVector(T value, int size)
 {
-	T* m_vector = new T[size];
-	int m_capacity = size;
-	int m_size = size;
+	m_vector = new T[size];
+	m_capacity = size;
+	m_size = size;
 
 	for (int i = 0; i < size; ++i)
 	{
@@ -43,8 +43,6 @@ void MyVector<T>::push_back(T data)
 		{
 			vector_2[i] = m_vector[i];
 		}
-
-		//delete[] m_vector;
 
 		m_vector = vector_2;
 
@@ -112,7 +110,7 @@ int MyVector<T>::size() const
 template<class T>
 MyVector<T>::~MyVector()
 {
-	delete[] m_vector; //
+	delete[] m_vector;
 }
 
 template <class T>

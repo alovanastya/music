@@ -6,8 +6,8 @@ class MyVector
 {
 private:
 	T* m_vector = nullptr;
-	int m_capacity = 0;		// сколько выделено памяти
-	int m_size = 0;			// сколько хранится
+	int m_capacity = 0;	
+	int m_size = 0;		
 
 
 public:

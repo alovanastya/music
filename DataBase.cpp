@@ -247,6 +247,7 @@ bool DataBase::addFavoriteAlbum(int user_id, int album_id)
 	}
 
 	m_favorite_albums[user_id].push_back(album_id);
+
 	return true;
 }
 
@@ -388,17 +389,111 @@ bool DataBase::addUser(const std::string& name, const std::string& password)
 	return true;
 }
 
-const MyVector<Song> &DataBase::getSongs() const
+const MyVector<Song>& DataBase::getSongs() const
 {
 	return m_songs;
 }
 
-const MyVector<Album> &DataBase::getAlbums() const
+const MyVector<Album>& DataBase::getAlbums() const
 {
 	return m_albums;
 }
 
-const MyVector<Author> &DataBase::getAuthors() const
+const MyVector<Author>& DataBase::getAuthors() const
 {
 	return m_authors;
 }
+
+MyVector<int> DataBase::sortSongsByName() const
+{
+	int size = m_songs.size();
+	MyVector<bool> need_ignore(false, size);
+	MyVector<int> songs_id(0, size);
+
+	for (int i = 0; i < size; ++i)
+	{
+		std::string min = "}";
+
+		for (int j = 0; j < size; ++j)
+		{
+			if ((m_songs[j].m_name < min) && (need_ignore[j] == false))
+			{
+				min = m_songs[j].m_name;
+			}
+		}
+
+		for (int j = 0; j < size; ++j)
+		{
+			if (m_songs[j].m_name == min)
+			{
+				need_ignore[j] = true;
+				songs_id[i] = m_songs[j].m_id;
+			}
+		}
+	}
+
+	return songs_id;
+}
+
+MyVector<int> DataBase::sortAuthorsByName() const
+{
+	int size = m_authors.size();
+	MyVector<bool> need_ignore(false, size);
+	MyVector<int> authors_id(0, size);
+
+	for (int i = 0; i < size; ++i)
+	{
+		std::string min = "}";
+
+		for (int j = 0; j < size; ++j)
+		{
+			if ((m_authors[j].m_name < min) && (need_ignore[j] == false))
+			{
+				min = m_authors[j].m_name;
+			}
+		}
+
+		for (int j = 0; j < size; ++j)
+		{
+			if (m_authors[j].m_name == min)
+			{
+				need_ignore[j] = true;
+				authors_id[i] = m_authors[j].m_id;
+			}
+		}
+	}
+
+	return authors_id;
+}
+
+MyVector<int> DataBase::sortAlbumsByName() const
+{
+	int size = m_albums.size();
+	MyVector<bool> need_ignore(false, size);
+	MyVector<int> albums_id(0, size);
+
+	for (int i = 0; i < size; ++i)
+	{
+		std::string min = "}";
+
+		for (int j = 0; j < size; ++j)
+		{
+			if ((m_albums[j].m_name < min) && (need_ignore[j] == false))
+			{
+				min = m_albums[j].m_name;
+			}
+		}
+
+		for (int j = 0; j < size; ++j)
+		{
+			if (m_albums[j].m_name == min)
+			{
+				need_ignore[j] = true;
+				albums_id[i] = m_albums[j].m_id;
+			}
+		}
+	}
+
+	return albums_id;
+}
+

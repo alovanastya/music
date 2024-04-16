@@ -18,10 +18,11 @@ void Menu::printMenu() const
 	std::cout << " 8 - Удалить любимый альбом       " << std::endl;
 	std::cout << " 9 - Напечатать любимые альбомы   " << std::endl;
 	std::cout << " 10 - Напечатать все песни        " << std::endl;
-	std::cout << " 11 - Сортировать песни           " << std::endl;
+	std::cout << " 11 - Сортировать песни по имени  " << std::endl;
+	std::cout << " 12 - Сортировать альбомы по имени " << std::endl;
+	std::cout << " 13 - Сортировать авторов по имени " << std::endl;
 
 }
-
 
 Result Menu::runSelected(int selected)
 {
@@ -30,7 +31,7 @@ Result Menu::runSelected(int selected)
 		return Result::EXIT;
 	}
 
-	else if (selected > 0 && selected <= 11)
+	else if (selected > 0 && selected <= 13)
 	{
 		switch (selected)
 		{
@@ -78,6 +79,14 @@ Result Menu::runSelected(int selected)
 			sortSongsByName();
 			return Result::DONE;
 			break;
+		case 12:
+			sortAlbumsByName();
+			return Result::DONE;
+			break;
+		case 13:
+			sortAuthorsByName();
+			return Result::DONE;
+			break;
 		default:
 			break;
 		}
@@ -85,7 +94,7 @@ Result Menu::runSelected(int selected)
 		system("pause");
 	}
 
-	else if (selected > 11)
+	else if (selected > 13)
 	{
 		return Result::NOT_SUPPORTED;
 	}
@@ -249,15 +258,92 @@ void Menu::printSongs()
 	{
 		std::cout << tmp_vector[i] << "\n";
 	}
+
+	system("pause");
 }
 
 void Menu::sortSongsByName()
 {
-	// TODO:
-	// доабавить в database метод
-	// MyVector<int> sortSongsByName();
-	// который будет возвращать id песен, отсортированных по имени
-	// а тут просто шагать по этому вектору и печатать песни на экран
+	int size = m_database->getSongs().size();
+
+	if (size != 0)
+	{
+		MyVector<int> id = m_database->sortSongsByName();
+
+		for (int i = 0; i < size; ++i)
+		{
+			for (int j = 0; j < size; ++j)
+			{
+				if (m_database->getSongs()[j].m_id == id[i])
+				{
+					std::cout << m_database->getSongs()[j] << std::endl;
+				}
+			}
+		}
+	}
+
+	else
+	{
+		std::cout << "Список песен пуст." << '\n';
+	}
+
+	system("pause");
+}
+
+void Menu::sortAlbumsByName()
+{
+	int size = m_database->getAlbums().size();
+
+	if (size != 0)
+	{
+		MyVector<int> id = m_database->sortAlbumsByName();
+
+		for (int i = 0; i < size; ++i)
+		{
+			for (int j = 0; j < size; ++j)
+			{
+				if (m_database->getAlbums()[j].m_id == id[i])
+				{
+					std::cout << m_database->getAlbums()[j] << std::endl;
+				}
+			}
+		}
+	}
+
+	else
+	{
+		std::cout << "Список альбомов пуст." << '\n';
+	}
+
+	system("pause");
+}
+
+void Menu::sortAuthorsByName()
+{
+	int size = m_database->getAuthors().size();
+
+	if (size != 0)
+	{
+		MyVector<int> id = m_database->sortAuthorsByName();
+
+		for (int i = 0; i < size; ++i)
+		{
+			for (int j = 0; j < size; ++j)
+			{
+				if (m_database->getAuthors()[j].m_id == id[i])
+				{
+					std::cout << m_database->getAuthors()[j] << std::endl;
+				}
+			}
+		}
+	}
+
+	else
+	{
+		std::cout << "Список авторов пуст." << '\n';
+	}
+
+	system("pause");
 }
 
 Menu::~Menu()

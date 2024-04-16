@@ -32,6 +32,10 @@ public:
 
 	void sortSongsByName();
 
+	void sortAlbumsByName();
+
+	void sortAuthorsByName();
+
 public:
 
 	Menu(DataBase* database, int user_id);
