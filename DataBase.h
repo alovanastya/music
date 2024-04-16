@@ -5,14 +5,11 @@
 
 class DataBase
 {
-//public:
 private:
-	// TODO: перенести в private
 	MyVector<Song> m_songs;
 	MyVector<Album> m_albums;
 	MyVector<Author> m_authors;
 
-private:
 	MyVector<MyVector<int>> m_favorite_songs;
 	MyVector<MyVector<int>> m_favorite_authors;
 	MyVector<MyVector<int>> m_favorite_albums;

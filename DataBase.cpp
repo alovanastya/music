@@ -413,23 +413,19 @@ MyVector<int> DataBase::sortSongsByName() const
 	for (int i = 0; i < size; ++i)
 	{
 		std::string min = "}";
+		int min_index = 0;
 
 		for (int j = 0; j < size; ++j)
 		{
 			if ((m_songs[j].m_name < min) && (need_ignore[j] == false))
 			{
 				min = m_songs[j].m_name;
+				min_index = j;
 			}
 		}
 
-		for (int j = 0; j < size; ++j)
-		{
-			if (m_songs[j].m_name == min)
-			{
-				need_ignore[j] = true;
-				songs_id[i] = m_songs[j].m_id;
-			}
-		}
+		need_ignore[min_index] = true;
+		songs_id[i] = m_songs[min_index].m_id;
 	}
 
 	return songs_id;
@@ -444,6 +440,7 @@ MyVector<int> DataBase::sortAuthorsByName() const
 	for (int i = 0; i < size; ++i)
 	{
 		std::string min = "}";
+		int min_index = 0;
 
 		for (int j = 0; j < size; ++j)
 		{
@@ -453,14 +450,8 @@ MyVector<int> DataBase::sortAuthorsByName() const
 			}
 		}
 
-		for (int j = 0; j < size; ++j)
-		{
-			if (m_authors[j].m_name == min)
-			{
-				need_ignore[j] = true;
-				authors_id[i] = m_authors[j].m_id;
-			}
-		}
+		need_ignore[min_index] = true;
+		authors_id[i] = m_authors[min_index].m_id;
 	}
 
 	return authors_id;
@@ -475,6 +466,7 @@ MyVector<int> DataBase::sortAlbumsByName() const
 	for (int i = 0; i < size; ++i)
 	{
 		std::string min = "}";
+		int min_index = 0;
 
 		for (int j = 0; j < size; ++j)
 		{
@@ -484,14 +476,8 @@ MyVector<int> DataBase::sortAlbumsByName() const
 			}
 		}
 
-		for (int j = 0; j < size; ++j)
-		{
-			if (m_albums[j].m_name == min)
-			{
-				need_ignore[j] = true;
-				albums_id[i] = m_albums[j].m_id;
-			}
-		}
+		need_ignore[min_index] = true;
+		albums_id[i] = m_albums[min_index].m_id;
 	}
 
 	return albums_id;
