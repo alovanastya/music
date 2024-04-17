@@ -32,6 +32,8 @@ struct Song
 
 	friend std::istream& operator >> (std::istream&, const Song&);
 
+	bool operator == (const Song&) const;
+
 	bool operator > (const Song&) const;
 };
 

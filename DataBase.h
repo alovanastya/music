@@ -40,11 +40,11 @@ public:
 
 	bool operator +(const Author&);
 
-	bool editSong(int id, Song*);
+	bool editSong(int id, const Song &);
 
-	bool editAlbum(int id, Album*);
+	bool editAlbum(int id, const Album &);
 
-	bool editAuthor(int id, Author*);
+	bool editAuthor(int id, const Author &);
 
 	bool getSong(int id, const Song*&) const;
 

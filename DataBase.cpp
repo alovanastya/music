@@ -67,7 +67,7 @@ bool DataBase::operator +(const Author& new_author)
 	return true;
 }
 
-bool DataBase::editSong(int id, Song* result)
+bool DataBase::editSong(int id, const Song &result)
 {
 	int size_m_songs = m_songs.size();
 
@@ -75,7 +75,7 @@ bool DataBase::editSong(int id, Song* result)
 	{
 		if (m_songs[i].m_id == id)
 		{
-			m_songs[i] = *result;
+			m_songs[i] = result;
 			return true;
 		}
 	}
@@ -83,7 +83,7 @@ bool DataBase::editSong(int id, Song* result)
 	return false;
 }
 
-bool DataBase::editAlbum(int id, Album* result)
+bool DataBase::editAlbum(int id, const Album &result)
 {
 	int size_m_albums = m_albums.size();
 
@@ -91,14 +91,14 @@ bool DataBase::editAlbum(int id, Album* result)
 	{
 		if (m_albums[i].m_id == id)
 		{
-			m_albums[i] = *result;
+			m_albums[i] = result;
 			return true;
 		}
 	}
 	return false;
 }
 
-bool DataBase::editAuthor(int id, Author* result)
+bool DataBase::editAuthor(int id, const Author &result)
 {
 	int size_m_authors = m_authors.size();
 
@@ -106,7 +106,7 @@ bool DataBase::editAuthor(int id, Author* result)
 	{
 		if (m_authors[i].m_id == id)
 		{
-			m_authors[i] = *result;
+			m_authors[i] = result;
 			return true;
 		}
 	}

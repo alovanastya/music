@@ -49,6 +49,11 @@ std::istream& operator >> (std::istream& cin, Song& song)
 	return cin;
 }
 
+bool Song::operator == (const Song& song) const
+{
+	return m_name == song.m_name && m_album == song.m_album;
+}
+
 bool Song::operator>(const Song& s) const
 {
 	if (m_name > s.m_name)
