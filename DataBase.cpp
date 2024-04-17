@@ -75,7 +75,7 @@ bool DataBase::editSong(int id, Song* result)
 	{
 		if (m_songs[i].m_id == id)
 		{
-			result = &m_songs[i];
+			m_songs[i] = *result;
 			return true;
 		}
 	}
@@ -91,7 +91,7 @@ bool DataBase::editAlbum(int id, Album* result)
 	{
 		if (m_albums[i].m_id == id)
 		{
-			result = &m_albums[i];
+			m_albums[i] = *result;
 			return true;
 		}
 	}
@@ -106,7 +106,7 @@ bool DataBase::editAuthor(int id, Author* result)
 	{
 		if (m_authors[i].m_id == id)
 		{
-			result = &m_authors[i];
+			m_authors[i] = *result;
 			return true;
 		}
 	}
@@ -379,6 +379,17 @@ bool DataBase::deleteFavoriteAlbum(int user_id, int album_id)
 
 bool DataBase::addUser(const std::string& name, const std::string& password)
 {
+	int size = m_name.size();
+
+	for (int i = 0; i < size; ++i)
+	{
+		if (m_name[i] == name && m_password[i] == password)
+		{
+			std::cout << "Такой пользователь уже есть.";
+			return false;
+		}
+	}
+
 	m_name.push_back(name);
 	m_password.push_back(password);
 

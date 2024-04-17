@@ -6,8 +6,8 @@ class MyVector
 {
 private:
 	T* m_vector = nullptr;
-	int m_capacity = 0;	
-	int m_size = 0;		
+	int m_capacity = 0;
+	int m_size = 0;
 
 
 public:
@@ -28,6 +28,8 @@ public:
 	T& operator[](int);
 
 	const T& operator[](int) const;
+
+	bool operator == (const MyVector<T>) const;
 
 	int size() const;
 

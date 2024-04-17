@@ -16,5 +16,11 @@ public:
 
 	bool addAuthor();
 
+	bool editSong();
+		 
+	bool editAlbum();
+		 
+	bool editAuthor();
+
 	~AdminMenu() override;
 };

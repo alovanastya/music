@@ -124,23 +124,76 @@ void Menu::inputInt(int& result)
 bool Menu::addFavoriteSong()
 {
 	std::cout << "Введите id песни: ";
+	const MyVector <Song> &songs = m_database->getSongs();
+	int size = songs.size();
+	
+	if (size == 0)
+	{
+		std::cout << "Песен нет.";
+		return false;
+	}
 
+	bool flag = false;
 	int id;
-	inputInt(id);
 
-	m_database->addFavoriteSong(m_user_id, id);
+	while (flag == false) 
+	{
+		std::cout << "Введите id:";
+		inputInt(id);
+
+		for (int i = 0; i < size; ++i)
+		{
+			if (songs[i].m_id == id)
+			{
+				m_database->addFavoriteSong(m_user_id, id);
+				flag = true;
+			}
+		}
+
+		if (flag == false)
+		{
+			std::cout << "Песня с таким id отсутствует." << std::endl;
+		}
+	}
+	
 
 	return true;
 }
 
 bool Menu::addFavoriteAuthor()
 {
+
 	std::cout << "Введите id автора: ";
-
+	const MyVector <Author>& authors = m_database->getAuthors();
+	int size = authors.size();
+	
+	if (size == 0)
+	{
+		std::cout << "Список авторов пуст.";
+		return false;
+	}
+	bool flag = false;
 	int id;
-	inputInt(id);
 
-	m_database->addFavoriteAuthor(m_user_id, id);
+	while (flag == false)
+	{
+		std::cout << "Введите id:";
+		inputInt(id);
+
+		for (int i = 0; i < size; ++i)
+		{
+			if (authors[i].m_id == id)
+			{
+				m_database->addFavoriteAuthor(m_user_id, id);
+				flag = true;
+			}
+		}
+
+		if (flag == false)
+		{
+			std::cout << "Автор с таким id отсутствует." << std::endl;
+		}
+	}
 
 	return true;
 }
@@ -148,11 +201,37 @@ bool Menu::addFavoriteAuthor()
 bool Menu::addFavoriteAlbum()
 {
 	std::cout << "Введите id альбома: ";
+	const MyVector <Album>& albums = m_database->getAlbums();
+	int size = albums.size();
 
+	if (size == 0)
+	{
+		std::cout << "Список альбомов пуст.";
+		return false;
+	}
+
+	bool flag = false;
 	int id;
-	inputInt(id);
 
-	m_database->addFavoriteAlbum(m_user_id, id);
+	while (flag == false)
+	{
+		std::cout << "Введите id:";
+		inputInt(id);
+
+		for (int i = 0; i < size; ++i)
+		{
+			if (albums[i].m_id == id)
+			{
+				m_database->addFavoriteAlbum(m_user_id, id);
+				flag = true;
+			}
+		}
+
+		if (flag == false)
+		{
+			std::cout << "Автор с таким id отсутствует." << std::endl;
+		}
+	}
 
 	return true;
 }
@@ -219,7 +298,7 @@ bool Menu::deleteFavoriteSong()
 	std::cout << "Введите id песни: ";
 
 	int id;
-	std::cin >> id;
+	inputInt(id);
 
 	m_database->deleteFavoriteSong(m_user_id, id);
 
@@ -231,7 +310,7 @@ bool Menu::deleteFavoriteAuthor()
 	std::cout << "Введите id автора: ";
 
 	int id;
-	std::cin >> id;
+	inputInt(id);
 
 	m_database->deleteFavoriteAuthor(m_user_id, id);
 
@@ -243,7 +322,7 @@ bool Menu::deleteFavoriteAlbum()
 	std::cout << "Введите id альбома: ";
 
 	int id;
-	std::cin >> id;
+	inputInt(id);
 
 	m_database->deleteFavoriteAlbum(m_user_id, id);
 

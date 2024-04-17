@@ -101,6 +101,19 @@ const T& MyVector<T>::operator[](int number) const
 	return m_vector[number];
 }
 
+template <class T>
+bool MyVector<T>::operator == (const MyVector<T> vector) const
+{
+	for (int i = 0; i < vector.size(); ++i)
+	{
+		if (m_vector[i] != vector[i])
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 template<class T>
 int MyVector<T>::size() const
 {
@@ -112,6 +125,7 @@ MyVector<T>::~MyVector()
 {
 	delete[] m_vector;
 }
+
 
 template <class T>
 std::ostream& operator << (std::ostream& cout, const MyVector<T>& v)
