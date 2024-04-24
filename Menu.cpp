@@ -160,7 +160,6 @@ bool Menu::addFavoriteSong()
 
 bool Menu::addFavoriteAuthor()
 {
-
 	std::cout << "Введите id автора: ";
 	const MyVector <Author>& authors = m_database->getAuthors();
 	int size = authors.size();
@@ -170,10 +169,10 @@ bool Menu::addFavoriteAuthor()
 		std::cout << "Список авторов пуст.";
 		return false;
 	}
-	bool flag = false;
+	bool correct_id = false;
 	int id;
 
-	while (flag == false)
+	while (correct_id == false)
 	{
 		std::cout << "Введите id:";
 		inputInt(id);
@@ -183,11 +182,11 @@ bool Menu::addFavoriteAuthor()
 			if (authors[i].m_id == id)
 			{
 				m_database->addFavoriteAuthor(m_user_id, id);
-				flag = true;
+				correct_id = true;
 			}
 		}
 
-		if (flag == false)
+		if (correct_id == false)
 		{
 			std::cout << "Автор с таким id отсутствует." << std::endl;
 		}
@@ -208,10 +207,10 @@ bool Menu::addFavoriteAlbum()
 		return false;
 	}
 
-	bool flag = false;
+	bool correct_id = false;
 	int id;
 
-	while (flag == false)
+	while (correct_id == false)
 	{
 		std::cout << "Введите id:";
 		inputInt(id);
@@ -221,11 +220,11 @@ bool Menu::addFavoriteAlbum()
 			if (albums[i].m_id == id)
 			{
 				m_database->addFavoriteAlbum(m_user_id, id);
-				flag = true;
+				correct_id = true;
 			}
 		}
 
-		if (flag == false)
+		if (correct_id == false)
 		{
 			std::cout << "Автор с таким id отсутствует." << std::endl;
 		}

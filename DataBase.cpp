@@ -1,5 +1,12 @@
 #include "DataBase.h"
 
+DataBase::DataBase()
+{
+	m_favorite_songs.push_back(MyVector<int>());
+	m_favorite_authors.push_back(MyVector<int>());
+	m_favorite_albums.push_back(MyVector<int>());
+}
+
 int DataBase::check_user(const std::string& name, const std::string& password) const
 {
 	int quantity = m_name.size();

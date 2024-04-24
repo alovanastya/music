@@ -10,8 +10,6 @@ private:
 	MyVector<Album> m_albums;
 	MyVector<Author> m_authors;
 
-	//???? возникает проблема при добавлении любимой песни
-	//nullptr
 	MyVector<MyVector<int>> m_favorite_songs;
 	MyVector<MyVector<int>> m_favorite_authors;
 	MyVector<MyVector<int>> m_favorite_albums;
@@ -25,8 +23,7 @@ private:
 	int m_new_user_id = 0;
 
 public:
-	DataBase()
-	{}
+	DataBase();
 
 	int check_user(const std::string&, const std::string&) const;
 
