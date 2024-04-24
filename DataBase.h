@@ -10,6 +10,8 @@ private:
 	MyVector<Album> m_albums;
 	MyVector<Author> m_authors;
 
+	//???? возникает проблема при добавлении любимой песни
+	//nullptr
 	MyVector<MyVector<int>> m_favorite_songs;
 	MyVector<MyVector<int>> m_favorite_authors;
 	MyVector<MyVector<int>> m_favorite_albums;

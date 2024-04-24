@@ -67,7 +67,7 @@ bool DataBase::operator +(const Author& new_author)
 	return true;
 }
 
-bool DataBase::editSong(int id, const Song &result)
+bool DataBase::editSong(int id, const Song& result)
 {
 	int size_m_songs = m_songs.size();
 
@@ -83,7 +83,7 @@ bool DataBase::editSong(int id, const Song &result)
 	return false;
 }
 
-bool DataBase::editAlbum(int id, const Album &result)
+bool DataBase::editAlbum(int id, const Album& result)
 {
 	int size_m_albums = m_albums.size();
 
@@ -98,7 +98,7 @@ bool DataBase::editAlbum(int id, const Album &result)
 	return false;
 }
 
-bool DataBase::editAuthor(int id, const Author &result)
+bool DataBase::editAuthor(int id, const Author& result)
 {
 	int size_m_authors = m_authors.size();
 

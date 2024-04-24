@@ -123,7 +123,6 @@ void Menu::inputInt(int& result)
 
 bool Menu::addFavoriteSong()
 {
-	std::cout << "Введите id песни: ";
 	const MyVector <Song> &songs = m_database->getSongs();
 	int size = songs.size();
 	
@@ -133,12 +132,12 @@ bool Menu::addFavoriteSong()
 		return false;
 	}
 
-	bool flag = false;
+	bool correct_id = false;
 	int id;
 
-	while (flag == false) 
+	while (correct_id == false)
 	{
-		std::cout << "Введите id:";
+		std::cout << "Введите id песни: ";
 		inputInt(id);
 
 		for (int i = 0; i < size; ++i)
@@ -146,17 +145,16 @@ bool Menu::addFavoriteSong()
 			if (songs[i].m_id == id)
 			{
 				m_database->addFavoriteSong(m_user_id, id);
-				flag = true;
+				correct_id = true;
 			}
 		}
 
-		if (flag == false)
+		if (correct_id == false)
 		{
 			std::cout << "Песня с таким id отсутствует." << std::endl;
 		}
 	}
 	
-
 	return true;
 }
 

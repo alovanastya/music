@@ -14,6 +14,8 @@ struct Album
 	std::string m_name;
 
 	friend std::ostream& operator << (std::ostream& p_out, const Album& album);
+
+	bool operator > (const Album&) const;
 };
 
 std::ostream& operator << (std::ostream& p_out, const Album& album);

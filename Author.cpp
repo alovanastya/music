@@ -19,3 +19,13 @@ std::ostream& operator << (std::ostream& p_out, const Author& author)
 
 	return p_out;
 }
+
+bool Author::operator > (const Author& author) const
+{
+	if (m_name > author.m_name)
+	{
+		return true;
+	}
+
+	return false;
+}

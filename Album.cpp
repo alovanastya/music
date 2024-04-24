@@ -26,3 +26,13 @@ std::ostream& operator << (std::ostream& p_out, const Album& album)
 
 	return p_out;
 }
+
+bool Album::operator > (const Album& album) const 
+{
+	if (m_name > album.m_name)
+	{
+		return true;
+	}
+
+	return false;
+}

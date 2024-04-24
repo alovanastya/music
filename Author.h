@@ -12,6 +12,8 @@ struct Author
 	std::string m_name;
 
 	friend std::ostream& operator << (std::ostream&, const Author&);
+
+	bool operator > (const Author&) const;
 };
 
 std::ostream& operator << (std::ostream&, const Author&);

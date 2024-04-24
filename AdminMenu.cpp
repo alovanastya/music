@@ -150,8 +150,7 @@ bool AdminMenu::addSong()
 
 	while (flag_2 == false)
 	{
-		// TODO: использовать inputInt
-		std::cin >> selection;
+		inputInt(selection);
 
 		if (std::cin.fail()) {
 			std::cin.clear();
@@ -347,9 +346,8 @@ bool AdminMenu::editSong()
 
 	while (f == false)
 	{
-		// TODO: использовать inputInt
 		std::cout << "Введите id песни, которую вы хотите редактировать: ";
-		std::cin >> id;
+		inputInt(id);
 
 		for (int i = 0; i < size_songs; ++i)
 		{
@@ -373,16 +371,16 @@ bool AdminMenu::editSong()
 	std::cout << "| 2 - Альбом   |\n";
 	std::cout << "| 3 - Жанр     |\n";
 	std::cout << "+-------------+\n";
-	// TODO: использовать inputInt
-	std::cin >> choice;
 
-	bool flag = false;
+	inputInt(choice);
+
+	bool success = false;
 	bool flag_for_name = false;
 
 	switch (choice)
 	{
 	case 1:
-		while (flag == false)
+		while (success == false)
 		{
 			std::cout << "Введите новое имя: ";
 			std::cin.ignore();
@@ -400,9 +398,10 @@ bool AdminMenu::editSong()
 			if (flag_for_name == false)
 			{
 				m_database->editSong(id, new_song);
-				flag = true;
+				success = true;
 			}
 		}
+		success = false;
 		break;
 
 	case 2:
@@ -418,7 +417,7 @@ bool AdminMenu::editSong()
 
 		std::cout << "Введите новый id альбома: ";
 
-		while (flag == false)
+		while (success == false)
 		{
 			inputInt(new_song.m_album);
 
@@ -439,7 +438,7 @@ bool AdminMenu::editSong()
 					switch (selection)
 					{
 					case 1:
-						flag = true;
+						success = true;
 						break;
 					case 2:
 						break;
@@ -449,7 +448,7 @@ bool AdminMenu::editSong()
 				}
 			}
 
-			if (flag == false) { std::cout << "Нет альбома с таким id.\n"; }
+			if (success == false) { std::cout << "Нет альбома с таким id.\n"; }
 		}
 		m_database->editSong(id, new_song);
 		break;
@@ -457,17 +456,13 @@ bool AdminMenu::editSong()
 	case 3:
 		std::cout << "\nВыберите новый жанр: \n";
 
-		// TODO: печатать элементы GENRES_NAMES в цикле
-		std::cout << "+-------------------+\n";
-		std::cout << "| 1. Рок            |\n";
-		std::cout << "| 2. Джаз           |\n";
-		std::cout << "| 3. Поп            |\n";
-		std::cout << "| 4. Классическая   |\n";
-		std::cout << "| 5. Электронная    |\n";
-		std::cout << "+-------------------+\n";
+		for (int i = 0; i < (int)Genre::COUNT; ++i)
+		{
+			std::cout << i + 1 << ". " << GENRES_NAMES[i] << std::endl;
+		}
 
 		int selection;
-		while (flag == false)
+		while (success == false)
 		{
 			inputInt(selection);
 
@@ -477,7 +472,7 @@ bool AdminMenu::editSong()
 			}
 
 			new_song.m_genre = (Genre)(selection - 1);
-			flag = true;
+			success = true;
 		}
 
 		m_database->editSong(id, new_song);
@@ -512,7 +507,7 @@ bool AdminMenu::editAuthor()
 
 	while (success == false)
 	{
-		std::cout << "Введите новое имя имя автора: ";
+		std::cout << "Введите новое имя автора: ";
 		std::cin.ignore();
 		getline(std::cin, new_author.m_name);
 
@@ -542,18 +537,16 @@ bool AdminMenu::editAlbum()
 	const MyVector<Album>& albums = m_database->getAlbums();
 	const MyVector<Author>& authors = m_database->getAuthors();
 	int size_authors = authors.size();
-
 	int size_albums = albums.size();
 
 	if (size_albums == 0)
 	{
-		std::cout << "Список альбомов пуст, нчеего редактировать." << std::endl;
+		std::cout << "Список альбомов пуст, нечего редактировать." << std::endl;
 		return false;
 	}
 
-	bool flag = false;
-	bool flag_2 = false;
-
+	bool correct_id = false;
+	bool is_it_changed = false;
 	int id;
 
 	std::cout << "Альбомы: " << std::endl;
@@ -564,12 +557,10 @@ bool AdminMenu::editAlbum()
 	}
 
 	std::cout << std::endl;
-	std::cout << std::endl;
 
-	while (flag == false)
+	while (correct_id == false)
 	{
 		std::cout << "Введите id альбома, который вы хотите редактировать: ";
-
 		inputInt(id);
 
 		for (int i = 0; i < size_albums; ++i)
@@ -577,11 +568,11 @@ bool AdminMenu::editAlbum()
 			if (albums[i].m_id == id)
 			{
 				new_album = albums[i];
-				flag = true;
+				correct_id = true;
 			}
 		}
 
-		if (flag == false)
+		if (correct_id == false)
 		{
 			std::cout << "Альбома с таким id не найдено.\n";
 		}
@@ -595,35 +586,36 @@ bool AdminMenu::editAlbum()
 	std::cout << "+---------------+\n";
 	std::cin >> choice;
 
-	bool f = false;
+	bool same_name = false;
 
 	switch (choice)
 	{
 	case 1:
-		while (flag_2 == false)
+		while (is_it_changed == false)
 		{
 			std::cout << "Введите новое название альбома: ";
 			std::cin.ignore();
 			getline(std::cin, new_album.m_name);
 
-			f = false;
+			same_name = false;
 			for (int i = 0; i < size_albums; ++i)
 			{
 				if (albums[i].m_name == new_album.m_name && new_album.m_authors == albums[i].m_authors)
 				{
 					std::cout << "У этого исполнителя уже есть альбом с таким именем. ";
-					f = true;
+					same_name = true;
 				}
 			}
 
-			if (f == false)
+			if (same_name == false)
 			{
 				m_database->editAlbum(id, new_album);
-				flag_2 = true;
+				is_it_changed = true;
 			}
 		}
 		break;
 	case 2:
+	{
 		std::cout << "Авторы: \n";
 
 		for (int i = 0; i < size_authors; ++i)
@@ -634,22 +626,27 @@ bool AdminMenu::editAlbum()
 		std::cout << std::endl;
 		std::cout << std::endl;
 
-		flag = false;
-		while (flag == false)
-		{
-			// TODO авторов может быть несколько, считывать int в цикле, если пользователь ввел -1, то конец цикла
-			std::cout << "Введите новых авторов альбома: ";
-			int authors_id;
-			std::cin >> authors_id;
+		bool edit_authors = false;
 
-			// В этом векторе должны будут лежать авторы, которых ввел пользователь
+		while (edit_authors == false)
+		{
 			MyVector<int> new_authors;
-			new_authors.push_back(authors_id);
+			int authors_id = 0;
+
+			std::cout << "Введите новых авторов альбома и -1 в конце: ";
+
+			while (authors_id != -1)
+			{
+				std::cin >> authors_id;
+				new_authors.push_back(authors_id);
+			}
 
 			bool all_authors_are_good = true;
+
 			for (int i = 0; i < new_authors.size(); ++i)
 			{
 				bool author_found = false;
+
 				for (int j = 0; j < authors.size(); ++j)
 				{
 					if (authors[j].m_id == new_authors[i])
@@ -660,20 +657,18 @@ bool AdminMenu::editAlbum()
 
 				all_authors_are_good = all_authors_are_good && author_found;
 			}
-	
+
 			if (all_authors_are_good)
 			{
 				new_album.m_authors = new_authors;
-				flag = true;
+				edit_authors = true;
 			}
 		}
-
+	}
 		break;
 	default:
 		break;
 	}
-
-
 	return true;
 }
 
