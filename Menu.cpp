@@ -37,61 +37,49 @@ Result Menu::runSelected(int selected)
 		{
 		case 1:
 			addFavoriteSong();
-			return Result::DONE;
 			break;
 		case 2:
 			deleteFavoriteSong();
-			return Result::DONE;
 			break;
 		case 3:
 			printFavoriteSongs();
-			return Result::DONE;
 			break;
 		case 4:
 			addFavoriteAuthor();
-			return Result::DONE;
 			break;
 		case 5:
 			deleteFavoriteAuthor();
-			return Result::DONE;
 			break;
 		case 6:
 			printFavoriteAuthors();
-			return Result::DONE;
 			break;
 		case 7:
 			addFavoriteAlbum();
-			return Result::DONE;
 			break;
 		case 8:
 			deleteFavoriteAlbum();
-			return Result::DONE;
 			break;
 		case 9:
 			printFavoriteAlbums();
-			return Result::DONE;
 			break;
 		case 10:
 			printSongs();
-			return Result::DONE;
 			break;
 		case 11:
 			sortSongsByName();
-			return Result::DONE;
 			break;
 		case 12:
 			sortAlbumsByName();
-			return Result::DONE;
 			break;
 		case 13:
 			sortAuthorsByName();
-			return Result::DONE;
 			break;
 		default:
 			break;
 		}
 
-		system("pause");
+		getchar();
+		return Result::DONE;
 	}
 
 	else if (selected > 13)
@@ -273,8 +261,7 @@ bool Menu::printFavoriteSongs()
 	if (size == 0)
 	{
 		std::cout << "Список пуст." << std::endl;
-		system("pause");
-		return false;
+		return true;
 	}
 
 	for (int i = 0; i < size; ++i)
@@ -282,7 +269,7 @@ bool Menu::printFavoriteSongs()
 		m_database->getSong(tmp_vec->operator[](i), tmp_song);
 		std::cout << (*tmp_song);
 	}
-	system("pause");
+
 	return true;
 }
 
@@ -302,8 +289,7 @@ bool Menu::printFavoriteAuthors()
 	if (size == 0)
 	{
 		std::cout << "Список пуст." << std::endl;
-		system("pause");
-		return false;
+		return true;
 	}
 
 	for (int i = 0; i < size; ++i)
@@ -311,7 +297,7 @@ bool Menu::printFavoriteAuthors()
 		m_database->getAuthor(tmp_vec->operator[](i), tmp_author);
 		std::cout << (*tmp_author);
 	}
-	system("pause");
+
 	return true;
 }
 
@@ -329,8 +315,7 @@ bool Menu::printFavoriteAlbums()
 	if (size == 0)
 	{
 		std::cout << "Список пуст." << std::endl;
-		system("pause");
-		return false;
+		return true;
 	}
 
 	const Album* tmp_album;
@@ -339,7 +324,7 @@ bool Menu::printFavoriteAlbums()
 		m_database->getAlbum(tmp_vec->operator[](i), tmp_album);
 		std::cout << (*tmp_album);
 	}
-	system("pause");
+
 	return true;
 }
 
@@ -352,7 +337,6 @@ bool Menu::deleteFavoriteSong()
 	if (favorite_songs_size == 0)
 	{
 		std::cout << "Список любимых песен пуст." << std::endl;
-		system("pause");
 		return false;
 	}
 
@@ -375,7 +359,6 @@ bool Menu::deleteFavoriteAuthor()
 	if (favorite_authors_size == 0)
 	{
 		std::cout << "Список любимых авторов пуст." << std::endl;
-		system("pause");
 		return false;
 	}
 
@@ -398,7 +381,6 @@ bool Menu::deleteFavoriteAlbum()
 	if (favorite_albums_size == 0)
 	{
 		std::cout << "Список любимых альбомов пуст." << std::endl;
-		system("pause");
 		return false;
 	}
 
@@ -426,8 +408,6 @@ void Menu::printSongs()
 	{
 		std::cout << tmp_vector[i] << "\n";
 	}
-
-	system("pause");
 }
 
 void Menu::sortSongsByName()
@@ -454,8 +434,6 @@ void Menu::sortSongsByName()
 	{
 		std::cout << "Список песен пуст." << '\n';
 	}
-
-	system("pause");
 }
 
 void Menu::sortAlbumsByName()
@@ -482,8 +460,6 @@ void Menu::sortAlbumsByName()
 	{
 		std::cout << "Список альбомов пуст." << '\n';
 	}
-
-	system("pause");
 }
 
 void Menu::sortAuthorsByName()
@@ -510,8 +486,6 @@ void Menu::sortAuthorsByName()
 	{
 		std::cout << "Список авторов пуст." << '\n';
 	}
-
-	system("pause");
 }
 
 Menu::~Menu()

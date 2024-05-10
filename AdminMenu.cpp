@@ -54,10 +54,9 @@ Result AdminMenu::runSelected(int selected)
 			break;
 		}
 
-		system("pause");
-
 		if (ok)
 		{
+			getchar();
 			return Result::DONE;
 		}
 
@@ -65,7 +64,7 @@ Result AdminMenu::runSelected(int selected)
 	}
 
 	std::cout << "Неверная команда!" << std::endl;
-	system("pause");
+	getchar();
 	return Result::NOT_SUPPORTED;
 }
 
@@ -174,127 +173,127 @@ bool AdminMenu::addSong()
 
 void AdminMenu::enterAuthors(Album& new_album, int authors_size, bool& success, const MyVector<Author>& authors)
 {
-	std::cout << "\nВведите id автора или авторов альбома: ";
-	int authors_id;
-	inputInt(authors_id);
+	//std::cout << "\nВведите id автора или авторов альбома: ";
+	//int authors_id;
+	//inputInt(authors_id);
 
-	for (int i = 0; i < authors_size; ++i)
-	{
-		if (authors[i].m_id == authors_id)
-		{
-			std::cout << "Автор с таким id: " << authors[i].m_name << std::endl;
-			std::cout << "Подтвердите выбор:" << std::endl;
-			std::cout << "1 - Да." << std::endl;
-			std::cout << "2 - Нет." << std::endl;
-
-			int selection = 0;
-			inputInt(selection);
-
-			switch (selection)
-			{
-			case 1:
-				new_album.m_authors.push_back(authors_id);
-				success = true;
-				break;
-			case 2:
-				break;
-			default:
-				break;
-			}
-		}
-	}
-
-	if (success == false)
-	{
-		std::cout << "Автора с таким id нет.\nХотите добавить нового автора?\n\n";
-		std::cout << "1. Да\n";
-		std::cout << "2. Нет\n";
-
-		int choice;
-
-		inputInt(choice);
-
-		switch (choice)
-		{
-		case 1:
-			addAuthor();
-			new_album.m_authors.push_back(authors.back().m_id);
-			success = true;
-			break;
-		case 2:
-			std::cout << "Тогда попробуйте ввести id снова.\n";
-			success = false;
-			break;
-		default:
-			break;
-		}
-	}
-
-	
-	//MyVector<int> new_authors;
-	//int authors_id = 0;
-	//bool enter_authors = false;
-	//
-	//while (enter_authors == false)
+	//for (int i = 0; i < authors_size; ++i)
 	//{
-	//	std::cout << "Введите авторов альбома и -1 в конце: ";
-
-	//	while (authors_id != -1)
+	//	if (authors[i].m_id == authors_id)
 	//	{
-	//		std::cin >> authors_id;
-	//		new_authors.push_back(authors_id);
-	//	}
+	//		std::cout << "Автор с таким id: " << authors[i].m_name << std::endl;
+	//		std::cout << "Подтвердите выбор:" << std::endl;
+	//		std::cout << "1 - Да." << std::endl;
+	//		std::cout << "2 - Нет." << std::endl;
 
-	//	bool all_authors_are_good = true;
-	//	
-	//	for (int i = 0; i < new_authors.size() - 1; ++i)
-	//	{
-	//		bool author_found = false;
+	//		int selection = 0;
+	//		inputInt(selection);
 
-	//		for (int j = 0; j < authors.size() - 1; ++j)
-	//		{
-	//			if (authors[j].m_id == new_authors[i])
-	//			{
-	//				author_found = true;
-	//			}
-	//		}
-
-	//		all_authors_are_good = all_authors_are_good && author_found;
-	//	}
-
-	//	if (all_authors_are_good)
-	//	{
-	//		new_album.m_authors = new_authors;
-	//		enter_authors = true;
-	//		success = true;
-	//	}
-
-	//	else
-	//	{
-	//		std::cout << "Автора с таким id нет.\nХотите добавить нового автора?\n\n";
-	//		std::cout << "1. Да\n";
-	//		std::cout << "2. Нет\n";
-
-	//		int choice;
-
-	//		inputInt(choice);
-
-	//		switch (choice)
+	//		switch (selection)
 	//		{
 	//		case 1:
-	//			addAuthor();
-	//			new_album.m_authors.push_back(authors.back().m_id);
-	//			enter_authors = true;
+	//			new_album.m_authors.push_back(authors_id);
 	//			success = true;
 	//			break;
 	//		case 2:
-	//			std::cout << "Тогда попробуйте ввести id снова.\n";
 	//			break;
 	//		default:
 	//			break;
 	//		}
 	//	}
 	//}
+
+	//if (success == false)
+	//{
+	//	std::cout << "Автора с таким id нет.\nХотите добавить нового автора?\n\n";
+	//	std::cout << "1. Да\n";
+	//	std::cout << "2. Нет\n";
+
+	//	int choice;
+
+	//	inputInt(choice);
+
+	//	switch (choice)
+	//	{
+	//	case 1:
+	//		addAuthor();
+	//		new_album.m_authors.push_back(authors.back().m_id);
+	//		success = true;
+	//		break;
+	//	case 2:
+	//		std::cout << "Тогда попробуйте ввести id снова.\n";
+	//		success = false;
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//}
+
+	
+	MyVector<int> new_authors;
+	int authors_id = 0;
+	bool enter_authors = false;
+	
+	while (enter_authors == false)
+	{
+		std::cout << "Введите авторов альбома и -1 в конце: ";
+
+		while (authors_id != -1)
+		{
+			std::cin >> authors_id;
+			new_authors.push_back(authors_id);
+		}
+
+		bool all_authors_are_good = true;
+		
+		for (int i = 0; i < new_authors.size() - 1; ++i)
+		{
+			bool author_found = false;
+
+			for (int j = 0; j < authors.size() - 1; ++j)
+			{
+				if (authors[j].m_id == new_authors[i])
+				{
+					author_found = true;
+				}
+			}
+
+			all_authors_are_good = all_authors_are_good && author_found;
+		}
+
+		if (all_authors_are_good)
+		{
+			new_album.m_authors = new_authors;
+			enter_authors = true;
+			success = true;
+		}
+
+		else
+		{
+			std::cout << "Автора с таким id нет.\nХотите добавить нового автора?\n\n";
+			std::cout << "1. Да\n";
+			std::cout << "2. Нет\n";
+
+			int choice;
+
+			inputInt(choice);
+
+			switch (choice)
+			{
+			case 1:
+				addAuthor();
+				new_album.m_authors.push_back(authors.back().m_id);
+				enter_authors = true;
+				success = true;
+				break;
+			case 2:
+				std::cout << "Тогда попробуйте ввести id снова.\n";
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }
 
 bool AdminMenu::addAlbum()
@@ -339,7 +338,7 @@ bool AdminMenu::addAlbum()
 	}
 
 	m_database->addAlbum(new_album);
-	return true; // Дважды вызывается деструтор 
+	return true;
 }
 
 bool AdminMenu::addAuthor()

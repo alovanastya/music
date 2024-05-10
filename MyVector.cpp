@@ -18,7 +18,18 @@ MyVector<T>::MyVector(T value, int size)
 }
 
 template <class T>
-void MyVector<T>::push_back(T data)
+MyVector<T>::MyVector(const MyVector& other) : m_capacity(other.m_capacity), m_size(other.m_capacity)
+{
+	m_vector = new T[m_capacity];
+
+	for (int i = 0; i < m_size; ++i)
+	{
+		m_vector[i] = other.m_vector[i];
+	}
+}
+
+template <class T>
+void MyVector<T>::push_back(const T& data)
 {
 	if (m_capacity == 0)
 	{
@@ -118,6 +129,23 @@ bool MyVector<T>::operator == (const MyVector<T> vector) const
 		}
 	}
 	return true;
+}
+
+template <class T>
+MyVector<T> MyVector<T>::operator = (const MyVector<T>& other)
+{
+	m_capacity = other.m_capacity;
+	m_size = other.m_size;
+
+	delete[]m_vector;
+	m_vector = new T[m_capacity];
+
+	for (int i = 0; i < m_size; ++i)
+	{
+		m_vector[i] = other.m_vector[i];
+	}
+
+	return *this;
 }
 
 template<class T>

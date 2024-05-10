@@ -9,13 +9,14 @@ private:
 	int m_capacity = 0;
 	int m_size = 0;
 
-
 public:
 	MyVector();
 
 	MyVector(T value, int size);
 
-	void push_back(T);
+	MyVector(const MyVector& other);
+
+	void push_back(const T&);
 
 	T& front();
 
@@ -32,6 +33,8 @@ public:
 	const T& operator[](int) const;
 
 	bool operator == (const MyVector<T>) const;
+
+	MyVector operator = (const MyVector<T>&);
 
 	int size() const;
 

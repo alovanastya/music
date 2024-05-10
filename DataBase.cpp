@@ -172,7 +172,6 @@ bool DataBase::addFavoriteSong(int user_id, int song_id)
 	{
 		std::cout << "Ошибка!!\n";
 		std::cout << "Нет внесенных песен." << std::endl;
-		system("pause");
 		return false;
 	}
 
@@ -202,7 +201,6 @@ bool DataBase::addFavoriteAuthor(int user_id, int author_id)
 	{
 		std::cout << "Ошибка!!\n";
 		std::cout << "Нет внесенных песен." << std::endl;
-		system("pause");
 		return false;
 	}
 
@@ -232,8 +230,6 @@ bool DataBase::addFavoriteAlbum(int user_id, int album_id)
 	{
 		std::cout << "Ошибка!!\n";
 		std::cout << "Нет внесенных песен." << std::endl;
-		system("pause");
-
 		return false;
 	}
 
@@ -264,7 +260,6 @@ bool DataBase::getFavoriteSongs(int user_id, const MyVector<int>*& result) const
 	{
 		std::cout << "Ошибка!!\n";
 		std::cout << "Список любимых песен пуст." << std::endl;
-		system("pause");
 		return false;
 	}
 
@@ -283,7 +278,6 @@ bool DataBase::getFavoriteAuthors(int user_id, const MyVector<int>*& result) con
 	{
 		std::cout << "Ошибка!!\n";
 		std::cout << "Список любимых авторов пуст." << std::endl;
-		system("pause");
 		return false;
 	}
 
@@ -302,7 +296,6 @@ bool DataBase::getFavoriteAlbums(int user_id, const MyVector<int>*& result) cons
 	{
 		std::cout << "Ошибка!!\n";
 		std::cout << "Список любимых альбомов пуст." << std::endl;
-		system("pause");
 		return false;
 	}
 
@@ -317,13 +310,10 @@ bool DataBase::getFavoriteAlbums(int user_id, const MyVector<int>*& result) cons
 
 bool DataBase::deleteFavoriteSong(int user_id, int song_id)
 {
-	bool correct_id = false;
-
 	if (m_favorite_songs.size() == 0)
 	{
 		std::cout << "Ошибка!!\n";
 		std::cout << "Список любимых песен пуст." << std::endl;
-		system("pause");
 		return false;
 	}
 
@@ -332,15 +322,11 @@ bool DataBase::deleteFavoriteSong(int user_id, int song_id)
 		if (m_favorite_songs[user_id][j] == song_id)
 		{
 			m_favorite_songs.deleteElement(j);
-			correct_id = true;
 			return true;
 		}
 	}
 
-	if (correct_id == false)
-	{
-		std::cout << "Песни с таким id нет." << std::endl;
-	}
+	std::cout << "Песни с таким id нет." << std::endl;
 
 	return false;
 }
@@ -351,7 +337,6 @@ bool DataBase::deleteFavoriteAuthor(int user_id, int author_id)
 	{
 		std::cout << "Ошибка!!\n";
 		std::cout << "Список любимых авторов пуст." << std::endl;
-		system("pause");
 		return false;
 	}
 
@@ -374,7 +359,6 @@ bool DataBase::deleteFavoriteAlbum(int user_id, int album_id)
 	{
 		std::cout << "Ошибка!!\n";
 		std::cout << "Список любимых альбомов пуст." << std::endl;
-		system("pause");
 		return false;
 	}
 

@@ -10,17 +10,26 @@ public:
 
 	Result runSelected(int) override;
 
-	void enterAlbum(Song&, bool&);
-
-	void chooseGenre(Song&, bool&);
-
 	bool addSong();
-
-	void enterAuthors(Album&, int, bool&, const MyVector<Author>&);
 
 	bool addAlbum();
 
 	bool addAuthor();
+
+	bool editSong();
+
+	bool editAlbum();
+
+	bool editAuthor();
+
+	~AdminMenu() override;
+
+private:
+	void enterAlbum(Song&, bool&);
+
+	void chooseGenre(Song&, bool&);
+
+	void enterAuthors(Album&, int, bool&, const MyVector<Author>&);
 
 	void editSongsAlbum(Song&, int&, bool&, const MyVector<Album>&, int&);
 
@@ -28,17 +37,9 @@ public:
 
 	void enterId(Song&, int&, const MyVector<Song>&, int&);
 
-	bool editSong();
-		 
 	void editAlbumsName(Album&, int&, const MyVector<Album>&, int&);
 
 	void editAlbumsAuthors(Album&, int&, const MyVector<Author>&, int&);
 
 	void enterAlbumsId(Album&, int&, const MyVector<Album>&, int&);
-
-	bool editAlbum();
-		 
-	bool editAuthor();
-
-	~AdminMenu() override;
 };
