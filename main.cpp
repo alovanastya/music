@@ -70,6 +70,8 @@ int main()
 			}
 		}
 
+		std::cin.ignore();
+
 		Result result = menu->runSelected(selection);
 		switch (result)
 		{

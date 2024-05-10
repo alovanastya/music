@@ -124,12 +124,21 @@ void Menu::inputInt(int& result)
 bool Menu::addFavoriteSong()
 {
 	const MyVector <Song> &songs = m_database->getSongs();
-	int size = songs.size();
+	int size_songs = songs.size();
 	
-	if (size == 0)
+	if (size_songs == 0)
 	{
 		std::cout << "Песен нет.";
 		return false;
+	}
+
+	std::cout << "+----------------------------+\n";
+	std::cout << "|   Список доступных песен   |\n";
+	std::cout << "+----------------------------+\n";
+
+	for (int i = 0; i < size_songs; ++i)
+	{
+		std::cout << songs[i] << std::endl;
 	}
 
 	bool correct_id = false;
@@ -140,7 +149,7 @@ bool Menu::addFavoriteSong()
 		std::cout << "Введите id песни: ";
 		inputInt(id);
 
-		for (int i = 0; i < size; ++i)
+		for (int i = 0; i < size_songs; ++i)
 		{
 			if (songs[i].m_id == id)
 			{
@@ -160,24 +169,32 @@ bool Menu::addFavoriteSong()
 
 bool Menu::addFavoriteAuthor()
 {
-	std::cout << "Введите id автора: ";
 	const MyVector <Author>& authors = m_database->getAuthors();
-	int size = authors.size();
+	int authors_size = authors.size();
 	
-	if (size == 0)
+	if (authors_size == 0)
 	{
 		std::cout << "Список авторов пуст.";
 		return false;
 	}
+	std::cout << "+----------------------------+\n";
+	std::cout << "|  Список доступных авторов  |\n";
+	std::cout << "+----------------------------+\n";
+
+	for (int i = 0; i < authors_size; ++i)
+	{
+		std::cout << authors[i] << std::endl;
+	}
+
 	bool correct_id = false;
 	int id;
 
 	while (correct_id == false)
 	{
-		std::cout << "Введите id:";
+		std::cout << "Введите id автора:";
 		inputInt(id);
 
-		for (int i = 0; i < size; ++i)
+		for (int i = 0; i < authors_size; ++i)
 		{
 			if (authors[i].m_id == id)
 			{
@@ -197,36 +214,44 @@ bool Menu::addFavoriteAuthor()
 
 bool Menu::addFavoriteAlbum()
 {
-	std::cout << "Введите id альбома: ";
 	const MyVector <Album>& albums = m_database->getAlbums();
-	int size = albums.size();
+	int albums_size = albums.size();
 
-	if (size == 0)
+	if (albums_size == 0)
 	{
 		std::cout << "Список альбомов пуст.";
 		return false;
 	}
 
-	bool correct_id = false;
-	int id;
+	std::cout << "+-----------------------------+\n";
+	std::cout << "|  Список доступных альбомов  |\n";
+	std::cout << "+-----------------------------+\n";
 
-	while (correct_id == false)
+	for (int i = 0; i < albums_size; ++i)
 	{
-		std::cout << "Введите id:";
-		inputInt(id);
-
-		for (int i = 0; i < size; ++i)
-		{
-			if (albums[i].m_id == id)
-			{
-				m_database->addFavoriteAlbum(m_user_id, id);
-				correct_id = true;
-			}
-		}
-
-		if (correct_id == false)
-		{
-			std::cout << "Автор с таким id отсутствует." << std::endl;
+		std::cout << albums[i] << std::endl;										 
+	}																				 
+																					 
+	bool correct_id = false;														 
+	int id;																			 
+																					 
+	while (correct_id == false)														 
+	{																				 
+		std::cout << "Введите id альбома:";											 
+		inputInt(id);																 
+																					 
+		for (int i = 0; i < albums_size; ++i)										 
+		{																			 
+			if (albums[i].m_id == id)												 
+			{																		 
+				m_database->addFavoriteAlbum(m_user_id, id);						 
+				correct_id = true;													 
+			}																		 
+		}																			 
+																					 
+		if (correct_id == false)													 
+		{																			 
+			std::cout << "Автор с таким id отсутствует." << std::endl;				 
 		}
 	}
 
@@ -243,15 +268,23 @@ bool Menu::printFavoriteSongs()
 		return false;
 	}
 
-	for (int i = 0; i < tmp_vec->size(); ++i)
+	int size = tmp_vec->size();
+
+	if (size == 0)
+	{
+		std::cout << "Список пуст." << std::endl;
+		system("pause");
+		return false;
+	}
+
+	for (int i = 0; i < size; ++i)
 	{
 		m_database->getSong(tmp_vec->operator[](i), tmp_song);
 		std::cout << (*tmp_song);
 	}
-
+	system("pause");
 	return true;
 }
-
 
 bool Menu::printFavoriteAuthors()
 {
@@ -264,11 +297,21 @@ bool Menu::printFavoriteAuthors()
 
 	const Author* tmp_author;
 
-	for (int i = 0; i < tmp_vec->size(); ++i)
+	int size = tmp_vec->size();
+
+	if (size == 0)
+	{
+		std::cout << "Список пуст." << std::endl;
+		system("pause");
+		return false;
+	}
+
+	for (int i = 0; i < size; ++i)
 	{
 		m_database->getAuthor(tmp_vec->operator[](i), tmp_author);
 		std::cout << (*tmp_author);
 	}
+	system("pause");
 	return true;
 }
 
@@ -281,17 +324,38 @@ bool Menu::printFavoriteAlbums()
 		return false;
 	}
 
+	int size = tmp_vec->size();
+
+	if (size == 0)
+	{
+		std::cout << "Список пуст." << std::endl;
+		system("pause");
+		return false;
+	}
+
 	const Album* tmp_album;
-	for (int i = 0; i < tmp_vec->size(); ++i)
+	for (int i = 0; i < size; ++i)
 	{
 		m_database->getAlbum(tmp_vec->operator[](i), tmp_album);
 		std::cout << (*tmp_album);
 	}
+	system("pause");
 	return true;
 }
 
 bool Menu::deleteFavoriteSong()
 {
+	const MyVector<int>* favorite_songs;
+	m_database->getFavoriteSongs(m_user_id, favorite_songs);
+	int favorite_songs_size = (*favorite_songs).size();
+
+	if (favorite_songs_size == 0)
+	{
+		std::cout << "Список любимых песен пуст." << std::endl;
+		system("pause");
+		return false;
+	}
+
 	std::cout << "Введите id песни: ";
 
 	int id;
@@ -304,6 +368,17 @@ bool Menu::deleteFavoriteSong()
 
 bool Menu::deleteFavoriteAuthor()
 {
+	const MyVector<int>* favorite_authors;
+	m_database->getFavoriteAuthors(m_user_id, favorite_authors);
+	int favorite_authors_size = (*favorite_authors).size();
+
+	if (favorite_authors_size == 0)
+	{
+		std::cout << "Список любимых авторов пуст." << std::endl;
+		system("pause");
+		return false;
+	}
+
 	std::cout << "Введите id автора: ";
 
 	int id;
@@ -316,6 +391,17 @@ bool Menu::deleteFavoriteAuthor()
 
 bool Menu::deleteFavoriteAlbum()
 {
+	const MyVector<int>* favorite_albums;
+	m_database->getFavoriteAlbums(m_user_id, favorite_albums);
+	int favorite_albums_size = (*favorite_albums).size();
+
+	if (favorite_albums_size == 0)
+	{
+		std::cout << "Список любимых альбомов пуст." << std::endl;
+		system("pause");
+		return false;
+	}
+
 	std::cout << "Введите id альбома: ";
 
 	int id;
@@ -329,6 +415,12 @@ bool Menu::deleteFavoriteAlbum()
 void Menu::printSongs()
 {
 	const MyVector<Song>& tmp_vector = m_database->getSongs();
+
+	if (tmp_vector.size() == 0)
+	{
+		std::cout << "Список песен пуст." << std::endl;
+		return;
+	}
 
 	for (int i = 0; i < tmp_vector.size(); ++i)
 	{

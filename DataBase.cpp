@@ -317,6 +317,8 @@ bool DataBase::getFavoriteAlbums(int user_id, const MyVector<int>*& result) cons
 
 bool DataBase::deleteFavoriteSong(int user_id, int song_id)
 {
+	bool correct_id = false;
+
 	if (m_favorite_songs.size() == 0)
 	{
 		std::cout << "Ошибка!!\n";
@@ -330,9 +332,14 @@ bool DataBase::deleteFavoriteSong(int user_id, int song_id)
 		if (m_favorite_songs[user_id][j] == song_id)
 		{
 			m_favorite_songs.deleteElement(j);
-
+			correct_id = true;
 			return true;
 		}
+	}
+
+	if (correct_id == false)
+	{
+		std::cout << "Песни с таким id нет." << std::endl;
 	}
 
 	return false;
@@ -465,6 +472,7 @@ MyVector<int> DataBase::sortAuthorsByName() const
 			if ((m_authors[j].m_name < min) && (need_ignore[j] == false))
 			{
 				min = m_authors[j].m_name;
+				min_index = j;
 			}
 		}
 
@@ -491,6 +499,7 @@ MyVector<int> DataBase::sortAlbumsByName() const
 			if ((m_albums[j].m_name < min) && (need_ignore[j] == false))
 			{
 				min = m_albums[j].m_name;
+				min_index = j;
 			}
 		}
 

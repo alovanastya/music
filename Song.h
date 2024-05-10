@@ -14,11 +14,17 @@ enum class Genre
 };
 
 static const std::vector<std::string> GENRES_NAMES = {
-	"ROCK",
-	"JAZZ",
-	"POP",
-	"CLASSICAL",
-	"ELECTRONIC"
+	//"ROCK", 
+	//"JAZZ",
+	//"POP",
+	//"CLASSICAL",
+	//"ELECTRONIC"
+
+	"Рок",
+	"Джаз",
+	"Поп",
+    "Классическая",
+	"Электронная"
 };
 
 struct Song

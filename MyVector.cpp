@@ -65,6 +65,12 @@ T& MyVector<T>::back()
 }
 
 template<class T>
+const T& MyVector<T>::back() const
+{
+	return m_vector[m_size - 1];
+}
+
+template<class T>
 void MyVector<T>::clear()
 {
 	m_size = 0;

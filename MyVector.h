@@ -21,6 +21,8 @@ public:
 
 	T& back();
 
+	const T& back() const;
+
 	void clear();
 
 	void deleteElement(int);
