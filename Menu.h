@@ -10,6 +10,10 @@ public:
 
 	void inputInt(int&);
 
+	bool saveUserToTextFile();
+
+	bool addUser();
+
 	bool addFavoriteSong();
 
 	bool addFavoriteAuthor();
@@ -28,7 +32,11 @@ public:
 
 	bool deleteFavoriteAlbum();
 
-	void printSongs();
+	void printSongs() const;
+
+	void printAlbums() const;
+
+	void printAuthors() const;
 
 	void sortSongsByName();
 

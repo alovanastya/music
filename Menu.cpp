@@ -1,27 +1,35 @@
 ﻿#include "Menu.h"
 #include <iostream>
-
+//#include <fstream>
 
 Menu::Menu(DataBase* database, int user_id) : IMenu(database, user_id)
 {}
 
 void Menu::printMenu() const
 {
-	std::cout << " 0 - Выход                        " << std::endl;
-	std::cout << " 1 - Добавить любимую песню       " << std::endl;
-	std::cout << " 2 - Удалить любимую песню        " << std::endl;
-	std::cout << " 3 - Напечатать любимые песни     " << std::endl;
-	std::cout << " 4 - Добавить любимого автора     " << std::endl;
-	std::cout << " 5 - Удалить любимого автора      " << std::endl;
-	std::cout << " 6 - Напечатать любимых авторов   " << std::endl;
-	std::cout << " 7 - Добавить любимый альбом      " << std::endl;
-	std::cout << " 8 - Удалить любимый альбом       " << std::endl;
-	std::cout << " 9 - Напечатать любимые альбомы   " << std::endl;
-	std::cout << " 10 - Напечатать все песни        " << std::endl;
-	std::cout << " 11 - Сортировать песни по имени  " << std::endl;
-	std::cout << " 12 - Сортировать альбомы по имени " << std::endl;
-	std::cout << " 13 - Сортировать авторов по имени " << std::endl;
-
+	std::cout << " 0 - Выход                         " << std::endl;
+	std::cout << " 1 - Добавить пользователя         " << std::endl;
+	std::cout << std::endl;							 
+	std::cout << " 2 - Добавить любимую песню        " << std::endl;
+	std::cout << " 3 - Удалить любимую песню         " << std::endl;
+	std::cout << " 4 - Напечатать любимые песни      " << std::endl;
+	std::cout << std::endl;							 
+	std::cout << " 5 - Добавить любимого автора      " << std::endl;
+	std::cout << " 6 - Удалить любимого автора       " << std::endl;
+	std::cout << " 7 - Напечатать любимых авторов    " << std::endl;
+	std::cout << std::endl;							 
+	std::cout << " 8 - Добавить любимый альбом       " << std::endl;
+	std::cout << " 9 - Удалить любимый альбом        " << std::endl;
+	std::cout << " 10 - Напечатать любимые альбомы    " << std::endl;
+	std::cout << std::endl;							 
+	std::cout << " 11 - Напечатать все песни         " << std::endl;
+	std::cout << " 12 - Напечатать все альбомы       " << std::endl;
+	std::cout << " 13 - Напечатать всех авторов      " << std::endl;
+	std::cout << std::endl;
+	std::cout << " 14 - Сортировать песни по имени   " << std::endl;
+	std::cout << " 15 - Сортировать альбомы по имени " << std::endl;
+	std::cout << " 16 - Сортировать авторов по имени " << std::endl;
+	std::cout << std::endl; 
 }
 
 Result Menu::runSelected(int selected)
@@ -31,83 +39,172 @@ Result Menu::runSelected(int selected)
 		return Result::EXIT;
 	}
 
-	else if (selected > 0 && selected <= 13)
+	else if (selected > 0 && selected <= 16)
 	{
 		switch (selected)
 		{
 		case 1:
-			addFavoriteSong();
+			addUser();
 			break;
 		case 2:
-			deleteFavoriteSong();
+			addFavoriteSong();
 			break;
 		case 3:
-			printFavoriteSongs();
+			deleteFavoriteSong();
 			break;
 		case 4:
-			addFavoriteAuthor();
+			printFavoriteSongs();
 			break;
 		case 5:
-			deleteFavoriteAuthor();
+			addFavoriteAuthor();
 			break;
 		case 6:
-			printFavoriteAuthors();
+			deleteFavoriteAuthor();
 			break;
 		case 7:
-			addFavoriteAlbum();
+			printFavoriteAuthors();
 			break;
 		case 8:
-			deleteFavoriteAlbum();
+			addFavoriteAlbum();
 			break;
 		case 9:
-			printFavoriteAlbums();
+			deleteFavoriteAlbum();
 			break;
 		case 10:
-			printSongs();
+			printFavoriteAlbums();
 			break;
 		case 11:
-			sortSongsByName();
+			printSongs();
 			break;
 		case 12:
-			sortAlbumsByName();
+			printAlbums();
 			break;
 		case 13:
+			printAuthors();
+			break;
+		case 14:
+			sortSongsByName();
+			break;
+		case 15:
+			sortAlbumsByName();
+			break;
+		case 16:
 			sortAuthorsByName();
 			break;
 		default:
 			break;
 		}
-
 		getchar();
 		return Result::DONE;
 	}
 
-	else if (selected > 13)
+	else if (selected > 16)
 	{
 		return Result::NOT_SUPPORTED;
 	}
 
+	std::cout << "Ошибка!\n";
+	getchar();
 	return Result::WITH_ERROR;
 }
 
 void Menu::inputInt(int& result)
 {
-	while (true) {
+	bool success = false;
+	bool error = false;
+	std::string string_result;
 
-		std::cin >> result;
+	while (!success) {
 
-		if (std::cin.fail()) {
-			std::cin.clear();
-			std::cin.ignore(INT64_MAX, '\n');
-			std::cout << "Введите корректное число: ";
+		try
+		{
+			std::cin >> string_result;
+			result = stoi(string_result);
 		}
 
-		else {
-			return;
+		catch (std::exception& exception)
+		{
+			error = true;
+			std::cerr << "Пойманное исключение: " << exception.what() << std::endl;
+			std::cerr << "Введите корректное число: ";
 		}
+
+		if (!error)
+		{
+			success = true;
+		}
+
+		error = false;
 	}
 }
 
+//bool Menu::saveUserToTextFile()
+//{
+//	MyVector<std::string>* names;
+//	MyVector<std::string>* passwords;
+//
+//	m_database->getUsers(names, passwords);
+//
+//	int size = names->size();
+//
+//	std::string filename = "users.txt";
+//
+//	std::ofstream file(filename, std::ios::trunc);
+//	if (!file.is_open())
+//	{
+//		std::cout << "Не удалось открыть файл для записи.\n";
+//		return false;
+//	}
+//
+//	for (int i = 0; i < size; i++)
+//	{
+//		file << names[i] << " " << passwords[i];
+//
+//		if (i != size - 1)
+//		{
+//			file << std::endl;
+//		}
+//	}
+//
+//	file.close();
+//
+//	return true;
+//}
+
+bool Menu::addUser()
+{
+	std::string login, password, password_2;
+
+	std::cout << "Введите логин: ";
+	std::cin >> login;
+
+	bool success = false;
+
+	while (!success)
+	{
+		std::cout << "Введите пароль: ";
+		std::cin >> password;
+		std::cout << "Введите пароль еще раз: ";
+		std::cin >> password_2;
+
+		if (password == password_2) 
+		{
+			std::cout << "Верно!\n";
+			success = true;
+		}
+
+		else
+		{
+			std::cout << "Пароли не совпадают. Повторите ввод еще раз.\n";
+		}
+	}
+
+	m_database->addUser(login, password);
+
+	//saveUserToTextFile(); 
+
+	return true;
+}
 
 bool Menu::addFavoriteSong()
 {
@@ -141,7 +238,11 @@ bool Menu::addFavoriteSong()
 		{
 			if (songs[i].m_id == id)
 			{
-				m_database->addFavoriteSong(m_user_id, id);
+				if (m_database->addFavoriteSong(m_user_id, id))
+				{
+					std::cout << "Добавлена любимая песня." << std::endl;
+				}
+
 				correct_id = true;
 			}
 		}
@@ -152,6 +253,7 @@ bool Menu::addFavoriteSong()
 		}
 	}
 	
+	getchar();
 	return true;
 }
 
@@ -186,8 +288,12 @@ bool Menu::addFavoriteAuthor()
 		{
 			if (authors[i].m_id == id)
 			{
-				m_database->addFavoriteAuthor(m_user_id, id);
-				correct_id = true;
+				if (m_database->addFavoriteAuthor(m_user_id, id))
+				{
+					std::cout << "Добавлен любимый автор." << std::endl;
+				}
+
+					correct_id = true;
 			}
 		}
 
@@ -197,6 +303,7 @@ bool Menu::addFavoriteAuthor()
 		}
 	}
 
+	getchar();
 	return true;
 }
 
@@ -212,7 +319,7 @@ bool Menu::addFavoriteAlbum()
 	}
 
 	std::cout << "+-----------------------------+\n";
-	std::cout << "|  Список доступных альбомов  |\n";
+	std::cout << "|   Список любимых альбомов   |\n";
 	std::cout << "+-----------------------------+\n";
 
 	for (int i = 0; i < albums_size; ++i)
@@ -232,17 +339,22 @@ bool Menu::addFavoriteAlbum()
 		{																			 
 			if (albums[i].m_id == id)												 
 			{																		 
-				m_database->addFavoriteAlbum(m_user_id, id);						 
+				if (m_database->addFavoriteAlbum(m_user_id, id))
+				{
+					std::cout << "Добавлен любимый альбом." << std::endl;
+				}
+
 				correct_id = true;													 
 			}																		 
 		}																			 
 																					 
 		if (correct_id == false)													 
 		{																			 
-			std::cout << "Автор с таким id отсутствует." << std::endl;				 
+			std::cout << "Альбом с таким id отсутствует." << std::endl;				 
 		}
 	}
 
+	getchar();
 	return true;
 }
 
@@ -263,6 +375,10 @@ bool Menu::printFavoriteSongs()
 		std::cout << "Список пуст." << std::endl;
 		return true;
 	}
+
+	std::cout << "+----------------------+\n";
+	std::cout << "|     Любимые песни    |\n";
+	std::cout << "+----------------------+\n";
 
 	for (int i = 0; i < size; ++i)
 	{
@@ -292,6 +408,10 @@ bool Menu::printFavoriteAuthors()
 		return true;
 	}
 
+	std::cout << "+----------------------+\n";
+	std::cout << "|    Любимые авторы    |\n";
+	std::cout << "+----------------------+\n";
+
 	for (int i = 0; i < size; ++i)
 	{
 		m_database->getAuthor(tmp_vec->operator[](i), tmp_author);
@@ -318,6 +438,10 @@ bool Menu::printFavoriteAlbums()
 		return true;
 	}
 
+	std::cout << "+------------------------+\n";
+	std::cout << "|     Любимые альбомы    |\n";
+	std::cout << "+------------------------+\n";
+
 	const Album* tmp_album;
 	for (int i = 0; i < size; ++i)
 	{
@@ -331,7 +455,9 @@ bool Menu::printFavoriteAlbums()
 bool Menu::deleteFavoriteSong()
 {
 	const MyVector<int>* favorite_songs;
+
 	m_database->getFavoriteSongs(m_user_id, favorite_songs);
+
 	int favorite_songs_size = (*favorite_songs).size();
 
 	if (favorite_songs_size == 0)
@@ -340,7 +466,9 @@ bool Menu::deleteFavoriteSong()
 		return false;
 	}
 
-	std::cout << "Введите id песни: ";
+	printFavoriteSongs();
+
+	std::cout << "Введите id песни, которую хотите удалить: ";
 
 	int id;
 	inputInt(id);
@@ -353,7 +481,9 @@ bool Menu::deleteFavoriteSong()
 bool Menu::deleteFavoriteAuthor()
 {
 	const MyVector<int>* favorite_authors;
+
 	m_database->getFavoriteAuthors(m_user_id, favorite_authors);
+
 	int favorite_authors_size = (*favorite_authors).size();
 
 	if (favorite_authors_size == 0)
@@ -362,7 +492,9 @@ bool Menu::deleteFavoriteAuthor()
 		return false;
 	}
 
-	std::cout << "Введите id автора: ";
+	printFavoriteAuthors();
+
+	std::cout << "Введите id автора, которого хотите удалить: ";
 
 	int id;
 	inputInt(id);
@@ -375,7 +507,9 @@ bool Menu::deleteFavoriteAuthor()
 bool Menu::deleteFavoriteAlbum()
 {
 	const MyVector<int>* favorite_albums;
+
 	m_database->getFavoriteAlbums(m_user_id, favorite_albums);
+
 	int favorite_albums_size = (*favorite_albums).size();
 
 	if (favorite_albums_size == 0)
@@ -384,7 +518,9 @@ bool Menu::deleteFavoriteAlbum()
 		return false;
 	}
 
-	std::cout << "Введите id альбома: ";
+	printFavoriteAlbums();
+
+	std::cout << "Введите id альбома, который хотите удалить: ";
 
 	int id;
 	inputInt(id);
@@ -394,8 +530,12 @@ bool Menu::deleteFavoriteAlbum()
 	return true;
 }
 
-void Menu::printSongs()
+void Menu::printSongs() const
 {
+	std::cout << "+-----------------+\n";
+	std::cout << "|      Песни      |\n";
+	std::cout << "+-----------------+\n";
+
 	const MyVector<Song>& tmp_vector = m_database->getSongs();
 
 	if (tmp_vector.size() == 0)
@@ -405,6 +545,53 @@ void Menu::printSongs()
 	}
 
 	for (int i = 0; i < tmp_vector.size(); ++i)
+	{
+		std::cout << tmp_vector[i] << "\n";
+	}
+}
+
+void Menu::printAlbums() const
+{
+	std::cout << "+-----------------+\n";
+	std::cout << "|     Альбомы     |\n";
+	std::cout << "+-----------------+\n";
+
+	const MyVector<Album>& tmp_vector = m_database->getAlbums();
+
+	if (tmp_vector.size() == 0)
+	{
+		std::cout << "Список альбомов пуст." << std::endl;
+		return;
+	}
+
+	for (int i = 0; i < tmp_vector.size(); ++i)
+	{
+		std::cout << tmp_vector[i] << "\n";
+	}
+
+	//for (auto& i : tmp_vector)
+	//{
+	//	std::cout << i;
+	//}
+}
+
+void Menu::printAuthors() const
+{
+	std::cout << "+-----------------+\n";
+	std::cout << "|     Авторы      |\n";
+	std::cout << "+-----------------+\n";
+
+	const MyVector<Author>& tmp_vector = m_database->getAuthors();
+
+	if (tmp_vector.size() == 0)
+	{
+		std::cout << "Список авторов пуст." << std::endl;
+		return;
+	}
+
+	int size = tmp_vector.size();
+
+	for (int i = 0; i < size; ++i)
 	{
 		std::cout << tmp_vector[i] << "\n";
 	}

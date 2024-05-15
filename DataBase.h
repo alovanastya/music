@@ -82,5 +82,7 @@ public:
 	MyVector<int> sortAuthorsByName() const;
 
 	MyVector<int> sortAlbumsByName() const;
+
+	//bool getUsers(MyVector<std::string>*&, MyVector<std::string>*&);
 	
 };

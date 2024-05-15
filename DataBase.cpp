@@ -168,14 +168,7 @@ bool DataBase::getAuthor(int id, const Author*& result) const
 
 bool DataBase::addFavoriteSong(int user_id, int song_id)
 {
-	if (m_songs.size() == 0)
-	{
-		std::cout << "Ошибка!!\n";
-		std::cout << "Нет внесенных песен." << std::endl;
-		return false;
-	}
-
-	else if (m_favorite_songs.size() < user_id)
+	if (m_favorite_songs.size() < user_id)
 	{
 		return false;
 	}
@@ -186,6 +179,7 @@ bool DataBase::addFavoriteSong(int user_id, int song_id)
 		{
 			if (m_favorite_songs[user_id][i] == song_id)
 			{
+				std::cout << "Такая песня уже добавлена.\n";
 				return false;
 			}
 		}
@@ -197,7 +191,7 @@ bool DataBase::addFavoriteSong(int user_id, int song_id)
 
 bool DataBase::addFavoriteAuthor(int user_id, int author_id)
 {
-	if (m_songs.size() == 0)
+	if (m_authors.size() == 0)
 	{
 		std::cout << "Ошибка!!\n";
 		std::cout << "Нет внесенных песен." << std::endl;
@@ -215,6 +209,7 @@ bool DataBase::addFavoriteAuthor(int user_id, int author_id)
 		{
 			if (m_favorite_authors[user_id][i] == author_id)
 			{
+				std::cout << "Такой автор уже добавлен.\n";
 				return false;
 			}
 		}
@@ -226,7 +221,7 @@ bool DataBase::addFavoriteAuthor(int user_id, int author_id)
 
 bool DataBase::addFavoriteAlbum(int user_id, int album_id)
 {
-	if (m_songs.size() == 0)
+	if (m_albums.size() == 0)
 	{
 		std::cout << "Ошибка!!\n";
 		std::cout << "Нет внесенных песен." << std::endl;
@@ -244,6 +239,7 @@ bool DataBase::addFavoriteAlbum(int user_id, int album_id)
 		{
 			if (m_favorite_albums[user_id][i] == album_id)
 			{
+				std::cout << "Такой альбом уже добавлен.\n";
 				return false;
 			}
 		}
@@ -310,18 +306,22 @@ bool DataBase::getFavoriteAlbums(int user_id, const MyVector<int>*& result) cons
 
 bool DataBase::deleteFavoriteSong(int user_id, int song_id)
 {
-	if (m_favorite_songs.size() == 0)
+	if (m_favorite_authors.size() == 0)
 	{
 		std::cout << "Ошибка!!\n";
-		std::cout << "Список любимых песен пуст." << std::endl;
+		std::cout << "Список любимых авторов пуст." << std::endl;
 		return false;
 	}
 
-	for (int j = 0; j < m_favorite_songs[user_id].size(); j++)
+	int size = m_favorite_songs[user_id].size();
+
+	for (int j = 0; j < size; j++)
 	{
 		if (m_favorite_songs[user_id][j] == song_id)
 		{
-			m_favorite_songs.deleteElement(j);
+			m_favorite_songs[user_id].deleteElement(j);
+			std::cout << "Песня удалена из любимых.\n";
+			getchar();
 			return true;
 		}
 	}
@@ -340,16 +340,20 @@ bool DataBase::deleteFavoriteAuthor(int user_id, int author_id)
 		return false;
 	}
 
-	for (int j = 0; j < m_favorite_authors[user_id].size(); j++)
+	int size = m_favorite_authors[user_id].size();
+
+	for (int j = 0; j < size; j++)
 	{
 		if (m_favorite_authors[user_id][j] == author_id)
 		{
-			m_favorite_authors.deleteElement(j);
-
+			m_favorite_authors[user_id].deleteElement(j);
+			std::cout << "Автор удален из любимых.\n";
+			getchar();
 			return true;
 		}
 	}
 
+	std::cout << "Нет автора с таким id.\n";
 	return false;
 }
 
@@ -366,12 +370,14 @@ bool DataBase::deleteFavoriteAlbum(int user_id, int album_id)
 	{
 		if (m_favorite_albums[user_id][j] == album_id)
 		{
-			m_favorite_albums.deleteElement(j);
-
+			m_favorite_albums[user_id].deleteElement(j);
+			std::cout << "Альбом удален из любимых.\n";
+			getchar();
 			return true;
 		}
 	}
 
+	std::cout << "Нет альбома с таким id.\n";
 	return false;
 }
 
@@ -493,4 +499,23 @@ MyVector<int> DataBase::sortAlbumsByName() const
 
 	return albums_id;
 }
+
+//bool DataBase::getUsers(MyVector<std::string>*& names, MyVector<std::string>*& passwords)
+//{
+//	MyVector <std::string> names_1;
+//	MyVector <std::string> passwords_1;
+//
+//	int size = m_name.size();
+//
+//	for (int i = 0; i < size; ++i)
+//	{
+//		names_1.push_back(m_name[i]);
+//		passwords_1.push_back(m_password[i]);
+//	}
+//
+//	names = &names_1;
+//	passwords = &passwords_1;
+//
+//	return true;
+//}
 

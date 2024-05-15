@@ -1,7 +1,11 @@
 ﻿#include <string>
 #include <iostream>
-#include <Windows.h>
+#include <windows.h>
 #include "AdminMenu.h"
+
+
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
 
 
 int main()
@@ -52,25 +56,37 @@ int main()
 
 		int selection = 0;
 		std::cout << " \nВведите число: ";
-		bool flag = false;
 
-		while (flag == false)
+		bool success = false;
+		bool error = false;
+
+		std::string string_selection;
+
+		while (!success)
 		{
-			std::cin >> selection;
-
-			if (std::cin.fail()) {
-				std::cin.clear();
-				std::cin.ignore(INT64_MAX, '\n');
-				std::cout << "Пожалуйста, введите корректное число: ";
-			}
-
-			else
+			try
 			{
-				flag = true;
+				std::cin >> string_selection;
+				selection = stoi(string_selection);
 			}
+
+			catch (std::exception& exception)
+			{
+				std::cerr << "Пойманное исключение: " << exception.what() << std::endl;
+				error = true;
+				std::cerr << "Введите корректное число: ";
+			}
+
+			if (!error)
+			{
+				std::cin.ignore();
+				success = true;
+			}
+
+			error = false;
 		}
 
-		std::cin.ignore();
+		//std::cin.ignore();
 
 		Result result = menu->runSelected(selection);
 		switch (result)
@@ -110,6 +126,7 @@ int main()
 
 			if (choice == 1) {
 				std::cout << "До свидания! Хорошего дня";
+				//exit(0);
 				end = true;
 			}
 

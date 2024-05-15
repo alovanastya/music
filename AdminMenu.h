@@ -14,6 +14,8 @@ public:
 
 	bool addAlbum();
 
+	void printAlbums();
+
 	bool addAuthor();
 
 	bool editSong();
@@ -29,7 +31,7 @@ private:
 
 	void chooseGenre(Song&, bool&);
 
-	void enterAuthors(Album&, int, bool&, const MyVector<Author>&);
+	void enterAuthors(Album&, bool&, const MyVector<Author>&);
 
 	void editSongsAlbum(Song&, int&, bool&, const MyVector<Album>&, int&);
 
