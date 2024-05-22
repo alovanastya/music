@@ -2,30 +2,73 @@
 
 std::ostream& operator << (std::ostream& p_out, const Song& song)
 {
-	std::cout << "ID: " << song.m_id << std::endl;
-	std::cout << "Name: " << song.m_name << std::endl;
-	std::cout << "Album's id: " << song.m_album << std::endl;
-	std::cout << "Genre : " << GENRES_NAMES[(int)song.m_genre] << std::endl;
+	p_out << "ID: " << song.m_id << std::endl;
+	p_out << "Имя: " << song.m_name << std::endl;
+	p_out << "Альбом: " << song.m_album << std::endl;
+	p_out << "Жанр: " << GENRES_NAMES[(int)song.m_genre] << std::endl;
 
 	return p_out;
 }
 
-
-std::istream& operator >> (std::istream& cin, Song& song)
+int inputInt()
 {
-	std::string name;
-	cin >> name;
-	song.m_name = name;
+	int result;
+	std::string tmp_str;
+	bool error = true;
 
-	int album;
-	cin >> album;
-	song.m_album = album;
+	while (error)
+	{
 
-	int genre_1;
-	cin >> genre_1;
+		error = false;
+		try
+		{
+			std::cin >> tmp_str;
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			result = stoi(tmp_str);
+		}
 
+		catch (...)
+		{
+			error = true;
+			std::cout << "Вы ввели некорректное число. Попробуйте еще раз: ";
+		}
+	}
 
-	switch (genre_1)
+	return result;
+}
+
+std::istream& operator >> (std::istream& p_in, Song& song)
+{
+	std::cout << "Введите имя: ";
+	std::getline(p_in, song.m_name);
+
+	std::cout << "Введите ID альбома: ";
+	p_in >> song.m_album;
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+	std::cout << "Доступные жанры:" << std::endl;
+	for (int i = 0; i < GENRES_NAMES.size(); ++i)
+	{
+		std::cout << i << " " << GENRES_NAMES[i] << std::endl;
+	}
+
+	std::cout << std::endl << "Введите жанр: ";
+
+	int genre;
+	bool genre_ok = false;
+	while (!genre_ok)
+	{
+		p_in >> genre;
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		genre_ok = genre >= 0 && genre < GENRES_NAMES.size();
+		if (!genre_ok)
+		{
+			std::cout << "Вы ввели несуществующий жанр. Попробуйте еще раз" << std::endl;
+		}
+	}
+
+	switch (genre)
 	{
 	case 0:
 		song.m_genre = Genre::ROCK;
@@ -43,10 +86,11 @@ std::istream& operator >> (std::istream& cin, Song& song)
 		song.m_genre = Genre::ELECTRONIC;
 		break;
 	default:
+		throw std::exception("Вы ввели несуществующий жанр");
 		break;
 	}
 
-	return cin;
+	return p_in;
 }
 
 bool Song::operator == (const Song& song) const
@@ -63,5 +107,3 @@ bool Song::operator>(const Song& s) const
 
 	return false;
 }
-
-

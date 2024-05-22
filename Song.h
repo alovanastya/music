@@ -14,16 +14,10 @@ enum class Genre
 };
 
 static const std::vector<std::string> GENRES_NAMES = {
-	//"ROCK", 
-	//"JAZZ",
-	//"POP",
-	//"CLASSICAL",
-	//"ELECTRONIC"
-
 	"Рок",
 	"Джаз",
 	"Поп",
-    "Классическая",
+	"Классическая",
 	"Электронная"
 };
 
@@ -45,4 +39,4 @@ struct Song
 
 std::ostream& operator << (std::ostream&, const Song&);
 
-std::istream& operator >> (std::istream&, const Song&);
+std::istream& operator >> (std::istream&, Song&);

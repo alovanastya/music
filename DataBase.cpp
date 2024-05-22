@@ -2,9 +2,12 @@
 
 DataBase::DataBase()
 {
-	m_favorite_songs.push_back(MyVector<int>());
-	m_favorite_authors.push_back(MyVector<int>());
-	m_favorite_albums.push_back(MyVector<int>());
+	m_favorite_songs.push_back({});
+	m_favorite_authors.push_back({});
+	m_favorite_albums.push_back({});
+
+	m_name.push_back("admin");
+	m_password.push_back("admin");
 }
 
 int DataBase::check_user(const std::string& name, const std::string& password) const
@@ -22,366 +25,307 @@ int DataBase::check_user(const std::string& name, const std::string& password) c
 	return -1;
 }
 
-bool DataBase::addSong(const Song& song)
+void DataBase::addSong(const Song& song)
 {
+	if (!albumExists(song.m_album))
+	{
+		throw std::exception("Ошибка при добавлении песни. Такого альбома не существует");
+	}
+
 	m_songs.push_back(song);
 	m_songs.back().m_id = m_new_song_id;
 	++m_new_song_id;
-
-	return true;
 }
 
-bool DataBase::operator +(const Song& song)
+void DataBase::operator +(const Song& song)
 {
+	if (!albumExists(song.m_album))
+	{
+		throw std::exception("Ошибка при добавлении песни. Такого альбома не существует");
+	}
+
 	m_songs.push_back(song);
 	m_songs.back().m_id = m_new_song_id;
 	++m_new_song_id;
-
-	return true;
 }
 
-bool DataBase::addAlbum(const Album& new_album)
+void DataBase::addAlbum(const Album& new_album)
 {
+	if (new_album.m_authors.size() == 0)
+	{
+		throw std::exception("Ошибка при добавлении альбома.Не указано ни одного автора");
+	}
+
+	for (int i = 0; i < new_album.m_authors.size(); ++i)
+	{
+		if (!authorExists(new_album.m_authors[i]))
+		{
+			throw std::exception("Ошибка при добавлении альбома. Одного из авторов не существует");
+		}
+	}
+
 	m_albums.push_back(new_album);
 	m_albums.back().m_id = m_new_album_id;
 	++m_new_album_id;
-	return true;
 }
 
-bool DataBase::operator +(const Album& new_album)
+void DataBase::operator +(const Album& new_album)
 {
+	if (new_album.m_authors.size() == 0)
+	{
+		throw std::exception("Ошибка при добавлении альбома.Не указано ни одного автора");
+	}
+
+	for (int i = 0; i < new_album.m_authors.size(); ++i)
+	{
+		if (!authorExists(new_album.m_authors[i]))
+		{
+			throw std::exception("Ошибка при добавлении альбома. Одного из авторов не существует");
+		}
+	}
+
 	m_albums.push_back(new_album);
 	m_albums.back().m_id = m_new_album_id;
 	++m_new_album_id;
-
-	return true;
 }
 
-bool DataBase::addAuthor(const Author& new_author)
+void DataBase::addAuthor(const Author& new_author)
 {
 	m_authors.push_back(new_author);
 	m_authors.back().m_id = m_new_author_id;
 	++m_new_author_id;
-	return true;
 }
 
-bool DataBase::operator +(const Author& new_author)
+void DataBase::operator +(const Author& new_author)
 {
 	m_authors.push_back(new_author);
 	m_authors.back().m_id = m_new_author_id;
 	++m_new_author_id;
-
-	return true;
 }
 
-bool DataBase::editSong(int id, const Song& result)
+void DataBase::editSong(int id, const Song& new_song)
 {
-	int size_m_songs = m_songs.size();
-
-	for (int i = 0; i < size_m_songs; i++)
+	const int index = getSongIndex(id);
+	if (index == -1)
 	{
-		if (m_songs[i].m_id == id)
+		throw std::exception("Ошибка при редактировании песни. Такой песни не существует");
+	}
+
+	if (!albumExists(new_song.m_album))
+	{
+		throw std::exception("Ошибка при редактировании песни. Такого альбома не существует");
+	}
+
+	m_songs[index] = new_song;
+}
+
+void  DataBase::editAlbum(int id, const Album& new_album)
+{
+	const int index = getAlbumIndex(id);
+	if (index == -1)
+	{
+		throw std::exception("Ошибка при редактировании альбома. Такого альбома не существует");
+	}
+
+	if (new_album.m_authors.size() == 0)
+	{
+		throw std::exception("Ошибка при редактировании альбома.Не указано ни одного автора");
+	}
+
+	for (int i = 0; i < new_album.m_authors.size(); ++i)
+	{
+		if (!authorExists(new_album.m_authors[i]))
 		{
-			m_songs[i] = result;
-			return true;
+			throw std::exception("Ошибка при редактировании альбома. Одного из авторов не существует");
 		}
 	}
 
-	return false;
+	m_albums[index] = new_album;
 }
 
-bool DataBase::editAlbum(int id, const Album& result)
+void DataBase::editAuthor(int id, const Author& new_author)
 {
-	int size_m_albums = m_albums.size();
-
-	for (int i = 0; i < size_m_albums; i++)
+	const int index = getAuthorIndex(id);
+	if (index == -1)
 	{
-		if (m_albums[i].m_id == id)
-		{
-			m_albums[i] = result;
-			return true;
-		}
+		throw std::exception("Ошибка при редактировании автора. Такого автора не существует");
 	}
-	return false;
+
+	m_authors[index] = new_author;
 }
 
-bool DataBase::editAuthor(int id, const Author& result)
+const Song &DataBase::getSong(int id) const
 {
-	int size_m_authors = m_authors.size();
-
-	for (int i = 0; i < size_m_authors; i++)
+	const int index = getSongIndex(id);
+	if (index == -1)
 	{
-		if (m_authors[i].m_id == id)
-		{
-			m_authors[i] = result;
-			return true;
-		}
+		throw std::exception("Ошибка при получении песни. Такой песни не существует");
 	}
-	return false;
+
+	return m_songs[index];
 }
 
-bool DataBase::getSong(int id, const Song*& result) const
+const Album& DataBase::getAlbum(int id) const
 {
-	int size_m_songs = m_songs.size();
-
-	for (int i = 0; i < size_m_songs; i++)
+	const int index = getAlbumIndex(id);
+	if (index == -1)
 	{
-		if (m_songs[i].m_id == id)
-		{
-			result = &m_songs[i];
-			return true;
-		}
+		throw std::exception("Ошибка при получении альбома. Такого альбома не существует");
 	}
 
-	return false;
+	return m_albums[index];
 }
 
-bool DataBase::getAlbum(int id, const Album*& result) const
+const Author& DataBase::getAuthor(int id) const
 {
-	int size_m_albums = m_albums.size();
-
-	for (int i = 0; i < size_m_albums; i++)
+	const int index = getAuthorIndex(id);
+	if (index == -1)
 	{
-		if (m_albums[i].m_id == id)
-		{
-			result = &m_albums[i];
-			return true;
-		}
+		throw std::exception("Ошибка при получении автора. Такого автора не существует");
 	}
-	return false;
+
+	return m_authors[index];
 }
 
-bool DataBase::getAuthor(int id, const Author*& result) const
+void DataBase::addFavoriteSong(int user_id, int song_id)
 {
-	int size_m_authors = m_authors.size();
-
-	for (int i = 0; i < size_m_authors; i++)
+	if (m_favorite_songs.size() <= user_id)
 	{
-		if (m_authors[i].m_id == id)
-		{
-			result = &m_authors[i];
-			return true;
-		}
-	}
-	return false;
-}
-
-bool DataBase::addFavoriteSong(int user_id, int song_id)
-{
-	if (m_favorite_songs.size() < user_id)
-	{
-		return false;
+		throw std::exception("Ошибка при добавлении любимой песни. Такой песни не существует");
 	}
 
-	if (m_favorite_songs[user_id].size() != 0)
+	if (!songExists(song_id))
 	{
-		for (int i = 0; i < m_favorite_songs[user_id].size(); i++)
-		{
-			if (m_favorite_songs[user_id][i] == song_id)
-			{
-				std::cout << "����� ����� ��� ���������.\n";
-				return false;
-			}
-		}
+		throw std::exception("Ошибка при добавлении любимой песни. Такой песни не существует");
+	}
+
+	if (getFavoriteSongIndex(user_id, song_id) != -1)
+	{
+		return;
 	}
 
 	m_favorite_songs[user_id].push_back(song_id);
-	return true;
 }
 
-bool DataBase::addFavoriteAuthor(int user_id, int author_id)
+void DataBase::addFavoriteAuthor(int user_id, int author_id)
 {
-	if (m_authors.size() == 0)
+	if (m_favorite_authors.size() <= user_id)
 	{
-		std::cout << "������!!\n";
-		std::cout << "��� ��������� �����." << std::endl;
-		return false;
+		throw std::exception("Ошибка при добавлении любимого автора. Такого автора не существует");
 	}
 
-	else if (m_favorite_authors.size() < user_id)
+	if (!authorExists(author_id))
 	{
-		return false;
+		throw std::exception("Ошибка при добавлении любимого автора. Такого автора не существует");
 	}
 
-	if (m_favorite_authors[user_id].size() != 0)
+	if (getFavoriteAuthorIndex(user_id, author_id) != -1)
 	{
-		for (int i = 0; i < m_favorite_authors[user_id].size(); i++)
-		{
-			if (m_favorite_authors[user_id][i] == author_id)
-			{
-				std::cout << "����� ����� ��� ��������.\n";
-				return false;
-			}
-		}
+		return;
 	}
 
 	m_favorite_authors[user_id].push_back(author_id);
-	return true;
 }
 
-bool DataBase::addFavoriteAlbum(int user_id, int album_id)
+void DataBase::addFavoriteAlbum(int user_id, int album_id)
 {
-	if (m_albums.size() == 0)
+	if (m_favorite_albums.size() <= user_id)
 	{
-		std::cout << "������!!\n";
-		std::cout << "��� ��������� �����." << std::endl;
-		return false;
+		throw std::exception("Ошибка при добавлении любимого альбома. Такого альюома не существует");
 	}
 
-	else if (m_favorite_albums.size() < user_id)
+	if (!albumExists(album_id))
 	{
-		return false;
+		throw std::exception("Ошибка при добавлении любимого альбома. Такого альбома не существует");
 	}
 
-	if (m_favorite_albums[user_id].size() != 0)
+	if (getFavoriteAlbumIndex(user_id, album_id) != -1)
 	{
-		for (int i = 0; i < m_favorite_albums[user_id].size(); i++)
-		{
-			if (m_favorite_albums[user_id][i] == album_id)
-			{
-				std::cout << "����� ������ ��� ��������.\n";
-				return false;
-			}
-		}
+		return;
 	}
 
 	m_favorite_albums[user_id].push_back(album_id);
-
-	return true;
 }
 
-bool DataBase::getFavoriteSongs(int user_id, const MyVector<int>*& result) const
+const MyVector<int> &DataBase::getFavoriteSongs(int user_id) const
 {
-	if (m_favorite_songs.size() == 0)
+	if (m_favorite_songs.size() <= user_id)
 	{
-		std::cout << "������!!\n";
-		std::cout << "������ ������� ����� ����." << std::endl;
-		return false;
+		throw std::exception("Ошибка при получении любимых песен. Такого пользователя не существует");
 	}
 
-	if (m_favorite_songs.size() < user_id)
-	{
-		return false;
-	}
-
-	result = &m_favorite_songs[user_id];
-	return true;
+	return m_favorite_songs[user_id];
 }
 
-bool DataBase::getFavoriteAuthors(int user_id, const MyVector<int>*& result) const
+const MyVector<int>& DataBase::getFavoriteAuthors(int user_id) const
 {
-	if (m_favorite_authors.size() == 0)
+	if (m_favorite_authors.size() <= user_id)
 	{
-		std::cout << "������!!\n";
-		std::cout << "������ ������� ������� ����." << std::endl;
-		return false;
+		throw std::exception("Ошибка при получении любимых авторов. Такого пользователя не существует");
 	}
 
-	if (m_favorite_authors.size() < user_id)
-	{
-		return false;
-	}
-
-	result = &m_favorite_authors[user_id];
-	return true;
+	return m_favorite_authors[user_id];
 }
 
-bool DataBase::getFavoriteAlbums(int user_id, const MyVector<int>*& result) const
+const MyVector<int>& DataBase::getFavoriteAlbums(int user_id) const
 {
-	if (m_favorite_albums.size() == 0)
+	if (m_favorite_albums.size() <= user_id)
 	{
-		std::cout << "������!!\n";
-		std::cout << "������ ������� �������� ����." << std::endl;
-		return false;
+		throw std::exception("Ошибка при получении любимых альбомов. Такого пользователя не существует");
 	}
 
-	if (m_favorite_albums.size() < user_id)
-	{
-		return false;
-	}
-
-	result = &m_favorite_albums[user_id];
-	return true;
+	return m_favorite_albums[user_id];
 }
 
-bool DataBase::deleteFavoriteSong(int user_id, int song_id)
+void DataBase::deleteFavoriteSong(int user_id, int song_id)
 {
-	if (m_favorite_authors.size() == 0)
+	if (m_favorite_songs.size() <= user_id)
 	{
-		std::cout << "������!!\n";
-		std::cout << "������ ������� ������� ����." << std::endl;
-		return false;
+		throw std::exception("Ошибка при удалении любимой песни. Такого пользователя не существует");
 	}
 
-	int size = m_favorite_songs[user_id].size();
-
-	for (int j = 0; j < size; j++)
+	const int index = getFavoriteSongIndex(user_id, song_id);
+	if (index == -1)
 	{
-		if (m_favorite_songs[user_id][j] == song_id)
-		{
-			m_favorite_songs[user_id].deleteElement(j);
-			std::cout << "����� ������� �� �������.\n";
-			getchar();
-			return true;
-		}
+		throw std::exception("Ошибка при удалении любимой песни. Песня не была среди любимых");
 	}
 
-	std::cout << "����� � ����� id ���." << std::endl;
-
-	return false;
+	m_favorite_songs[user_id].deleteElement(index);
 }
 
-bool DataBase::deleteFavoriteAuthor(int user_id, int author_id)
+void DataBase::deleteFavoriteAuthor(int user_id, int author_id)
 {
-	if (m_favorite_authors.size() == 0)
+	if (m_favorite_authors.size() <= user_id)
 	{
-		std::cout << "������!!\n";
-		std::cout << "������ ������� ������� ����." << std::endl;
-		return false;
+		throw std::exception("Ошибка при удалении любимого автора. Такого пользователя не существует");
 	}
 
-	int size = m_favorite_authors[user_id].size();
-
-	for (int j = 0; j < size; j++)
+	const int index = getFavoriteAuthorIndex(user_id, author_id);
+	if (index == -1)
 	{
-		if (m_favorite_authors[user_id][j] == author_id)
-		{
-			m_favorite_authors[user_id].deleteElement(j);
-			std::cout << "����� ������ �� �������.\n";
-			getchar();
-			return true;
-		}
+		throw std::exception("Ошибка при удалении любимого альбома. Альбом не был среди любимых");
 	}
 
-	std::cout << "��� ������ � ����� id.\n";
-	return false;
+	m_favorite_authors[user_id].deleteElement(index);
 }
 
-bool DataBase::deleteFavoriteAlbum(int user_id, int album_id)
+void DataBase::deleteFavoriteAlbum(int user_id, int album_id)
 {
-	if (m_favorite_albums.size() == 0)
+	if (m_favorite_albums.size() <= user_id)
 	{
-		std::cout << "������!!\n";
-		std::cout << "������ ������� �������� ����." << std::endl;
-		return false;
+		throw std::exception("Ошибка при удалении любимого альбома. Такого пользователя не существует");
 	}
 
-	for (int j = 0; j < m_favorite_albums[user_id].size(); j++)
+	const int index = getFavoriteAlbumIndex(user_id, album_id);
+	if (index == -1)
 	{
-		if (m_favorite_albums[user_id][j] == album_id)
-		{
-			m_favorite_albums[user_id].deleteElement(j);
-			std::cout << "������ ������ �� �������.\n";
-			getchar();
-			return true;
-		}
+		throw std::exception("Ошибка при удалении любимого альбома. Альбом не был среди любимых");
 	}
 
-	std::cout << "��� ������� � ����� id.\n";
-	return false;
+	m_favorite_albums[user_id].deleteElement(index);
 }
 
-bool DataBase::addUser(const std::string& name, const std::string& password)
+void DataBase::addUser(const std::string& name, const std::string& password)
 {
 	int size = m_name.size();
 
@@ -389,8 +333,7 @@ bool DataBase::addUser(const std::string& name, const std::string& password)
 	{
 		if (m_name[i] == name && m_password[i] == password)
 		{
-			std::cout << "����� ������������ ��� ����.";
-			return false;
+			throw std::exception("Ошибка при добавлении пользователя. Такой пользователь уже существует");
 		}
 	}
 
@@ -400,8 +343,6 @@ bool DataBase::addUser(const std::string& name, const std::string& password)
 	m_favorite_songs.push_back({});
 	m_favorite_authors.push_back({});
 	m_favorite_albums.push_back({});
-
-	return true;
 }
 
 const MyVector<Song>& DataBase::getSongs() const
@@ -500,22 +441,151 @@ MyVector<int> DataBase::sortAlbumsByName() const
 	return albums_id;
 }
 
-//bool DataBase::getUsers(MyVector<std::string>*& names, MyVector<std::string>*& passwords)
-//{
-//	MyVector <std::string> names_1;
-//	MyVector <std::string> passwords_1;
-//
-//	int size = m_name.size();
-//
-//	for (int i = 0; i < size; ++i)
-//	{
-//		names_1.push_back(m_name[i]);
-//		passwords_1.push_back(m_password[i]);
-//	}
-//
-//	names = &names_1;
-//	passwords = &passwords_1;
-//
-//	return true;
-//}
+void DataBase::getUsers(const MyVector<std::string>*& names, const  MyVector<std::string>*& passwords) const
+{
+	names = &m_name;
+	passwords = &m_password;
+}
 
+bool DataBase::userExists(const std::string& name) const
+{
+	for (int i = 0; i < m_name.size(); ++i)
+	{
+		if (m_name[i] == name)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool DataBase::songExists(int id) const
+{
+	return getSongIndex(id) != -1;
+}
+
+bool DataBase::authorExists(int id) const
+{
+	return getAuthorIndex(id) != -1;
+}
+
+bool DataBase::albumExists(int id) const
+{
+	return getAlbumIndex(id) != -1;
+}
+
+bool DataBase::albumExists(int author_id, const std::string& album_name) const
+{
+	for (int i = 0; i < m_albums.size(); ++i)
+	{
+		if (m_albums[i].m_name == album_name)
+		{
+			for (int j = 0; j < m_albums[i].m_authors.size(); ++j)
+			{
+				if (m_albums[i].m_authors[j] == author_id)
+				{
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+int DataBase::getSongIndex(int id) const
+{
+	for (int i = 0; i < m_songs.size(); ++i)
+	{
+		if (m_songs[i].m_id == id)
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+int DataBase::getAuthorIndex(int id) const
+{
+	for (int i = 0; i < m_authors.size(); ++i)
+	{
+		if (m_authors[i].m_id == id)
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+int DataBase::getAlbumIndex(int id) const
+{
+	for (int i = 0; i < m_albums.size(); ++i)
+	{
+		if (m_albums[i].m_id == id)
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+int DataBase::getFavoriteSongIndex(int user_id, int song_id) const
+{
+	if (m_favorite_songs.size() <= user_id)
+	{
+		return -1;
+	}
+
+	const MyVector<int>& tmp_vec = m_favorite_songs[user_id];
+	for (int i = 0; i < tmp_vec.size(); ++i)
+	{
+		if (tmp_vec[i] == song_id)
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+int DataBase::getFavoriteAuthorIndex(int user_id, int author_id) const
+{
+	if (m_favorite_authors.size() <= user_id)
+	{
+		return -1;
+	}
+
+	const MyVector<int>& tmp_vec = m_favorite_authors[user_id];
+	for (int i = 0; i < tmp_vec.size(); ++i)
+	{
+		if (tmp_vec[i] == author_id)
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+int DataBase::getFavoriteAlbumIndex(int user_id, int album_id) const
+{
+	if (m_favorite_albums.size() <= user_id)
+	{
+		return -1;
+	}
+
+	const MyVector<int>& tmp_vec = m_favorite_albums[user_id];
+	for (int i = 0; i < tmp_vec.size(); ++i)
+	{
+		if (tmp_vec[i] == album_id)
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}

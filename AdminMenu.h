@@ -10,38 +10,28 @@ public:
 
 	Result runSelected(int) override;
 
-	bool addSong();
+	void addSong();
 
-	bool addAlbum();
+	void addAlbum();
 
-	void printAlbums();
+	void addAuthor();
 
-	bool addAuthor();
+	void editSong();
 
-	bool editSong();
+	void editAlbum();
 
-	bool editAlbum();
-
-	bool editAuthor();
+	void editAuthor();
 
 	~AdminMenu() override;
 
 private:
-	void enterAlbum(Song&, bool&);
+	void editSongsAlbum(Song&) const;
 
-	void chooseGenre(Song&, bool&);
+	void editSongsName(Song&) const;
 
-	void enterAuthors(Album&, bool&, const MyVector<Author>&);
+	void editSongsGenre(Song&) const;
 
-	void editSongsAlbum(Song&, int&, bool&, const MyVector<Album>&, int&);
+	void editAlbumsName(Album&) const;
 
-	void editSongsName(Song&, int&, bool&, const MyVector<Song>&, int&);
-
-	void enterId(Song&, int&, const MyVector<Song>&, int&);
-
-	void editAlbumsName(Album&, int&, const MyVector<Album>&, int&);
-
-	void editAlbumsAuthors(Album&, int&, const MyVector<Author>&, int&);
-
-	void enterAlbumsId(Album&, int&, const MyVector<Album>&, int&);
+	void editAlbumsAuthors(Album&) const;
 };

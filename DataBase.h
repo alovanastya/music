@@ -14,8 +14,8 @@ private:
 	MyVector<MyVector<int>> m_favorite_authors;
 	MyVector<MyVector<int>> m_favorite_albums;
 
-	std::vector<std::string> m_name = { "admin" };
-	std::vector<std::string> m_password = { "admin" };
+	MyVector<std::string> m_name;
+	MyVector<std::string> m_password;
 
 	int m_new_song_id = 0;
 	int m_new_album_id = 0;
@@ -27,55 +27,55 @@ public:
 
 	int check_user(const std::string&, const std::string&) const;
 
-	bool addSong(const Song&);
+	void addSong(const Song&);
 
-	bool operator +(const Song&);
+	void operator +(const Song&);
 
-	bool addAlbum(const Album&);
+	void addAlbum(const Album&);
 
-	bool operator +(const Album&);
+	void operator +(const Album&);
 
-	bool addAuthor(const Author&);
+	void addAuthor(const Author&);
 
-	bool operator +(const Author&);
+	void operator +(const Author&);
 
-	bool editSong(int id, const Song &);
+	void editSong(int id, const Song&);
 
-	bool editAlbum(int id, const Album &);
+	void editAlbum(int id, const Album&);
 
-	bool editAuthor(int id, const Author &);
+	void editAuthor(int id, const Author&);
 
-	bool getSong(int id, const Song*&) const;
+	const Song& getSong(int id) const;
 
-	bool getAlbum(int id, const Album*&) const;
+	const Album& getAlbum(int id) const;
 
-	bool getAuthor(int id, const Author*&) const;
+	const Author& getAuthor(int id) const;
 
-	bool addFavoriteSong(int, int);
+	void addFavoriteSong(int, int);
 
-	bool addFavoriteAuthor(int, int);
+	void addFavoriteAuthor(int, int);
 
-	bool addFavoriteAlbum(int, int);
+	void addFavoriteAlbum(int, int);
 
-	bool getFavoriteSongs(int, const MyVector<int>*&) const;
+	const MyVector<int>& getFavoriteSongs(int) const;
 
-	bool getFavoriteAuthors(int, const MyVector<int>*&) const;
+	const MyVector<int>& getFavoriteAuthors(int) const;
 
-	bool getFavoriteAlbums(int, const MyVector<int>*&) const;
+	const MyVector<int>& getFavoriteAlbums(int) const;
 
-	bool deleteFavoriteSong(int, int);
+	void deleteFavoriteSong(int, int);
 
-	bool deleteFavoriteAuthor(int, int);
+	void deleteFavoriteAuthor(int, int);
 
-	bool deleteFavoriteAlbum(int, int);
+	void deleteFavoriteAlbum(int, int);
 
-	bool addUser(const std::string&, const std::string&);
+	void addUser(const std::string&, const std::string&);
 
-	const MyVector<Song> &getSongs() const;
+	const MyVector<Song>& getSongs() const;
 
-	const MyVector<Album> &getAlbums() const;
+	const MyVector<Album>& getAlbums() const;
 
-	const MyVector<Author> &getAuthors() const;
+	const MyVector<Author>& getAuthors() const;
 
 	MyVector<int> sortSongsByName() const;
 
@@ -83,6 +83,30 @@ public:
 
 	MyVector<int> sortAlbumsByName() const;
 
-	//bool getUsers(MyVector<std::string>*&, MyVector<std::string>*&);
-	
+	void getUsers(const MyVector<std::string>*&, const MyVector<std::string>*&) const;
+
+	bool userExists(const std::string& name) const;
+
+	bool songExists(int) const;
+
+	bool authorExists(int) const;
+
+	bool albumExists(int) const;
+
+	bool albumExists(int, const std::string&) const;
+
+private:
+	int getSongIndex(int) const;
+
+	int getAuthorIndex(int) const;
+
+	int getAlbumIndex(int) const;
+
+	int getFavoriteSongIndex(int, int) const;
+
+	int getFavoriteAuthorIndex(int, int) const;
+
+	int getFavoriteAlbumIndex(int, int) const;
+
+
 };

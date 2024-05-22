@@ -1,21 +1,19 @@
 ﻿#include "AdminMenu.h"
 
 AdminMenu::AdminMenu(DataBase* database, int user_id) : Menu(database, user_id)
-{
-
-}
+{}
 
 void AdminMenu::printMenu() const
 {
 	Menu::printMenu();
 
-	std::cout << " 17 - Добавить песню  " << std::endl;
-	std::cout << " 18 - Добавить автора " << std::endl;
-	std::cout << " 19 - Добавить альбом " << std::endl;
+	std::cout << "17 - Добавить песню  " << std::endl;
+	std::cout << "18 - Добавить автора " << std::endl;
+	std::cout << "19 - Добавить альбом " << std::endl;
 	std::cout << std::endl;
-	std::cout << " 20 - Редактировать песню  " << std::endl;
-	std::cout << " 21 - Редактировать автора " << std::endl;
-	std::cout << " 22 - Редактировать альбом " << std::endl;
+	std::cout << "20 - Редактировать песню  " << std::endl;
+	std::cout << "21 - Редактировать автора " << std::endl;
+	std::cout << "22 - Редактировать альбом " << std::endl;
 }
 
 Result AdminMenu::runSelected(int selected)
@@ -29,790 +27,361 @@ Result AdminMenu::runSelected(int selected)
 
 	if (selected <= 22)
 	{
-		bool ok = true;
-		switch (selected)
+		try
 		{
-		case 17:
-			ok = AdminMenu::addSong();
-			break;
-		case 18:
-			ok = AdminMenu::addAuthor();
-			break;
-		case 19:
-			ok = AdminMenu::addAlbum();
-			break;
-		case 20:
-			ok = AdminMenu::editSong();
-			break;
-		case 21:
-			ok = AdminMenu::editAuthor();
-			break;
-		case 22:
-			ok = AdminMenu::editAlbum();
-			break;
-		default:
+			switch (selected)
+			{
+			case 17:
+				addSong();
+				break;
+			case 18:
+				addAuthor();
+				break;
+			case 19:
+				addAlbum();
+				break;
+			case 20:
+				editSong();
+				break;
+			case 21:
+				editAuthor();
+				break;
+			case 22:
+				editAlbum();
+				break;
+			default:
+				return Result::WITH_ERROR;
+				break;
+			}
+		}
+		catch (const std::exception& error)
+		{
+			std::cout << error.what() << std::endl;
 			return Result::WITH_ERROR;
-			break;
 		}
 
-		if (ok)
-		{
-			getchar();
-			return Result::DONE;
-		}
-
-		getchar();
-		return Result::WITH_ERROR;
+		return Result::DONE;
 	}
 
-	std::cout << "Неверная команда!" << std::endl;
-	getchar();
 	return Result::NOT_SUPPORTED;
 }
 
-void AdminMenu::printAlbums()
+void AdminMenu::addSong()
 {
-	std::cout << "+-----------------+\n";
-	std::cout << "|     Альбомы     |\n";
-	std::cout << "+-----------------+\n";
+	Song new_song;
+	std::cin >> new_song;
+	m_database->addSong(new_song);
+	std::cout << "Песня добавлена." << std::endl;
+}
 
-	const MyVector<Album>& tmp_vector = m_database->getAlbums();
+void AdminMenu::addAlbum()
+{
+	Album new_album;
+	std::cin >> new_album;
+	m_database->addAlbum(new_album);
+	std::cout << "Альбом добавлен." << std::endl;
+}
 
-	if (tmp_vector.size() == 0)
+void AdminMenu::addAuthor()
+{
+	Author new_author;
+	std::cin >> new_author;
+	m_database->addAuthor(new_author);
+	std::cout << "Автор добавлен." << std::endl;
+}
+
+
+void AdminMenu::editSongsAlbum(Song& song) const
+{
+	int album_id;
+	bool album_found = false;
+
+	std::cout << "Введите новый альбом: ";
+	while (!album_found)
 	{
-		std::cout << "Список альбомов пуст." 
-			<< std::endl << std::endl;
+		album_id = inputInt();
+		album_found = m_database->albumExists(album_id);
+
+		if (!album_found)
+		{
+			std::cout << "Вы ввели несуществующий альбом. Попробуйте еще раз" << std::endl;
+		}
+	}
+
+	song.m_album = album_id;
+}
+
+void AdminMenu::editSongsName(Song& song) const
+{
+	std::cout << "Введите новое имя: ";
+	std::getline(std::cin, song.m_name);
+}
+
+void AdminMenu::editSongsGenre(Song& song) const
+{
+	std::cout << "Доступные жанры:" << std::endl;
+	for (int i = 0; i < GENRES_NAMES.size(); ++i)
+	{
+		std::cout << i << " " << GENRES_NAMES[i] << std::endl;
+	}
+
+	std::cout << std::endl << "Введите жанр: ";
+
+	int genre;
+	bool genre_ok = false;
+	while (!genre_ok)
+	{
+		std::cin >> genre;
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		genre_ok = genre >= 0 && genre < GENRES_NAMES.size();
+		if (!genre_ok)
+		{
+			std::cout << "Вы ввели несуществующий жанр. Попробуйте еще раз" << std::endl;
+		}
+	}
+
+	switch (genre)
+	{
+	case 0:
+		song.m_genre = Genre::ROCK;
+		break;
+	case 1:
+		song.m_genre = Genre::JAZZ;
+		break;
+	case 2:
+		song.m_genre = Genre::POP;
+		break;
+	case 3:
+		song.m_genre = Genre::CLASSICAL;
+		break;
+	case 4:
+		song.m_genre = Genre::ELECTRONIC;
+		break;
+	default:
+		throw std::exception("Вы ввели несуществующий жанр");
+		break;
+	}
+}
+
+void AdminMenu::editSong()
+{
+	const MyVector<Song>& songs = m_database->getSongs();
+	if (songs.size() == 0)
+	{
+		std::cout << "Список песен пуст." << std::endl;
 		return;
 	}
 
-	for (int i = 0; i < tmp_vector.size(); ++i)
+	int song_id;
+	bool song_found = false;
+
+	std::cout << "Введите id песни: ";
+	while (!song_found)
 	{
-		std::cout << tmp_vector[i] << "\n";
-	}
-}
+		song_id = inputInt();
 
-void AdminMenu::enterAlbum(Song& new_song, bool& success)
-{
-	printAlbums();
-
-	std::cout << "Введите id альбома, в который хотите внести песню: ";
-	inputInt(new_song.m_album);
-
-	const MyVector<Album>& albums = m_database->getAlbums();
-	int size = albums.size();
-
-	for (int i = 0; i < size; ++i)
-	{
-		if (albums[i].m_id == new_song.m_album)
+		if (m_database->songExists(song_id))
 		{
-			const MyVector<Song>& songs = m_database->getSongs();
-			int size = songs.size();
-
-			for (int j = 0; j < size; ++j)
-			{
-				if (songs[j] == new_song)
-				{
-					std::cout << "В альбоме в таким id уже есть песня с таким именем." << '\n';
-				}
-			}
-			success = true;
-		}
-	}
-
-	if (success == false)
-	{
-		std::cout << "Альбома с таким id не существует. Хотите создать?" << std::endl;
-		std::cout << "1. Да\n";
-		std::cout << "2. Нет\n";
-		int choice;
-		inputInt(choice);
-
-		switch (choice)
-		{
-		case 1:
-		{
-			addAlbum();
-			const MyVector<Album>& albums_2 = m_database->getAlbums();
-			new_song.m_album = albums_2.back().m_id;
-			success = true;
-		}
-		break;
-		case 2:
-			std::cout << "Тогда попробуйте ввести id снова\n";
-			success = false;
-			break;
-		default:
-			break;
-		}
-	}
-}
-
-void AdminMenu::chooseGenre(Song& new_song, bool& success)
-{
-	std::cout << "\nВыберите жанр: \n";
-
-	for (int i = 0; i < (int)Genre::COUNT; ++i)
-	{
-		std::cout << i + 1 << ". " << GENRES_NAMES[i] << std::endl;
-	}
-
-	success = false;
-
-	int selection;
-
-	while (success == false)
-	{
-		inputInt(selection);
-
-		if (selection > (int)Genre::COUNT || selection <= 0)
-		{
-			continue;
-		}
-
-		new_song.m_genre = (Genre)(selection - 1);
-		success = true;
-	}
-}
-
-bool AdminMenu::addSong()
-{
-	Song new_song;
-	std::cout << "Введите название песни: ";
-	//std::cin.ignore(); // Первая буква названия игнорировалась почему-то
-	std::cin.clear();
-	std::cin.sync();
-	std::getline(std::cin, new_song.m_name);
-	std::cout << std::endl;
-
-	bool success = false;
-
-	while (success == false)
-	{
-		enterAlbum(new_song, success);
-	}
-
-	chooseGenre(new_song, success);
-
-	m_database->addSong(new_song);
-	std::cout << "Песня добавлена.\n";
-	return true;
-}
-
-void AdminMenu::enterAuthors(Album& new_album, bool& success, const MyVector<Author>& authors)
-{
-	const MyVector<Author>& tmp_vector = m_database->getAuthors();
-
-	if (tmp_vector.size() == 0)
-	{
-		std::cout << "Список авторов пуст." << std::endl;
-		int choice{};
-		std::cout << "Пожалуйста, добавьте автора и попробуйте еще раз.\n\n";
-		std::cout << "Сколько авторов хотите добавить?\n";
-
-		std::cout << "Введите количество авторов:  ";
-		inputInt(choice);
-		std::cin.ignore();
-
-		for (int i = 0; i < choice; ++i)
-		{
-			addAuthor();
-			new_album.m_authors.push_back(authors.back().m_id);
-			std::cout << "\nАвтор добавлен.\n";
-		}
-
-		success = true;
-	}
-
-	printAuthors();
-
-	std::cout << "\nВведите id автора или авторов альбома ";
-	std::cout << "(и -1 в конце списка):\n";
-
-	MyVector <int> new_authors;
-
-	int current_id{};
-
-	do
-	{
-		inputInt(current_id);
-		new_authors.push_back(current_id);
-	} while (current_id != -1);
-
-	// чтобы убрать -1 в конце
-	MyVector <int> tmp;
-
-	int new_authors_size = new_authors.size();
-
-	for (int i = 0; i < new_authors_size - 1; ++i)
-	{
-		tmp.push_back(new_authors[i]);
-	}
-
-	new_authors.clear();
-	new_authors = tmp;
-
-	bool all_authors_are_good = true;
-
-	int size = new_authors.size();
-
-	int authors_size = authors.size();
-
-	// Поиск авторов среди тех, которые уже записаны
-	for (int i = 0; i < size; ++i)
-	{
-		bool author_found = false;
-
-		for (int j = 0; j < authors_size; ++j)
-		{
-			if (authors[j].m_id == new_authors[i])
-			{
-				author_found = true;
-			}
-		}
-
-		all_authors_are_good = all_authors_are_good && author_found;
-	}
-
-	if (all_authors_are_good)
-	{
-		new_album.m_authors = new_authors;
-
-		success = true;
-	}
-
-	else
-	{
-		std::cout << "Автора с таким id нет." << std::endl;
-		std::cout << "Пожалуйста, добавьте автора и попробуйте еще раз." << std::endl;
-
-		std::cout << "\nХотите добавить нового автора?\n\n";
-		std::cout << "1. Да\n";
-		std::cout << "2. Нет\n";
-
-		int choice;
-
-		inputInt(choice);
-
-		switch (choice)
-		{
-		case 1:
-
-			std::cout << "Сколько авторов хотите добавить?\n";
-			inputInt(choice);
-
-			for (int i = 0; i < choice; ++i)
-			{
-				addAuthor();
-				new_album.m_authors.push_back(authors.back().m_id);
-				std::cout << "\nАвтор добавлен.\n";
-			}
-			success = true;
-			break;
-
-		case 2:
-			std::cout << "Тогда попробуйте ввести id снова.\n";
-			break;
-
-		default:
-			std::cout << "Ошибка!";
-			break;
-		}
-	}
-}
-
-bool AdminMenu::addAlbum()
-{
-	Album new_album;
-	const MyVector<Author>& authors = m_database->getAuthors();
-	int authors_size = authors.size();
-	bool success = false;
-
-	while (success == false)
-	{
-		enterAuthors(new_album, success, authors);
-	}
-
-	bool same_name = false;
-	success = false;
-
-	while (success == false)
-	{
-		std::cout << "\nВведите название альбома: ";
-		std::cin.ignore();
-		std::cin.clear();
-		std::cin.sync();
-
-		getline(std::cin, new_album.m_name);
-
-		const MyVector<Album>& albums = m_database->getAlbums();
-		int albums_size = albums.size();
-
-		for (int j = 0; j < albums_size; ++j)
-		{
-			if (albums[j].m_authors == new_album.m_authors && albums[j].m_name == new_album.m_name)
-			{
-				std::cout << "У автора уже есть альбом с таким именем." << std::endl;
-				same_name = true;
-			}
-		}
-
-		if (same_name == false)
-		{
-			success = true;
-		}
-	}
-
-	m_database->addAlbum(new_album);
-	std::cout << "Альбом добавлен.\n";
-	return true;
-}
-
-bool AdminMenu::addAuthor()
-{
-	Author new_author;
-	std::cout << "Введите имя автора, которого хотите добавить: ";
-	bool success = false;
-
-	while (success == false)
-	{
-		//std::cin.ignore();
-		std::cin.clear();      // используется для сброса флагов ошибок в входном потоке.
-		std::cin.sync();      // убирает все непрочитанные символы из входного потока.
-
-		getline(std::cin, new_author.m_name);
-		int size = m_database->getAuthors().size();
-
-		if (size != 0)
-		{
-			for (int i = 0; i < size; ++i)
-			{
-				if (m_database->getAuthors()[i].m_name == new_author.m_name)
-				{
-					std::cout << "Автор с таким именем уже существует." << std::endl;
-					std::cout << "Введите другое имя." << std::endl;
-				}
-				else
-				{
-					success = true;
-					break;
-				}
-			}
+			song_found = true;
 		}
 
 		else
 		{
-			success = true;
+			std::cout << "Песни с таким id не существует. Попробуйте еще раз: ";
 		}
 	}
 
-	m_database->addAuthor(new_author);
-	std::cout << "Автор добавлен.\n";
-	return true;
-}
-
-void AdminMenu::editSongsAlbum(Song& new_song, int& size_albums, bool& success, const MyVector<Album>& albums, int& id)
-{
-	std::cout << "Альбомы: " << std::endl;
-
-	for (int i = 0; i < size_albums; ++i)
-	{
-		std::cout << albums[i] << std::endl;
-	}
-
-	std::cout << std::endl;
-
-	bool re_entry = false;
-
-	while (success == false)
-	{
-		re_entry = false;
-		std::cout << "Введите новый id альбома: ";
-		inputInt(new_song.m_album);
-
-		for (int i = 0; i < size_albums; ++i)
-		{
-			if (albums[i].m_id == new_song.m_album)
-			{
-				std::cout << "Имя альбома с таким id: ";
-				std::cout << albums[i].m_name << std::endl;
-				std::cout << "Подтвердите выбор альбома: " << std::endl;
-				std::cout << "1 - Да" << std::endl;
-				std::cout << "2 - Нет" << std::endl;
-
-				int selection;
-				inputInt(selection);
-
-				switch (selection)
-				{
-				case 1:
-					success = true;
-					break;
-				case 2:
-					re_entry = true;
-					break;
-				default:
-					break;
-				}
-			}
-		}
-		if (success == false && re_entry == false) { std::cout << "Нет альбома с таким id.\n"; }
-	}
-}
-
-void AdminMenu::editSongsName(Song& new_song, int& size_songs, bool& success, const MyVector<Song>& songs, int& id)
-{
-	bool flag_for_name = false;
-
-	while (success == false)
-	{
-		std::cout << "Введите новое имя: ";
-		//std::cin.ignore();
-		std::cin.clear();
-		std::cin.sync();
-		getline(std::cin, new_song.m_name);
-
-		for (int i = 0; i < size_songs; ++i)
-		{
-			if (songs[i] == new_song)
-			{
-				std::cout << "В этом альбоме уже существует песня с таким именем." << "\n";
-				flag_for_name = true;
-			}
-		}
-
-		if (flag_for_name == false)
-		{
-			m_database->editSong(id, new_song);
-			success = true;
-		}
-	}
-}
-
-void AdminMenu::enterId(Song& new_song, int& size_songs, const MyVector<Song>& songs, int& id)
-{
-	bool correct_id = false;
-
-	while (correct_id == false)
-	{
-		std::cout << "Введите id песни, которую вы хотите редактировать: ";
-		inputInt(id);
-
-		for (int i = 0; i < size_songs; ++i)
-		{
-			if (songs[i].m_id == id)
-			{
-				new_song = songs[i];
-				correct_id = true;
-			}
-		}
-
-		if (correct_id == false)
-		{
-			std::cout << "Песни с таким id нет." << std::endl;
-		}
-	}
-}
-
-bool AdminMenu::editSong()
-{
-	const MyVector<Song>& songs = m_database->getSongs();
-	const MyVector<Album>& albums = m_database->getAlbums();
-	int size_songs = songs.size();
-	int size_albums = albums.size();
-	Song new_song;
-	int id;
-
-	if (size_songs == 0)
-	{
-		std::cout << "Список песен пуст." << std::endl;
-		return false;
-	}
-
-	std::cout << std::endl;
-
-	for (int i = 0; i < size_songs; ++i)
-	{
-		std::cout << songs[i] << std::endl;
-	}
-
-	std::cout << std::endl;
-
-	enterId(new_song, size_songs, songs, id);
-
-	std::cout << "\nЧто хотите поменять?" << '\n';
-	int choice;
+	std::cout << std::endl << "Что хотите поменять?" << std::endl;
 	std::cout << "+--------------+\n";
 	std::cout << "| 1 - Имя      |\n";
 	std::cout << "| 2 - Альбом   |\n";
 	std::cout << "| 3 - Жанр     |\n";
 	std::cout << "+--------------+\n";
 
-	inputInt(choice);
-
-	bool success = false;
-
-	switch (choice)
+	Song new_song = m_database->getSong(song_id);
+	bool song_edited = false;
+	while (!song_edited)
 	{
-	case 1:
-		editSongsName(new_song, size_songs, success, songs, id);
-		success = false;
-		break;
+		const int choice = inputInt();
 
-	case 2:
-		editSongsAlbum(new_song, size_albums, success, albums, id);
-		m_database->editSong(id, new_song);
-		break;
-	case 3:
-		chooseGenre(new_song, success);
-		m_database->editSong(id, new_song);
-		break;
-	default:
-		break;
+		switch (choice)
+		{
+		case 1:
+			editSongsName(new_song);
+			song_edited = true;
+			break;
+		case 2:
+			editSongsAlbum(new_song);
+			song_edited = true;
+			break;
+		case 3:
+			editSongsGenre(new_song);
+			song_edited = true;
+			break;
+		default:
+			std::cout << "Выбран недопустимый вариант. Введите корретное число: ";
+			break;
+		}
 	}
 
+	m_database->editSong(song_id, new_song);
 	std::cout << "Изменено." << std::endl;
-	return true;
 }
 
-bool AdminMenu::editAuthor()
+void AdminMenu::editAuthor()
 {
-	Author new_author;
 	const MyVector<Author>& authors = m_database->getAuthors();
-	int size_authors = authors.size();
-
-	if (size_authors == 0)
+	if (authors.size() == 0)
 	{
 		std::cout << "Список авторов пуст." << std::endl;
-		return false;
+		return;
 	}
 
-	bool success = false;
-	bool same_author_found = false;
-
-	std::cout << "+-----------------+\n";
-	std::cout << "|     Авторы      |\n";
-	std::cout << "+-----------------+\n";
-
-	for (int i = 0; i < size_authors; ++i)
+	int author_id;
+	bool author_found = false;
+	std::cout << "Введите id автора: ";
+	while (!author_found)
 	{
-		std::cout << authors[i] << std::endl;
-	}
+		author_id = inputInt();
 
-	std::cout << std::endl;
-	std::cout << std::endl;
-
-	std::cout << "Введите id автора, имя которого вы хотите редактировать: ";
-	int id;
-	inputInt(id);
-
-	while (success == false)
-	{
-		std::cout << "Введите новое имя автора: ";
-		std::cin.ignore();;
-		getline(std::cin, new_author.m_name);
-
-		same_author_found = false;
-
-		for (int i = 0; i < size_authors; ++i)
+		if (m_database->authorExists(author_id))
 		{
-			if (authors[i].m_name == new_author.m_name)
+			author_found = true;
+		}
+
+		else
+		{
+			std::cout << "Автора с таким id не существует. Попробуйте еще раз: ";
+		}
+	}
+
+	Author new_author = m_database->getAuthor(author_id);
+	std::cout << "Введите новое имя автора: ";
+	std::getline(std::cin, new_author.m_name);
+	m_database->editAuthor(author_id, new_author);
+}
+
+void AdminMenu::editAlbumsName(Album& new_album) const
+{
+	bool album_is_unique = false;
+
+	std::string new_name;
+
+	std::cout << "Введите новое имя: ";
+	while (!album_is_unique)
+	{
+		std::cin >> new_name;
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		album_is_unique = true;
+		for (int i = 0; i < new_album.m_authors.size(); ++i)
+		{
+			if (m_database->albumExists(new_album.m_authors[i], new_name))
 			{
-				std::cout << "Автор с таким именем уже есть. " << std::endl;
-				same_author_found = true;
+				album_is_unique = false;
 			}
 		}
 
-		if (!same_author_found)
+		if (!album_is_unique)
 		{
-			new_author.m_id = id;
-			m_database->editAuthor(id, new_author);
-			std::cout << "Изменено!" << std::endl;
-			success = true;
+			std::cout << "У одного из исполнителей уже есть альбом с таким назваванем. Попробуйте еще раз: ";
 		}
 	}
 
-	return true;
+	new_album.m_name = new_name;
 }
 
-void AdminMenu::editAlbumsName(Album& new_album, int& size_albums, const MyVector<Album>& albums, int& id)
+void AdminMenu::editAlbumsAuthors(Album& new_album) const
 {
-	bool is_it_changed = false;
-	bool same_name = false;
+	std::cout << "Введите новых авторов. Введите -1, чтобы закончить список" << std::endl;
 
-	while (is_it_changed == false)
+	MyVector<int> new_authors;
+	int new_author = 0;
+
+	while (new_author != -1)
 	{
-		std::cout << "Введите новое название альбома: ";
-		std::cin.ignore();
-		std::cin.clear();
-		std::cin.sync();
-		getline(std::cin, new_album.m_name);
+		std::cin >> new_author;
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-		same_name = false;
-
-		for (int i = 0; i < size_albums; ++i)
+		if (!m_database->authorExists(new_author))
 		{
-			if (albums[i].m_name == new_album.m_name && new_album.m_authors == albums[i].m_authors)
+			std::cout << "Такого автора не существует. Введите другого автора" << std::endl;
+			continue;
+		}
+
+		if (m_database->albumExists(new_author, new_album.m_name))
+		{
+			std::cout << "У этого автора уже есть альбом с таким названием. Введите другого автора" << std::endl;
+			continue;
+		}
+
+		for (int i = 0; i < new_authors.size(); ++i)
+		{
+			if (new_authors[i] == new_author)
 			{
-				std::cout << "У этого исполнителя уже есть альбом с таким именем. ";
-				same_name = true;
+				std::cout << "Этот автор уже есть в новом списке. Введите другого автора" << std::endl;
+				continue;
 			}
 		}
 
-		if (same_name == false)
-		{
-			m_database->editAlbum(id, new_album);
-			std::cout << "Изменено." << std::endl;
-			is_it_changed = true;
-		}
+		new_authors.push_back(new_author);
 	}
+
+	new_album.m_authors = new_authors;
 }
 
-void AdminMenu::editAlbumsAuthors(Album& new_album, int& size_authors, const MyVector<Author>& authors, int& id)
+void AdminMenu::editAlbum()
 {
-	std::cout << "+-----------------+\n";
-	std::cout << "|     Авторы      |\n";
-	std::cout << "+-----------------+\n";
+	int album_id;
+	bool album_found = false;
 
-	for (int i = 0; i < size_authors; ++i)
+	std::cout << "Введите id альбома: ";
+	while (!album_found)
 	{
-		std::cout << authors[i] << std::endl;
-	}
+		album_id = inputInt();
 
-	std::cout << std::endl;
-	std::cout << std::endl;
-
-	MyVector <int> new_authors;
-
-	int current_id{};
-
-	std::cout << "\nВведите id автора или авторов альбома ";
-	std::cout << "(и -1 в конце списка):\n";
-
-	do
-	{
-		inputInt(current_id);
-		new_authors.push_back(current_id);
-	} while (current_id != -1);
-
-	// чтобы убрать -1 в конце
-	MyVector <int> tmp;
-
-	int new_authors_size = new_authors.size();
-
-	for (int i = 0; i < new_authors_size - 1; ++i)
-	{
-		tmp.push_back(new_authors[i]);
-	}
-
-	new_authors.clear();
-	new_authors = tmp;
-
-	// Поиск авторов среди тех, которые уже записаны
-	bool all_authors_are_good = true;
-
-	int size = new_authors.size();
-
-	for (int i = 0; i < size; ++i)
-	{
-		bool author_found = false;
-
-		for (int j = 0; j < size_authors; ++j)
+		if (m_database->songExists(album_id))
 		{
-			if (authors[j].m_id == new_authors[i])
-			{
-				author_found = true;
-			}
+			album_found = true;
 		}
 
-		all_authors_are_good = all_authors_are_good && author_found;
-	}
-
-	if (all_authors_are_good)
-	{
-		new_album.m_authors = new_authors;
-		m_database->editAlbum(id, new_album);
-		std::cout << "Изменено." << std::endl;
-	}
-
-	else
-	{
-		std::cout << "Авторы не найдены." << std::endl;
-	}
-}
-
-void AdminMenu::enterAlbumsId(Album& new_album, int& size_albums, const MyVector<Album>& albums, int& id)
-{
-	bool correct_id = false;
-
-	while (correct_id == false)
-	{
-		std::cout << "Введите id альбома, который вы хотите редактировать: ";
-
-		inputInt(id);
-
-		for (int i = 0; i < size_albums; ++i)
+		else
 		{
-			if (albums[i].m_id == id)
-			{
-				new_album = albums[i];
-				correct_id = true;
-			}
-		}
-
-		if (correct_id == false)
-		{
-			std::cout << "Альбома с таким id не найдено.\n";
+			std::cout << "Песни с таким id не существует. Попробуйте еще раз: ";
 		}
 	}
-}
 
-bool AdminMenu::editAlbum()
-{
-	Album new_album;
+	std::cout << std::endl << "Что хотите поменять?" << std::endl;
+	std::cout << "+--------------+\n";
+	std::cout << "| 1 - Имя      |\n";
+	std::cout << "| 2 - Авторов  |\n";
+	std::cout << "+--------------+\n";
 
-	const MyVector<Album>& albums = m_database->getAlbums();
-	const MyVector<Author>& authors = m_database->getAuthors();
-
-	int size_authors = authors.size();
-	int size_albums = albums.size();
-
-	int id;
-
-	if (size_albums == 0)
+	Album new_album = m_database->getAlbum(album_id);
+	bool album_edited = false;
+	while (!album_edited)
 	{
-		std::cout << "Список альбомов пуст, нечего редактировать." << std::endl;
-		return false;
+		const int choice = inputInt();
+
+		switch (choice)
+		{
+		case 1:
+			editAlbumsName(new_album);
+			album_edited = true;
+			break;
+		case 2:
+			editAlbumsAuthors(new_album);
+			album_edited = true;
+			break;
+		default:
+			std::cout << "Выбран недопустимый вариант. Введите корретное число: ";
+			break;
+		}
 	}
 
-	printAlbums();
-
-	std::cout << std::endl;
-
-	enterAlbumsId(new_album, size_albums, albums, id);
-
-	std::cout << "\nЧто хотите поменять?" << '\n';
-	int choice;
-	std::cout << "+---------------+\n";
-	std::cout << "| 1 - Имя       |\n";
-	std::cout << "| 2 - Авторов   |\n";
-	std::cout << "+---------------+\n";
-
-	inputInt(choice);
-
-	switch (choice)
-	{
-	case 1:
-		editAlbumsName(new_album, size_albums, albums, id);
-		break;
-	case 2:
-		editAlbumsAuthors(new_album, size_authors, authors, id);
-		break;
-	default:
-		std::cout << "Ошибка!" << std::endl;
-		break;
-	}
-
-	return true;
+	m_database->editAlbum(album_id, new_album);
+	std::cout << "Изменено." << std::endl;
 }
 
 AdminMenu::~AdminMenu()

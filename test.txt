@@ -1,0 +1,84 @@
+admin
+admin
+1
+admin
+new_user
+new_password
+123
+new_user
+new_password
+new_password
+
+18
+Author 1
+
+19
+Album 1
+-1
+
+19
+Album 1
+1
+-1
+
+19
+Album 1
+0
+-1
+
+17
+Song 1
+1
+0
+
+17
+Song 1
+0
+5
+0
+
+20
+1
+0
+1
+New song 1
+
+20
+0
+2
+1
+0
+
+20
+0
+3
+5
+1
+
+11
+
+21
+1
+0
+New Author 1
+
+12
+
+22
+1
+0
+1
+New album 1
+
+18
+Author 2
+
+22
+0
+0
+2
+1
+-1
+
+13
+

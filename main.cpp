@@ -1,17 +1,12 @@
 ﻿#include <string>
 #include <iostream>
-#include <windows.h>
+#include <limits>
 #include "AdminMenu.h"
-
-
-#include <mmsystem.h>
-#pragma comment(lib, "winmm.lib")
 
 
 int main()
 {
-	SetConsoleCP(1251);
-	setlocale(LC_ALL, "ru");
+	setlocale(0, "RUSSIAN");
 	DataBase database;
 
 	std::string login(100, '\0');
@@ -55,91 +50,52 @@ int main()
 		menu->printMenu();
 
 		int selection = 0;
-		std::cout << " \nВведите число: ";
+		std::cout << std::endl << std::endl << "Введите число: ";
 
-		bool success = false;
-		bool error = false;
-
+		bool error = true;
 		std::string string_selection;
 
-		while (!success)
+		while (error)
 		{
 			try
 			{
+				error = false;
 				std::cin >> string_selection;
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				selection = stoi(string_selection);
 			}
 
 			catch (std::exception& exception)
 			{
-				std::cerr << "Пойманное исключение: " << exception.what() << std::endl;
 				error = true;
+				std::cerr << "Пойманное исключение: " << exception.what() << std::endl;
 				std::cerr << "Введите корректное число: ";
 			}
-
-			if (!error)
-			{
-				std::cin.ignore();
-				success = true;
-			}
-
-			error = false;
 		}
 
-		//std::cin.ignore();
-
 		Result result = menu->runSelected(selection);
+
 		switch (result)
 		{
-		case (Result::DONE):
+		case Result::DONE:
+			
 			break;
 
-		case (Result::WITH_ERROR):
+		case Result::WITH_ERROR:
 			std::cout << "Произошла ошибка!";
 			break;
 
-		case (Result::EXIT):
-		{
-			std::cout << "Вы уверены, что хотите выйти?\n";
-			int choice = 0;
-			std::cout << "1 - Да\n";
-			std::cout << "2 - Нет, хочу остаться\n";
-
-			bool f = false;
-
-			while (f == false)
-			{
-				std::cin >> choice;
-
-				if (std::cin.fail())
-				{
-					std::cin.clear();
-					std::cin.ignore(INT64_MAX, '\n');
-					std::cout << "Пожалуйста, введите корректное число: ";
-				}
-
-				else
-				{
-					f = true;
-				}
-			}
-
-			if (choice == 1) {
-				std::cout << "До свидания! Хорошего дня";
-				//exit(0);
-				end = true;
-			}
-
-			else if (choice != 2)
-			{
-				std::cout << "Неизвестная команда";
-			}
-		}
-		break;
+		case Result::EXIT:
+			std::cout << "До свидания! Хорошего дня";
+			end = true;
+			break;
 
 		default:
 			break;
 		}
+
+		std::cout << "Нажмите любую клавишу, чтобы продолжить";
+		std::cin.get();
 	}
 
 	delete menu;

@@ -8,29 +8,27 @@ public:
 
 	Result runSelected(int selected) override;
 
-	void inputInt(int&);
+	int inputInt() const;
 
-	bool saveUserToTextFile();
+	void addUser();
 
-	bool addUser();
+	void addFavoriteSong();
 
-	bool addFavoriteSong();
+	void addFavoriteAuthor();
 
-	bool addFavoriteAuthor();
+	void addFavoriteAlbum();
 
-	bool addFavoriteAlbum();
+	void printFavoriteSongs() const;
 
-	bool printFavoriteSongs();
+	void printFavoriteAuthors() const;
 
-	bool printFavoriteAuthors();
+	void printFavoriteAlbums() const;
 
-	bool printFavoriteAlbums();
+	void deleteFavoriteSong();
 
-	bool deleteFavoriteSong();
+	void deleteFavoriteAuthor();
 
-	bool deleteFavoriteAuthor();
-
-	bool deleteFavoriteAlbum();
+	void deleteFavoriteAlbum();
 
 	void printSongs() const;
 
@@ -38,11 +36,11 @@ public:
 
 	void printAuthors() const;
 
-	void sortSongsByName();
+	void sortSongsByName() const;
 
-	void sortAlbumsByName();
+	void sortAlbumsByName() const;
 
-	void sortAuthorsByName();
+	void sortAuthorsByName() const;
 
 public:
 
