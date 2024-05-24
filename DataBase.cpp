@@ -154,7 +154,7 @@ void DataBase::editAuthor(int id, const Author& new_author)
 	m_authors[index] = new_author;
 }
 
-const Song &DataBase::getSong(int id) const
+const Song& DataBase::getSong(int id) const
 {
 	const int index = getSongIndex(id);
 	if (index == -1)
@@ -247,7 +247,7 @@ void DataBase::addFavoriteAlbum(int user_id, int album_id)
 	m_favorite_albums[user_id].push_back(album_id);
 }
 
-const MyVector<int> &DataBase::getFavoriteSongs(int user_id) const
+const MyVector<int>& DataBase::getFavoriteSongs(int user_id) const
 {
 	if (m_favorite_songs.size() <= user_id)
 	{

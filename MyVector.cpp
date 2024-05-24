@@ -33,7 +33,7 @@ void MyVector<T>::push_back(const T& data)
 {
 	if (m_capacity == 0)
 	{
-		m_vector = new T;
+		m_vector = new T[1];
 		*m_vector = data;
 
 		m_capacity = 1;
@@ -134,6 +134,11 @@ bool MyVector<T>::operator == (const MyVector<T> vector) const
 template <class T>
 MyVector<T> MyVector<T>::operator = (const MyVector<T>& other)
 {
+	if (this == &other)
+	{
+		return *this;
+	}
+
 	m_capacity = other.m_capacity;
 	m_size = other.m_size;
 
