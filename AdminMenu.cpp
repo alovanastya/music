@@ -1,4 +1,4 @@
-﻿#include "AdminMenu.h"
+#include "AdminMenu.h"
 
 AdminMenu::AdminMenu(DataBase* database, int user_id) : Menu(database, user_id)
 {}

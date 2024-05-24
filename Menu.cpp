@@ -1,4 +1,4 @@
-﻿#include "Menu.h"
+#include "Menu.h"
 #include <iostream>
 
 Menu::Menu(DataBase* database, int user_id) : IMenu(database, user_id)
