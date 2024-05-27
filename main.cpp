@@ -7,6 +7,7 @@
 int main()
 {
 	setlocale(0, "RUSSIAN");
+	/*
 	DataBase database;
 
 	std::string login(100, '\0');
@@ -78,7 +79,7 @@ int main()
 		switch (result)
 		{
 		case Result::DONE:
-			
+
 			break;
 
 		case Result::WITH_ERROR:
@@ -97,8 +98,21 @@ int main()
 		std::cout << "Нажмите любую клавишу, чтобы продолжить";
 		std::cin.get();
 	}
+	*/
 
-	delete menu;
+
+
+	//MyVector<int> vector(3, 5);
+	//vector.push_back(7);
+
+	//for (auto&& i : vector)
+	//{
+	//	std::cout << i;
+	//}
+
+
+
+	//delete menu;
 
 	return 0;
 }

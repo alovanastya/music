@@ -1,5 +1,6 @@
 #include "MyVector.h"
 
+
 template <class T>
 MyVector<T>::MyVector()
 {}
@@ -33,7 +34,7 @@ void MyVector<T>::push_back(const T& data)
 {
 	if (m_capacity == 0)
 	{
-		m_vector = new T[1];
+		m_vector = new T;
 		*m_vector = data;
 
 		m_capacity = 1;
@@ -134,11 +135,6 @@ bool MyVector<T>::operator == (const MyVector<T> vector) const
 template <class T>
 MyVector<T> MyVector<T>::operator = (const MyVector<T>& other)
 {
-	if (this == &other)
-	{
-		return *this;
-	}
-
 	m_capacity = other.m_capacity;
 	m_size = other.m_size;
 
@@ -176,3 +172,55 @@ std::ostream& operator << (std::ostream& cout, const MyVector<T>& v)
 	cout << '\n';
 	return cout;
 }
+
+
+///
+
+template <class T>
+typename MyVector<T>::Iterator<T> MyVector<T>::begin()
+{
+	return (Iterator<T>)m_vector;
+}
+
+
+template<class T>
+typename MyVector<T>::Iterator<T> MyVector<T>::end()
+{
+	return Iterator<T>(m_vector + m_size);
+}
+
+
+
+
+template<class T, class Iter>
+MyVector<T>::Iterator<T>::operator!=(Iterator const& other) const
+{
+	return value != other.value;
+}
+
+//
+//template<class T, class Iter>
+//bool MyVector<T>::Iterator<Iter>::operator==(Iterator const& other) const
+//{
+//	return value == other.value;
+//}
+//
+//template<class T, class Iter>
+//typename Iter& MyVector<T>::Iterator<Iter>::operator*() const
+//{
+//	return *value;
+//}
+//
+//template<class T, class Iter>
+//MyVector<T>::Iterator& MyVector<T>::Iterator<Iter>::operator++()
+//{
+//	value++;
+//	return *this;
+//}
+//
+//template<class T, class Iter>
+//inline MyVector<T>::Iterator<Iter>::Iterator(const Iterator& it)
+//{
+//	value = it.value;
+//}
+
