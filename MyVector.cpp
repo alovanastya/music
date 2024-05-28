@@ -161,7 +161,6 @@ MyVector<T>::~MyVector()
 	delete[] m_vector;
 }
 
-
 template <class T>
 std::ostream& operator << (std::ostream& cout, const MyVector<T>& v)
 {
@@ -173,54 +172,51 @@ std::ostream& operator << (std::ostream& cout, const MyVector<T>& v)
 	return cout;
 }
 
-
-///
-
 template <class T>
-typename MyVector<T>::Iterator<T> MyVector<T>::begin()
+Iterator<T> MyVector<T>::begin() const
 {
-	return (Iterator<T>)m_vector;
+	return (Iterator<T>)(m_vector);
 }
 
-
 template<class T>
-typename MyVector<T>::Iterator<T> MyVector<T>::end()
+Iterator<T> MyVector<T>::end() const
 {
 	return Iterator<T>(m_vector + m_size);
 }
 
-
-
-
-template<class T, class Iter>
-MyVector<T>::Iterator<T>::operator!=(Iterator const& other) const
+template<typename ValueType>
+Iterator<ValueType>::Iterator(const Iterator& it): m_data(it.m_data)
 {
-	return value != other.value;
+
 }
 
-//
-//template<class T, class Iter>
-//bool MyVector<T>::Iterator<Iter>::operator==(Iterator const& other) const
-//{
-//	return value == other.value;
-//}
-//
-//template<class T, class Iter>
-//typename Iter& MyVector<T>::Iterator<Iter>::operator*() const
-//{
-//	return *value;
-//}
-//
-//template<class T, class Iter>
-//MyVector<T>::Iterator& MyVector<T>::Iterator<Iter>::operator++()
-//{
-//	value++;
-//	return *this;
-//}
-//
-//template<class T, class Iter>
-//inline MyVector<T>::Iterator<Iter>::Iterator(const Iterator& it)
-//{
-//	value = it.value;
-//}
+template<typename ValueType>
+bool Iterator<ValueType>::operator!=(Iterator<ValueType> const& other) const
+{
+	return m_data != other.m_data;
+}
 
+template<typename ValueType>
+bool Iterator<ValueType>::operator==(Iterator const& other) const
+{
+	return m_data == other.m_data;
+}
+
+template<typename ValueType>
+const ValueType& Iterator<ValueType>::operator*() const
+{
+	return *m_data;
+}
+
+template<typename ValueType>
+Iterator<ValueType>& Iterator<ValueType>::operator++()
+{
+	++m_data;
+	return *this;
+}
+
+template<typename ValueType>
+Iterator<ValueType>::Iterator(ValueType* p): m_data(p)
+{
+
+}

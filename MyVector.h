@@ -1,6 +1,30 @@
 #pragma once
 #include <iostream>
 
+template <class T>
+class MyVector;
+
+template<typename ValueType>
+class Iterator
+{
+public:
+	Iterator(const Iterator& it);
+
+	bool operator!=(Iterator const& other) const;
+
+	bool operator==(Iterator const& other) const;
+
+	const ValueType &operator*() const;
+
+	Iterator& operator++();
+
+private:
+	Iterator(ValueType* data);
+
+	ValueType* m_data;
+
+	friend class MyVector<ValueType>;
+};
 
 template <class T>
 class MyVector
@@ -10,31 +34,10 @@ private:
 	int m_capacity = 0;
 	int m_size = 0;
 
-	template <class Iter>
-	class Iterator
-	{
-	public:
-
-		Iterator(const Iterator& it);
-
-		bool operator!=(Iterator const& other) const;
-
-		bool operator==(Iterator const& other) const;
-
-		typename Iter& operator*() const;
-
-		Iterator& operator++();
-
-	private:
-		Iterator(Iter* p);
-
-		friend class MyVector;
-	};
-
 public:
-	Iterator<T> begin();
+	Iterator<T> begin() const;
 
-	Iterator<T> end();
+	Iterator<T> end() const;
 
 	MyVector();
 
@@ -71,5 +74,3 @@ public:
 
 template <class T>
 std::ostream& operator << (std::ostream& p_out, const MyVector<T>& vector);
-
-

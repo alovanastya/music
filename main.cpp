@@ -6,8 +6,9 @@
 
 int main()
 {
-	setlocale(0, "RUSSIAN");
 	/*
+	setlocale(0, "RUSSIAN");
+
 	DataBase database;
 
 	std::string login(100, '\0');
@@ -98,21 +99,18 @@ int main()
 		std::cout << "Нажмите любую клавишу, чтобы продолжить";
 		std::cin.get();
 	}
+
+	delete menu;
 	*/
+	
 
+	MyVector<int> vector(3, 5);
+	vector.push_back(7);
 
-
-	//MyVector<int> vector(3, 5);
-	//vector.push_back(7);
-
-	//for (auto&& i : vector)
-	//{
-	//	std::cout << i;
-	//}
-
-
-
-	//delete menu;
+	for (auto iter = vector.begin(); iter != vector.end(); ++iter)
+	{
+		std::cout << *iter;
+	}
 
 	return 0;
 }
