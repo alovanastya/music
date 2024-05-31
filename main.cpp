@@ -14,7 +14,7 @@ int main()
 	std::string password(100, '\0');
 
 	database.readUsersFromTxt();
-	database.readAuthorsFromTxt();
+	// database.readAuthorsFromTxt();
 
 	int user_id = -1;
 
@@ -105,16 +105,6 @@ int main()
 	}
 
 	delete menu;
-	
-	
-
-	//MyVector<int> vector(3, 5);
-	//vector.push_back(7);
-
-	//for (auto iter = vector.begin(); iter != vector.end(); ++iter)
-	//{
-	//	std::cout << *iter;
-	//}
 
 	return 0;
 }

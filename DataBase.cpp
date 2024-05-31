@@ -547,7 +547,6 @@ void DataBase::readAuthorsFromTxt()
 
 	if (!file.is_open()) { throw "Не удалось открыть файл."; }
 
-	std::string name;
 	std::string id;
 	int author_id;
 
@@ -556,16 +555,9 @@ void DataBase::readAuthorsFromTxt()
 	while (!file.eof())
 	{
 		std::getline(file, id, ' ');
-		try
-		{
-			//author_id = std::stoi(id);
-		//new_author.m_id = author_id;
-		} catch (...)
-		{
-			std::cout << "error";
-		};
-		std::getline(file, name, ' ');
-		new_author.m_name = name;
+		author_id = std::stoi(id);
+		new_author.m_id = author_id;
+		std::getline(file, new_author.m_name, ' ');
 		m_authors.push_back(new_author);
 	}
 
