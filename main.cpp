@@ -6,13 +6,15 @@
 
 int main()
 {
-	/*
 	setlocale(0, "RUSSIAN");
 
 	DataBase database;
 
 	std::string login(100, '\0');
 	std::string password(100, '\0');
+
+	database.readUsersFromTxt();
+	database.readAuthorsFromTxt();
 
 	int user_id = -1;
 
@@ -28,8 +30,8 @@ int main()
 
 		if (user_id == -1)
 		{
-			std::cout << "ÐÐµÐ²ÐµÑ€Ð½Ñ‹Ð¹ Ð»Ð¾Ð³Ð¸Ð½ Ð¸Ð»Ð¸ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ." << std::endl;
-			std::cout << "ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÐµÑ‰Ðµ Ñ€Ð°Ð·: " << std::endl;
+			std::cout << "Íåâåðíûé ëîãèí èëè ïàðîëü." << std::endl;
+			std::cout << "Ïîïðîáóéòå åùå ðàç: " << std::endl;
 		}
 	}
 
@@ -52,7 +54,7 @@ int main()
 		menu->printMenu();
 
 		int selection = 0;
-		std::cout << std::endl << std::endl << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ‡Ð¸ÑÐ»Ð¾: ";
+		std::cout << std::endl << std::endl << "Ââåäèòå ÷èñëî: ";
 
 		bool error = true;
 		std::string string_selection;
@@ -63,15 +65,17 @@ int main()
 			{
 				error = false;
 				std::cin >> string_selection;
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cin.ignore();
+
 				selection = stoi(string_selection);
 			}
 
 			catch (std::exception& exception)
 			{
 				error = true;
-				std::cerr << "ÐŸÐ¾Ð¹Ð¼Ð°Ð½Ð½Ð¾Ðµ Ð¸ÑÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ: " << exception.what() << std::endl;
-				std::cerr << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾: ";
+				std::cerr << "Ïîéìàííîå èñêëþ÷åíèå: " << exception.what() << std::endl;
+				std::cerr << "Ââåäèòå êîððåêòíîå ÷èñëî: ";
 			}
 		}
 
@@ -84,11 +88,11 @@ int main()
 			break;
 
 		case Result::WITH_ERROR:
-			std::cout << "ÐŸÑ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ°!";
+			std::cout << "Ïðîèçîøëà îøèáêà!";
 			break;
 
 		case Result::EXIT:
-			std::cout << "Ð”Ð¾ ÑÐ²Ð¸Ð´Ð°Ð½Ð¸Ñ! Ð¥Ð¾Ñ€Ð¾ÑˆÐµÐ³Ð¾ Ð´Ð½Ñ";
+			std::cout << "Äî ñâèäàíèÿ! Õîðîøåãî äíÿ" << std::endl;
 			end = true;
 			break;
 
@@ -96,21 +100,21 @@ int main()
 			break;
 		}
 
-		std::cout << "ÐÐ°Ð¶Ð¼Ð¸Ñ‚Ðµ Ð»ÑŽÐ±ÑƒÑŽ ÐºÐ»Ð°Ð²Ð¸ÑˆÑƒ, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¿Ñ€Ð¾Ð´Ð¾Ð»Ð¶Ð¸Ñ‚ÑŒ";
+		std::cout << "Íàæìèòå ëþáóþ êëàâèøó, ÷òîáû ïðîäîëæèòü";
 		std::cin.get();
 	}
 
 	delete menu;
-	*/
+	
 	
 
-	MyVector<int> vector(3, 5);
-	vector.push_back(7);
+	//MyVector<int> vector(3, 5);
+	//vector.push_back(7);
 
-	for (auto iter = vector.begin(); iter != vector.end(); ++iter)
-	{
-		std::cout << *iter;
-	}
+	//for (auto iter = vector.begin(); iter != vector.end(); ++iter)
+	//{
+	//	std::cout << *iter;
+	//}
 
 	return 0;
 }

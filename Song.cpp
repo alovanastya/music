@@ -23,7 +23,8 @@ int inputInt()
 		try
 		{
 			std::cin >> tmp_str;
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cin.ignore();
 			result = stoi(tmp_str);
 		}
 
@@ -44,7 +45,8 @@ std::istream& operator >> (std::istream& p_in, Song& song)
 
 	std::cout << "Введите ID альбома: ";
 	p_in >> song.m_album;
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	std::cin.ignore();
 
 	std::cout << "Доступные жанры:" << std::endl;
 	for (int i = 0; i < GENRES_NAMES.size(); ++i)
@@ -59,7 +61,8 @@ std::istream& operator >> (std::istream& p_in, Song& song)
 	while (!genre_ok)
 	{
 		p_in >> genre;
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cin.ignore();
 
 		genre_ok = genre >= 0 && genre < GENRES_NAMES.size();
 		if (!genre_ok)

@@ -6,29 +6,29 @@ Menu::Menu(DataBase* database, int user_id) : IMenu(database, user_id)
 
 void Menu::printMenu() const
 {
-	std::cout << "0 Ð’Ñ‹Ñ…Ð¾Ð´                         " << std::endl;
+	std::cout << "0 Âûõîä                         " << std::endl;
 	std::cout << std::endl;
-	std::cout << "1 Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ		  " << std::endl;
+	std::cout << "1 Äîáàâèòü ïîëüçîâàòåëÿ		  " << std::endl;
 	std::cout << std::endl;
-	std::cout << "2 Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð»ÑŽÐ±Ð¸Ð¼ÑƒÑŽ Ð¿ÐµÑÐ½ÑŽ        " << std::endl;
-	std::cout << "3 Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð»ÑŽÐ±Ð¸Ð¼ÑƒÑŽ Ð¿ÐµÑÐ½ÑŽ         " << std::endl;
-	std::cout << "4 ÐÐ°Ð¿ÐµÑ‡Ð°Ñ‚Ð°Ñ‚ÑŒ Ð»ÑŽÐ±Ð¸Ð¼Ñ‹Ðµ Ð¿ÐµÑÐ½Ð¸      " << std::endl;
+	std::cout << "2 Äîáàâèòü ëþáèìóþ ïåñíþ        " << std::endl;
+	std::cout << "3 Óäàëèòü ëþáèìóþ ïåñíþ         " << std::endl;
+	std::cout << "4 Íàïå÷àòàòü ëþáèìûå ïåñíè      " << std::endl;
 	std::cout << std::endl;
-	std::cout << "5 Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð»ÑŽÐ±Ð¸Ð¼Ð¾Ð³Ð¾ Ð°Ð²Ñ‚Ð¾Ñ€Ð°      " << std::endl;
-	std::cout << "6 Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð»ÑŽÐ±Ð¸Ð¼Ð¾Ð³Ð¾ Ð°Ð²Ñ‚Ð¾Ñ€Ð°       " << std::endl;
-	std::cout << "7 ÐÐ°Ð¿ÐµÑ‡Ð°Ñ‚Ð°Ñ‚ÑŒ Ð»ÑŽÐ±Ð¸Ð¼Ñ‹Ñ… Ð°Ð²Ñ‚Ð¾Ñ€Ð¾Ð²    " << std::endl;
+	std::cout << "5 Äîáàâèòü ëþáèìîãî àâòîðà      " << std::endl;
+	std::cout << "6 Óäàëèòü ëþáèìîãî àâòîðà       " << std::endl;
+	std::cout << "7 Íàïå÷àòàòü ëþáèìûõ àâòîðîâ    " << std::endl;
 	std::cout << std::endl;
-	std::cout << "8 Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð»ÑŽÐ±Ð¸Ð¼Ñ‹Ð¹ Ð°Ð»ÑŒÐ±Ð¾Ð¼       " << std::endl;
-	std::cout << "9 Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð»ÑŽÐ±Ð¸Ð¼Ñ‹Ð¹ Ð°Ð»ÑŒÐ±Ð¾Ð¼        " << std::endl;
-	std::cout << "10 ÐÐ°Ð¿ÐµÑ‡Ð°Ñ‚Ð°Ñ‚ÑŒ Ð»ÑŽÐ±Ð¸Ð¼Ñ‹Ðµ Ð°Ð»ÑŒÐ±Ð¾Ð¼Ñ‹    " << std::endl;
+	std::cout << "8 Äîáàâèòü ëþáèìûé àëüáîì       " << std::endl;
+	std::cout << "9 Óäàëèòü ëþáèìûé àëüáîì        " << std::endl;
+	std::cout << "10 Íàïå÷àòàòü ëþáèìûå àëüáîìû    " << std::endl;
 	std::cout << std::endl;
-	std::cout << "11 ÐÐ°Ð¿ÐµÑ‡Ð°Ñ‚Ð°Ñ‚ÑŒ Ð²ÑÐµ Ð¿ÐµÑÐ½Ð¸         " << std::endl;
-	std::cout << "12 ÐÐ°Ð¿ÐµÑ‡Ð°Ñ‚Ð°Ñ‚ÑŒ Ð²ÑÐµÑ… Ð°Ð²Ñ‚Ð¾Ñ€Ð¾Ð²      " << std::endl;
-	std::cout << "13 ÐÐ°Ð¿ÐµÑ‡Ð°Ñ‚Ð°Ñ‚ÑŒ Ð²ÑÐµ Ð°Ð»ÑŒÐ±Ð¾Ð¼Ñ‹       " << std::endl;
+	std::cout << "11 Íàïå÷àòàòü âñå ïåñíè         " << std::endl;
+	std::cout << "12 Íàïå÷àòàòü âñåõ àâòîðîâ      " << std::endl;
+	std::cout << "13 Íàïå÷àòàòü âñå àëüáîìû       " << std::endl;
 	std::cout << std::endl;
-	std::cout << "14 Ð¡Ð¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿ÐµÑÐ½Ð¸ Ð¿Ð¾ Ð¸Ð¼ÐµÐ½Ð¸   " << std::endl;
-	std::cout << "15 Ð¡Ð¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð°Ð»ÑŒÐ±Ð¾Ð¼Ñ‹ Ð¿Ð¾ Ð¸Ð¼ÐµÐ½Ð¸ " << std::endl;
-	std::cout << "16 Ð¡Ð¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð°Ð²Ñ‚Ð¾Ñ€Ð¾Ð² Ð¿Ð¾ Ð¸Ð¼ÐµÐ½Ð¸ " << std::endl;
+	std::cout << "14 Ñîðòèðîâàòü ïåñíè ïî èìåíè   " << std::endl;
+	std::cout << "15 Ñîðòèðîâàòü àëüáîìû ïî èìåíè " << std::endl;
+	std::cout << "16 Ñîðòèðîâàòü àâòîðîâ ïî èìåíè " << std::endl;
 	std::cout << std::endl;
 }
 
@@ -131,7 +131,7 @@ int Menu::inputInt() const
 		catch (...)
 		{
 			error = true;
-			std::cout << "Ð’Ñ‹ Ð²Ð²ÐµÐ»Ð¸ Ð½ÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÐµÑ‰Ðµ Ñ€Ð°Ð·: ";
+			std::cout << "Âû ââåëè íåêîððåêòíîå ÷èñëî. Ïîïðîáóéòå åùå ðàç: ";
 		}
 	}
 
@@ -146,54 +146,60 @@ void Menu::addUser()
 
 	while (!success)
 	{
-		std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð»Ð¾Ð³Ð¸Ð½: ";
+		std::cout << "Ââåäèòå ëîãèí: ";
 		std::cin >> login;
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cin.ignore();
+
 
 		if (m_database->userExists(login))
 		{
-			std::cout << "Ð¢Ð°ÐºÐ¾Ð¹ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒ ÑƒÐ¶Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚!" << std::endl;
+			std::cout << "Òàêîé ïîëüçîâàòåëü óæå ñóùåñòâóåò!" << std::endl;
 			continue;
 		}
 
-		std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ: ";
+		std::cout << "Ââåäèòå ïàðîëü: ";
 		std::cin >> password;
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cin.ignore();
 
-		std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ ÐµÑ‰Ðµ Ñ€Ð°Ð·: ";
+		std::cout << "Ââåäèòå ïàðîëü åùå ðàç: ";
 		std::cin >> password_2;
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cin.ignore();
 
 		if (password != password_2)
 		{
-			std::cout << "ÐŸÐ°Ñ€Ð¾Ð»Ð¸ Ð½Ðµ ÑÐ¾Ð²Ð¿Ð°Ð´Ð°ÑŽÑ‚!" << std::endl;
+			std::cout << "Ïàðîëè íå ñîâïàäàþò!" << std::endl;
 			continue;
 		}
+
+		m_database->saveUserToTxt(login, password);
 
 		success = true;
 	}
 
 	m_database->addUser(login, password);
-	std::cout << "ÐŸÐ¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½" << std::endl;
+	std::cout << "Ïîëüçîâàòåëü äîáàâëåí" << std::endl;
 }
 
 void Menu::addFavoriteSong()
 {
-	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ id Ð¿ÐµÑÐ½Ð¸: ";
+	std::cout << "Ââåäèòå id ïåñíè: ";
 	const int song_id = inputInt();
 	m_database->addFavoriteSong(m_user_id, song_id);
 }
 
 void Menu::addFavoriteAuthor()
 {
-	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ id Ð°Ð²Ñ‚Ð¾Ñ€Ð°: ";
+	std::cout << "Ââåäèòå id àâòîðà: ";
 	const int author_id = inputInt();
 	m_database->addFavoriteAuthor(m_user_id, author_id);
 }
 
 void Menu::addFavoriteAlbum()
 {
-	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ id Ð°Ð»ÑŒÐ±Ð¾Ð¼Ð°: ";
+	std::cout << "Ââåäèòå id àëüáîìà: ";
 	const int album_id = inputInt();
 	m_database->addFavoriteAuthor(m_user_id, album_id);
 }
@@ -204,12 +210,12 @@ void Menu::printFavoriteSongs() const
 	const MyVector<int>& ids = m_database->getFavoriteSongs(m_user_id);
 
 	std::cout << "+----------------------+\n";
-	std::cout << "|     Ð›ÑŽÐ±Ð¸Ð¼Ñ‹Ðµ Ð¿ÐµÑÐ½Ð¸    |\n";
+	std::cout << "|     Ëþáèìûå ïåñíè    |\n";
 	std::cout << "+----------------------+\n";
 
 	if (ids.size() == 0)
 	{
-		std::cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿ÐµÑÐµÐ½ Ð¿ÑƒÑÑ‚." << std::endl;
+		std::cout << "Ñïèñîê ïåñåí ïóñò." << std::endl;
 		return;
 	}
 
@@ -225,12 +231,12 @@ void Menu::printFavoriteAuthors() const
 	const MyVector<int>& ids = m_database->getFavoriteAuthors(m_user_id);
 
 	std::cout << "+----------------------+\n";
-	std::cout << "|     Ð›ÑŽÐ±Ð¸Ð¼Ñ‹Ðµ Ð°Ð²Ñ‚Ð¾Ñ€Ñ‹   |\n";
+	std::cout << "|     Ëþáèìûå àâòîðû   |\n";
 	std::cout << "+----------------------+\n";
 
 	if (ids.size() == 0)
 	{
-		std::cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð°Ð²Ñ‚Ð¾Ñ€Ð¾Ð² Ð¿ÑƒÑÑ‚." << std::endl;
+		std::cout << "Ñïèñîê àâòîðîâ ïóñò." << std::endl;
 		return;
 	}
 
@@ -246,12 +252,12 @@ void Menu::printFavoriteAlbums() const
 	const MyVector<int>& ids = m_database->getFavoriteAlbums(m_user_id);
 
 	std::cout << "+----------------------+\n";
-	std::cout << "|     Ð›ÑŽÐ±Ð¸Ð¼Ñ‹Ðµ Ð°Ð»ÑŒÐ±Ð¾Ð¼Ñ‹  |\n";
+	std::cout << "|     Ëþáèìûå àëüáîìû  |\n";
 	std::cout << "+----------------------+\n";
 
 	if (ids.size() == 0)
 	{
-		std::cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð°Ð»ÑŒÐ±Ð¾Ð¼Ð¾Ð² Ð¿ÑƒÑÑ‚." << std::endl;
+		std::cout << "Ñïèñîê àëüáîìîâ ïóñò." << std::endl;
 		return;
 	}
 
@@ -263,21 +269,21 @@ void Menu::printFavoriteAlbums() const
 
 void Menu::deleteFavoriteSong()
 {
-	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ id Ð¿ÐµÑÐ½Ð¸: ";
+	std::cout << "Ââåäèòå id ïåñíè: ";
 	const int song_id = inputInt();
 	m_database->deleteFavoriteSong(m_user_id, song_id);
 }
 
 void Menu::deleteFavoriteAuthor()
 {
-	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ id Ð°Ð²Ñ‚Ð¾Ñ€Ð°: ";
+	std::cout << "Ââåäèòå id àâòîðà: ";
 	const int author_id = inputInt();
 	m_database->deleteFavoriteAuthor(m_user_id, author_id);
 }
 
 void Menu::deleteFavoriteAlbum()
 {
-	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ id Ð°Ð»ÑŒÐ±Ð¾Ð¼Ð°: ";
+	std::cout << "Ââåäèòå id àëüáîìà: ";
 	const int album_id = inputInt();
 	m_database->deleteFavoriteAlbum(m_user_id, album_id);
 }
@@ -285,14 +291,14 @@ void Menu::deleteFavoriteAlbum()
 void Menu::printSongs() const
 {
 	std::cout << "+-----------------+\n";
-	std::cout << "|      ÐŸÐµÑÐ½Ð¸      |\n";
+	std::cout << "|      Ïåñíè      |\n";
 	std::cout << "+-----------------+\n";
 
 	const MyVector<Song>& tmp_vector = m_database->getSongs();
 
 	if (tmp_vector.size() == 0)
 	{
-		std::cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿ÐµÑÐµÐ½ Ð¿ÑƒÑÑ‚." << std::endl;
+		std::cout << "Ñïèñîê ïåñåí ïóñò." << std::endl;
 		return;
 	}
 
@@ -305,14 +311,14 @@ void Menu::printSongs() const
 void Menu::printAlbums() const
 {
 	std::cout << "+-----------------+\n";
-	std::cout << "|     ÐÐ»ÑŒÐ±Ð¾Ð¼Ñ‹     |\n";
+	std::cout << "|     Àëüáîìû     |\n";
 	std::cout << "+-----------------+\n";
 
 	const MyVector<Album>& tmp_vector = m_database->getAlbums();
 
 	if (tmp_vector.size() == 0)
 	{
-		std::cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð°Ð»ÑŒÐ±Ð¾Ð¼Ð¾Ð² Ð¿ÑƒÑÑ‚." << std::endl;
+		std::cout << "Ñïèñîê àëüáîìîâ ïóñò." << std::endl;
 		return;
 	}
 
@@ -325,14 +331,14 @@ void Menu::printAlbums() const
 void Menu::printAuthors() const
 {
 	std::cout << "+-----------------+\n";
-	std::cout << "|     ÐÐ²Ñ‚Ð¾Ñ€Ñ‹      |\n";
+	std::cout << "|     Àâòîðû      |\n";
 	std::cout << "+-----------------+\n";
 
 	const MyVector<Author>& tmp_vector = m_database->getAuthors();
 
 	if (tmp_vector.size() == 0)
 	{
-		std::cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð°Ð²Ñ‚Ð¾Ñ€Ð¾Ð² Ð¿ÑƒÑÑ‚." << std::endl;
+		std::cout << "Ñïèñîê àâòîðîâ ïóñò." << std::endl;
 		return;
 	}
 
@@ -350,7 +356,7 @@ void Menu::sortSongsByName() const
 
 	if (size == 0)
 	{
-		std::cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿ÐµÑÐµÐ½ Ð¿ÑƒÑÑ‚." << '\n';
+		std::cout << "Ñïèñîê ïåñåí ïóñò." << '\n';
 		return;
 	}
 
@@ -375,7 +381,7 @@ void Menu::sortAlbumsByName() const
 
 	if (size == 0)
 	{
-		std::cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð°Ð»ÑŒÐ±Ð¾Ð¼Ð¾Ð² Ð¿ÑƒÑÑ‚." << '\n';
+		std::cout << "Ñïèñîê àëüáîìîâ ïóñò." << '\n';
 		return;
 	}
 
@@ -400,7 +406,7 @@ void Menu::sortAuthorsByName() const
 
 	if (size == 0)
 	{
-		std::cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð°Ð»ÑŒÐ±Ð¾Ð¼Ð¾Ð² Ð¿ÑƒÑÑ‚." << '\n';
+		std::cout << "Ñïèñîê àëüáîìîâ ïóñò." << '\n';
 		return;
 	}
 

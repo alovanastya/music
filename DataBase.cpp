@@ -1,5 +1,6 @@
 #include "DataBase.h"
 
+
 DataBase::DataBase()
 {
 	m_favorite_songs.push_back({});
@@ -93,6 +94,7 @@ void DataBase::addAuthor(const Author& new_author)
 {
 	m_authors.push_back(new_author);
 	m_authors.back().m_id = m_new_author_id;
+	saveAuthorToTxt(new_author.m_name, new_author.m_id);
 	++m_new_author_id;
 }
 
@@ -494,6 +496,82 @@ bool DataBase::albumExists(int author_id, const std::string& album_name) const
 	return false;
 }
 
+void DataBase::saveUserToTxt(const std::string& name, const std::string& password) const
+{
+	std::ofstream file("users.txt", std::ios::app);
+
+	if (!file.is_open())
+	{
+		throw "Не удалось открыть файл.";
+
+	}
+	file << name << ' ' << password << ' ';
+	file.close();
+}
+
+
+void DataBase::readUsersFromTxt()
+{
+	std::ifstream file("users.txt");
+
+	if (!file.is_open()) { throw "Не удалось открыть файл."; }
+
+	std::string name;
+	std::string password;
+
+	while (!file.eof())
+	{
+		std::getline(file, name, ' ');
+		m_name.push_back(name);
+		std::getline(file, password, ' ');
+		m_password.push_back(password);
+	}
+
+	file.close();
+}
+
+void DataBase::saveAuthorToTxt(const std::string& name, const int& id) const
+{
+	std::ofstream file("authors.txt", std::ios::app);
+
+	if (!file.is_open()) { throw "Не удалось открыть файл."; }
+
+	file << id << ' ' << name << ' ';
+
+	file.close();
+}
+
+void DataBase::readAuthorsFromTxt()
+{
+	std::ifstream file("authors.txt");
+
+	if (!file.is_open()) { throw "Не удалось открыть файл."; }
+
+	std::string name;
+	std::string id;
+	int author_id;
+
+	Author new_author;
+
+	while (!file.eof())
+	{
+		std::getline(file, id, ' ');
+		try
+		{
+			//author_id = std::stoi(id);
+		//new_author.m_id = author_id;
+		} catch (...)
+		{
+			std::cout << "error";
+		};
+		std::getline(file, name, ' ');
+		new_author.m_name = name;
+		m_authors.push_back(new_author);
+	}
+
+	file.close();
+}
+
 int DataBase::getSongIndex(int id) const
 {
 	for (int i = 0; i < m_songs.size(); ++i)
@@ -589,3 +667,6 @@ int DataBase::getFavoriteAlbumIndex(int user_id, int album_id) const
 
 	return -1;
 }
+
+
+

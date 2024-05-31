@@ -3,6 +3,9 @@
 #include "Album.h"
 #include "Author.h"
 
+#include <fstream>
+#include <string>
+
 class DataBase
 {
 private:
@@ -95,6 +98,14 @@ public:
 
 	bool albumExists(int, const std::string&) const;
 
+	void saveUserToTxt(const std::string&, const std::string&) const;
+
+	void readUsersFromTxt();
+
+	void saveAuthorToTxt(const std::string&, const int&) const;
+
+	void readAuthorsFromTxt();
+
 private:
 	int getSongIndex(int) const;
 
@@ -107,6 +118,7 @@ private:
 	int getFavoriteAuthorIndex(int, int) const;
 
 	int getFavoriteAlbumIndex(int, int) const;
+
 
 
 };

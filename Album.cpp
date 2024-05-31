@@ -44,7 +44,8 @@ std::istream& operator >> (std::istream& p_in, Album& album)
 	while (author != -1)
 	{
 		p_in >> author;
-		p_in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		//p_in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		p_in.ignore();
 
 		if (author == -1)
 		{
