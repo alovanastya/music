@@ -1,11 +1,11 @@
-#include "Song.h"
+п»ї#include "Song.h"
 
 std::ostream& operator << (std::ostream& p_out, const Song& song)
 {
 	p_out << "ID: " << song.m_id << std::endl;
-	p_out << "Имя: " << song.m_name << std::endl;
-	p_out << "Альбом: " << song.m_album << std::endl;
-	p_out << "Жанр: " << GENRES_NAMES[(int)song.m_genre] << std::endl;
+	p_out << "РРјСЏ: " << song.m_name << std::endl;
+	p_out << "РђР»СЊР±РѕРј: " << song.m_album << std::endl;
+	p_out << "Р–Р°РЅСЂ: " << GENRES_NAMES[(int)song.m_genre] << std::endl;
 
 	return p_out;
 }
@@ -31,7 +31,7 @@ int inputInt()
 		catch (...)
 		{
 			error = true;
-			std::cout << "Вы ввели некорректное число. Попробуйте еще раз: ";
+			std::cout << "Р’С‹ РІРІРµР»Рё РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ С‡РёСЃР»Рѕ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·: ";
 		}
 	}
 
@@ -40,21 +40,21 @@ int inputInt()
 
 std::istream& operator >> (std::istream& p_in, Song& song)
 {
-	std::cout << "Введите имя: ";
+	std::cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ: ";
 	std::getline(p_in, song.m_name);
 
-	std::cout << "Введите ID альбома: ";
+	std::cout << "Р’РІРµРґРёС‚Рµ ID Р°Р»СЊР±РѕРјР°: ";
 	p_in >> song.m_album;
 	//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	std::cin.ignore();
 
-	std::cout << "Доступные жанры:" << std::endl;
+	std::cout << "Р”РѕСЃС‚СѓРїРЅС‹Рµ Р¶Р°РЅСЂС‹:" << std::endl;
 	for (int i = 0; i < GENRES_NAMES.size(); ++i)
 	{
 		std::cout << i << " " << GENRES_NAMES[i] << std::endl;
 	}
 
-	std::cout << std::endl << "Введите жанр: ";
+	std::cout << std::endl << "Р’РІРµРґРёС‚Рµ Р¶Р°РЅСЂ: ";
 
 	int genre;
 	bool genre_ok = false;
@@ -67,7 +67,7 @@ std::istream& operator >> (std::istream& p_in, Song& song)
 		genre_ok = genre >= 0 && genre < GENRES_NAMES.size();
 		if (!genre_ok)
 		{
-			std::cout << "Вы ввели несуществующий жанр. Попробуйте еще раз" << std::endl;
+			std::cout << "Р’С‹ РІРІРµР»Рё РЅРµСЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ Р¶Р°РЅСЂ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·" << std::endl;
 		}
 	}
 
@@ -89,7 +89,7 @@ std::istream& operator >> (std::istream& p_in, Song& song)
 		song.m_genre = Genre::ELECTRONIC;
 		break;
 	default:
-		throw std::exception("Вы ввели несуществующий жанр");
+		throw std::exception("Р’С‹ РІРІРµР»Рё РЅРµСЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ Р¶Р°РЅСЂ");
 		break;
 	}
 

@@ -98,13 +98,9 @@ public:
 
 	bool albumExists(int, const std::string&) const;
 
-	void saveUserToTxt(const std::string&, const std::string&) const;
+	void readFromTxt();
 
-	void readUsersFromTxt();
-
-	void saveAuthorToTxt(const std::string&, const int&) const;
-
-	void readAuthorsFromTxt();
+	void saveToTxt();
 
 private:
 	int getSongIndex(int) const;

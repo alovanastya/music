@@ -1,4 +1,4 @@
-#include "DataBase.h"
+﻿#include "DataBase.h"
 
 
 DataBase::DataBase()
@@ -42,7 +42,8 @@ void DataBase::operator +(const Song& song)
 {
 	if (!albumExists(song.m_album))
 	{
-		throw std::exception("Ошибка при добавлении песни. Такого альбома не существует");
+		//throw std::exception("Ошибка при добавлении песни. Такого альбома не существует");
+		throw ("Ошибка при добавлении песни. Такого альбома не существует");
 	}
 
 	m_songs.push_back(song);
@@ -54,14 +55,16 @@ void DataBase::addAlbum(const Album& new_album)
 {
 	if (new_album.m_authors.size() == 0)
 	{
-		throw std::exception("Ошибка при добавлении альбома.Не указано ни одного автора");
+		//throw std::exception("Ошибка при добавлении альбома.Не указано ни одного автора");
+		throw ("Ошибка при добавлении альбома.Не указано ни одного автора");
 	}
 
 	for (int i = 0; i < new_album.m_authors.size(); ++i)
 	{
 		if (!authorExists(new_album.m_authors[i]))
 		{
-			throw std::exception("Ошибка при добавлении альбома. Одного из авторов не существует");
+			//throw std::exception("Ошибка при добавлении альбома. Одного из авторов не существует");
+			throw ("Ошибка при добавлении альбома. Одного из авторов не существует");
 		}
 	}
 
@@ -74,14 +77,16 @@ void DataBase::operator +(const Album& new_album)
 {
 	if (new_album.m_authors.size() == 0)
 	{
-		throw std::exception("Ошибка при добавлении альбома.Не указано ни одного автора");
+		//throw std::exception("Ошибка при добавлении альбома.Не указано ни одного автора");
+		throw ("Ошибка при добавлении альбома.Не указано ни одного автора");
 	}
 
 	for (int i = 0; i < new_album.m_authors.size(); ++i)
 	{
 		if (!authorExists(new_album.m_authors[i]))
 		{
-			throw std::exception("Ошибка при добавлении альбома. Одного из авторов не существует");
+			//throw std::exception("Ошибка при добавлении альбома. Одного из авторов не существует");
+			throw ("Ошибка при добавлении альбома. Одного из авторов не существует");
 		}
 	}
 
@@ -94,7 +99,9 @@ void DataBase::addAuthor(const Author& new_author)
 {
 	m_authors.push_back(new_author);
 	m_authors.back().m_id = m_new_author_id;
-	saveAuthorToTxt(new_author.m_name, new_author.m_id);
+
+//	saveAuthorToTxt(new_author.m_name, new_author.m_id);
+
 	++m_new_author_id;
 }
 
@@ -110,12 +117,14 @@ void DataBase::editSong(int id, const Song& new_song)
 	const int index = getSongIndex(id);
 	if (index == -1)
 	{
-		throw std::exception("Ошибка при редактировании песни. Такой песни не существует");
+		//throw std::exception("Ошибка при редактировании песни. Такой песни не существует");
+		throw ("Ошибка при редактировании песни. Такой песни не существует");
 	}
 
 	if (!albumExists(new_song.m_album))
 	{
-		throw std::exception("Ошибка при редактировании песни. Такого альбома не существует");
+		//throw std::exception("Ошибка при редактировании песни. Такого альбома не существует");
+		throw ("Ошибка при редактировании песни. Такого альбома не существует");
 	}
 
 	m_songs[index] = new_song;
@@ -126,19 +135,22 @@ void  DataBase::editAlbum(int id, const Album& new_album)
 	const int index = getAlbumIndex(id);
 	if (index == -1)
 	{
-		throw std::exception("Ошибка при редактировании альбома. Такого альбома не существует");
+		//throw std::exception("Ошибка при редактировании альбома. Такого альбома не существует");
+		throw ("Ошибка при редактировании альбома. Такого альбома не существует");
 	}
 
 	if (new_album.m_authors.size() == 0)
 	{
-		throw std::exception("Ошибка при редактировании альбома.Не указано ни одного автора");
+		//throw std::exception("Ошибка при редактировании альбома.Не указано ни одного автора");
+		throw ("Ошибка при редактировании альбома.Не указано ни одного автора");
 	}
 
 	for (int i = 0; i < new_album.m_authors.size(); ++i)
 	{
 		if (!authorExists(new_album.m_authors[i]))
 		{
-			throw std::exception("Ошибка при редактировании альбома. Одного из авторов не существует");
+			//throw std::exception("Ошибка при редактировании альбома. Одного из авторов не существует");
+			throw ("Ошибка при редактировании альбома. Одного из авторов не существует");
 		}
 	}
 
@@ -150,7 +162,8 @@ void DataBase::editAuthor(int id, const Author& new_author)
 	const int index = getAuthorIndex(id);
 	if (index == -1)
 	{
-		throw std::exception("Ошибка при редактировании автора. Такого автора не существует");
+		//throw std::exception("Ошибка при редактировании автора. Такого автора не существует");
+		throw ("Ошибка при редактировании автора. Такого автора не существует");
 	}
 
 	m_authors[index] = new_author;
@@ -161,7 +174,8 @@ const Song& DataBase::getSong(int id) const
 	const int index = getSongIndex(id);
 	if (index == -1)
 	{
-		throw std::exception("Ошибка при получении песни. Такой песни не существует");
+		//throw std::exception("Ошибка при получении песни. Такой песни не существует");
+		throw ("Ошибка при редактировании автора. Такого автора не существует");
 	}
 
 	return m_songs[index];
@@ -172,7 +186,8 @@ const Album& DataBase::getAlbum(int id) const
 	const int index = getAlbumIndex(id);
 	if (index == -1)
 	{
-		throw std::exception("Ошибка при получении альбома. Такого альбома не существует");
+		//throw std::exception("Ошибка при получении альбома. Такого альбома не существует");
+		throw ("Ошибка при получении альбома. Такого альбома не существует");
 	}
 
 	return m_albums[index];
@@ -183,7 +198,8 @@ const Author& DataBase::getAuthor(int id) const
 	const int index = getAuthorIndex(id);
 	if (index == -1)
 	{
-		throw std::exception("Ошибка при получении автора. Такого автора не существует");
+		//throw std::exception("Ошибка при получении автора. Такого автора не существует");
+		throw ("Ошибка при получении автора. Такого автора не существует");
 	}
 
 	return m_authors[index];
@@ -193,12 +209,14 @@ void DataBase::addFavoriteSong(int user_id, int song_id)
 {
 	if (m_favorite_songs.size() <= user_id)
 	{
-		throw std::exception("Ошибка при добавлении любимой песни. Такой песни не существует");
+		//throw std::exception("Ошибка при добавлении любимой песни. Такой песни не существует");
+		throw ("Ошибка при добавлении любимой песни. Такой песни не существует");
 	}
 
 	if (!songExists(song_id))
 	{
-		throw std::exception("Ошибка при добавлении любимой песни. Такой песни не существует");
+		//throw std::exception("Ошибка при добавлении любимой песни. Такой песни не существует");
+		throw ("Ошибка при добавлении любимой песни. Такой песни не существует");
 	}
 
 	if (getFavoriteSongIndex(user_id, song_id) != -1)
@@ -213,12 +231,14 @@ void DataBase::addFavoriteAuthor(int user_id, int author_id)
 {
 	if (m_favorite_authors.size() <= user_id)
 	{
-		throw std::exception("Ошибка при добавлении любимого автора. Такого автора не существует");
+		//throw std::exception("Ошибка при добавлении любимого автора. Такого автора не существует");
+		throw ("Ошибка при добавлении любимого автора. Такого автора не существует");
 	}
 
 	if (!authorExists(author_id))
 	{
-		throw std::exception("Ошибка при добавлении любимого автора. Такого автора не существует");
+		//throw std::exception("Ошибка при добавлении любимого автора. Такого автора не существует");
+		throw ("Ошибка при добавлении любимого автора. Такого автора не существует");
 	}
 
 	if (getFavoriteAuthorIndex(user_id, author_id) != -1)
@@ -233,12 +253,14 @@ void DataBase::addFavoriteAlbum(int user_id, int album_id)
 {
 	if (m_favorite_albums.size() <= user_id)
 	{
-		throw std::exception("Ошибка при добавлении любимого альбома. Такого альюома не существует");
+		//throw std::exception("Ошибка при добавлении любимого альбома. Такого альюома не существует");
+		throw ("Ошибка при добавлении любимого альбома. Такого альюома не существует");
 	}
 
 	if (!albumExists(album_id))
 	{
-		throw std::exception("Ошибка при добавлении любимого альбома. Такого альбома не существует");
+		//throw std::exception("Ошибка при добавлении любимого альбома. Такого альбома не существует");
+		throw ("Ошибка при добавлении любимого альбома. Такого альбома не существует");
 	}
 
 	if (getFavoriteAlbumIndex(user_id, album_id) != -1)
@@ -253,7 +275,8 @@ const MyVector<int>& DataBase::getFavoriteSongs(int user_id) const
 {
 	if (m_favorite_songs.size() <= user_id)
 	{
-		throw std::exception("Ошибка при получении любимых песен. Такого пользователя не существует");
+		//throw std::exception("Ошибка при получении любимых песен. Такого пользователя не существует");
+		throw ("Ошибка при получении любимых песен. Такого пользователя не существует");
 	}
 
 	return m_favorite_songs[user_id];
@@ -263,7 +286,8 @@ const MyVector<int>& DataBase::getFavoriteAuthors(int user_id) const
 {
 	if (m_favorite_authors.size() <= user_id)
 	{
-		throw std::exception("Ошибка при получении любимых авторов. Такого пользователя не существует");
+		//throw std::exception("Ошибка при получении любимых авторов. Такого пользователя не существует");
+		throw ("Ошибка при получении любимых авторов. Такого пользователя не существует");
 	}
 
 	return m_favorite_authors[user_id];
@@ -273,7 +297,8 @@ const MyVector<int>& DataBase::getFavoriteAlbums(int user_id) const
 {
 	if (m_favorite_albums.size() <= user_id)
 	{
-		throw std::exception("Ошибка при получении любимых альбомов. Такого пользователя не существует");
+		//throw std::exception("Ошибка при получении любимых альбомов. Такого пользователя не существует");
+		throw ("Ошибка при получении любимых альбомов. Такого пользователя не существует");
 	}
 
 	return m_favorite_albums[user_id];
@@ -283,13 +308,15 @@ void DataBase::deleteFavoriteSong(int user_id, int song_id)
 {
 	if (m_favorite_songs.size() <= user_id)
 	{
-		throw std::exception("Ошибка при удалении любимой песни. Такого пользователя не существует");
+		//throw std::exception("Ошибка при удалении любимой песни. Такого пользователя не существует");
+		throw ("Ошибка при удалении любимой песни. Такого пользователя не существует");
 	}
 
 	const int index = getFavoriteSongIndex(user_id, song_id);
 	if (index == -1)
 	{
-		throw std::exception("Ошибка при удалении любимой песни. Песня не была среди любимых");
+		//throw std::exception("Ошибка при удалении любимой песни. Песня не была среди любимых");
+		throw ("Ошибка при удалении любимой песни. Песня не была среди любимых");
 	}
 
 	m_favorite_songs[user_id].deleteElement(index);
@@ -299,13 +326,15 @@ void DataBase::deleteFavoriteAuthor(int user_id, int author_id)
 {
 	if (m_favorite_authors.size() <= user_id)
 	{
-		throw std::exception("Ошибка при удалении любимого автора. Такого пользователя не существует");
+		//throw std::exception("Ошибка при удалении любимого автора. Такого пользователя не существует");
+		throw ("Ошибка при удалении любимого автора. Такого пользователя не существует");
 	}
 
 	const int index = getFavoriteAuthorIndex(user_id, author_id);
 	if (index == -1)
 	{
-		throw std::exception("Ошибка при удалении любимого альбома. Альбом не был среди любимых");
+		//throw std::exception("Ошибка при удалении любимого альбома. Альбом не был среди любимых");
+		throw ("Ошибка при удалении любимого альбома. Альбом не был среди любимых");
 	}
 
 	m_favorite_authors[user_id].deleteElement(index);
@@ -315,13 +344,15 @@ void DataBase::deleteFavoriteAlbum(int user_id, int album_id)
 {
 	if (m_favorite_albums.size() <= user_id)
 	{
-		throw std::exception("Ошибка при удалении любимого альбома. Такого пользователя не существует");
+		//throw std::exception("Ошибка при удалении любимого альбома. Такого пользователя не существует");
+		throw ("Ошибка при удалении любимого альбома. Такого пользователя не существует");
 	}
 
 	const int index = getFavoriteAlbumIndex(user_id, album_id);
 	if (index == -1)
 	{
-		throw std::exception("Ошибка при удалении любимого альбома. Альбом не был среди любимых");
+		//throw std::exception("Ошибка при удалении любимого альбома. Альбом не был среди любимых");
+		throw ("Ошибка при удалении любимого альбома. Альбом не был среди любимых");
 	}
 
 	m_favorite_albums[user_id].deleteElement(index);
@@ -335,7 +366,8 @@ void DataBase::addUser(const std::string& name, const std::string& password)
 	{
 		if (m_name[i] == name && m_password[i] == password)
 		{
-			throw std::exception("Ошибка при добавлении пользователя. Такой пользователь уже существует");
+			//throw std::exception("Ошибка при добавлении пользователя. Такой пользователь уже существует");
+			throw ("Ошибка при добавлении пользователя. Такой пользователь уже существует");
 		}
 	}
 
@@ -496,25 +528,14 @@ bool DataBase::albumExists(int author_id, const std::string& album_name) const
 	return false;
 }
 
-void DataBase::saveUserToTxt(const std::string& name, const std::string& password) const
+void DataBase::readFromTxt()
 {
-	std::ofstream file("users.txt", std::ios::app);
-
-	if (!file.is_open())
-	{
-		throw "Не удалось открыть файл.";
-
-	}
-	file << name << ' ' << password << ' ';
-	file.close();
-}
-
-
-void DataBase::readUsersFromTxt()
-{
-	std::ifstream file("users.txt");
+	std::ifstream file("file.txt", std::ios::in);
 
 	if (!file.is_open()) { throw "Не удалось открыть файл."; }
+	else if (file.peek() == EOF) { throw "в файле ничего нет"; };
+
+	file.seekg(12, std::ios::cur);
 
 	std::string name;
 	std::string password;
@@ -522,30 +543,14 @@ void DataBase::readUsersFromTxt()
 	while (!file.eof())
 	{
 		std::getline(file, name, ' ');
+		if (name == "|")
+		{
+			break;
+		}
 		m_name.push_back(name);
 		std::getline(file, password, ' ');
 		m_password.push_back(password);
 	}
-
-	file.close();
-}
-
-void DataBase::saveAuthorToTxt(const std::string& name, const int& id) const
-{
-	std::ofstream file("authors.txt", std::ios::app);
-
-	if (!file.is_open()) { throw "Не удалось открыть файл."; }
-
-	file << id << ' ' << name << ' ';
-
-	file.close();
-}
-
-void DataBase::readAuthorsFromTxt()
-{
-	std::ifstream file("authors.txt");
-
-	if (!file.is_open()) { throw "Не удалось открыть файл."; }
 
 	std::string id;
 	int author_id;
@@ -554,11 +559,47 @@ void DataBase::readAuthorsFromTxt()
 
 	while (!file.eof())
 	{
-		std::getline(file, id, ' ');
+		std::getline(file, id, ',');
+		if (id == "|")
+		{
+			break;
+		}
 		author_id = std::stoi(id);
 		new_author.m_id = author_id;
-		std::getline(file, new_author.m_name, ' ');
-		m_authors.push_back(new_author);
+		std::getline(file, new_author.m_name, ',');
+		addAuthor(new_author);
+	}
+
+	file.close();
+}
+
+void DataBase::saveToTxt()
+{
+	std::ofstream file("file.txt", std::ios::out);
+
+	if (!file.is_open()) { throw "Не удалось открыть файл."; }
+
+	int size = m_name.size();
+
+	for (int i = 0; i < size; i++)
+	{
+		file << m_name[i] << ' ' << m_password[i] << ' ';
+		
+	}
+
+	file << '|' << ' ';
+
+
+	if (m_authors.size() != 0)
+	{
+		int authors_size = m_authors.size();
+
+		for (int i = 0; i < authors_size; ++i)
+		{
+			file << m_authors[i].m_id << ',' << m_authors[i].m_name << ',';
+		}
+
+		file << '|' << ' ';
 	}
 
 	file.close();

@@ -1,4 +1,4 @@
-#include "AdminMenu.h"
+ï»¿#include "AdminMenu.h"
 
 AdminMenu::AdminMenu(DataBase* database, int user_id) : Menu(database, user_id)
 {}
@@ -7,13 +7,13 @@ void AdminMenu::printMenu() const
 {
 	Menu::printMenu();
 
-	std::cout << "17 - Äîáàâèòü ïåñíþ  " << std::endl;
-	std::cout << "18 - Äîáàâèòü àâòîðà " << std::endl;
-	std::cout << "19 - Äîáàâèòü àëüáîì " << std::endl;
+	std::cout << "17 - Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð¿ÐµÑÐ½ÑŽ  " << std::endl;
+	std::cout << "18 - Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð°Ð²Ñ‚Ð¾Ñ€Ð° " << std::endl;
+	std::cout << "19 - Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð°Ð»ÑŒÐ±Ð¾Ð¼ " << std::endl;
 	std::cout << std::endl;
-	std::cout << "20 - Ðåäàêòèðîâàòü ïåñíþ  " << std::endl;
-	std::cout << "21 - Ðåäàêòèðîâàòü àâòîðà " << std::endl;
-	std::cout << "22 - Ðåäàêòèðîâàòü àëüáîì " << std::endl;
+	std::cout << "20 - Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿ÐµÑÐ½ÑŽ  " << std::endl;
+	std::cout << "21 - Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð°Ð²Ñ‚Ð¾Ñ€Ð° " << std::endl;
+	std::cout << "22 - Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð°Ð»ÑŒÐ±Ð¾Ð¼ " << std::endl;
 }
 
 Result AdminMenu::runSelected(int selected)
@@ -54,9 +54,11 @@ Result AdminMenu::runSelected(int selected)
 				break;
 			}
 		}
-		catch (const std::exception& error)
+		//catch (const std::exception& error)
+		catch (const char* message)
 		{
-			std::cout << error.what() << std::endl;
+			//std::cout << error.what() << std::endl;
+			std::cerr << message << std::endl;
 			return Result::WITH_ERROR;
 		}
 
@@ -71,7 +73,7 @@ void AdminMenu::addSong()
 	Song new_song;
 	std::cin >> new_song;
 	m_database->addSong(new_song);
-	std::cout << "Ïåñíÿ äîáàâëåíà." << std::endl;
+	std::cout << "ÐŸÐµÑÐ½Ñ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð°." << std::endl;
 }
 
 void AdminMenu::addAlbum()
@@ -79,7 +81,7 @@ void AdminMenu::addAlbum()
 	Album new_album;
 	std::cin >> new_album;
 	m_database->addAlbum(new_album);
-	std::cout << "Àëüáîì äîáàâëåí." << std::endl;
+	std::cout << "ÐÐ»ÑŒÐ±Ð¾Ð¼ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½." << std::endl;
 }
 
 void AdminMenu::addAuthor()
@@ -87,7 +89,7 @@ void AdminMenu::addAuthor()
 	Author new_author;
 	std::cin >> new_author;
 	m_database->addAuthor(new_author);
-	std::cout << "Àâòîð äîáàâëåí." << std::endl;
+	std::cout << "ÐÐ²Ñ‚Ð¾Ñ€ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½." << std::endl;
 }
 
 
@@ -96,7 +98,7 @@ void AdminMenu::editSongsAlbum(Song& song) const
 	int album_id;
 	bool album_found = false;
 
-	std::cout << "Ââåäèòå íîâûé àëüáîì: ";
+	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð²Ñ‹Ð¹ Ð°Ð»ÑŒÐ±Ð¾Ð¼: ";
 	while (!album_found)
 	{
 		album_id = inputInt();
@@ -104,7 +106,7 @@ void AdminMenu::editSongsAlbum(Song& song) const
 
 		if (!album_found)
 		{
-			std::cout << "Âû ââåëè íåñóùåñòâóþùèé àëüáîì. Ïîïðîáóéòå åùå ðàç" << std::endl;
+			std::cout << "Ð’Ñ‹ Ð²Ð²ÐµÐ»Ð¸ Ð½ÐµÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¹ Ð°Ð»ÑŒÐ±Ð¾Ð¼. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÐµÑ‰Ðµ Ñ€Ð°Ð·" << std::endl;
 		}
 	}
 
@@ -113,19 +115,19 @@ void AdminMenu::editSongsAlbum(Song& song) const
 
 void AdminMenu::editSongsName(Song& song) const
 {
-	std::cout << "Ââåäèòå íîâîå èìÿ: ";
+	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð²Ð¾Ðµ Ð¸Ð¼Ñ: ";
 	std::getline(std::cin, song.m_name);
 }
 
 void AdminMenu::editSongsGenre(Song& song) const
 {
-	std::cout << "Äîñòóïíûå æàíðû:" << std::endl;
+	std::cout << "Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ñ‹Ðµ Ð¶Ð°Ð½Ñ€Ñ‹:" << std::endl;
 	for (int i = 0; i < GENRES_NAMES.size(); ++i)
 	{
 		std::cout << i << " " << GENRES_NAMES[i] << std::endl;
 	}
 
-	std::cout << std::endl << "Ââåäèòå æàíð: ";
+	std::cout << std::endl << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¶Ð°Ð½Ñ€: ";
 
 	int genre;
 	bool genre_ok = false;
@@ -139,7 +141,7 @@ void AdminMenu::editSongsGenre(Song& song) const
 		genre_ok = genre >= 0 && genre < GENRES_NAMES.size();
 		if (!genre_ok)
 		{
-			std::cout << "Âû ââåëè íåñóùåñòâóþùèé æàíð. Ïîïðîáóéòå åùå ðàç" << std::endl;
+			std::cout << "Ð’Ñ‹ Ð²Ð²ÐµÐ»Ð¸ Ð½ÐµÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¹ Ð¶Ð°Ð½Ñ€. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÐµÑ‰Ðµ Ñ€Ð°Ð·" << std::endl;
 		}
 	}
 
@@ -161,7 +163,8 @@ void AdminMenu::editSongsGenre(Song& song) const
 		song.m_genre = Genre::ELECTRONIC;
 		break;
 	default:
-		throw std::exception("Âû ââåëè íåñóùåñòâóþùèé æàíð");
+		//throw std::exception("Ð’Ñ‹ Ð²Ð²ÐµÐ»Ð¸ Ð½ÐµÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¹ Ð¶Ð°Ð½Ñ€");
+		throw ("Ð’Ñ‹ Ð²Ð²ÐµÐ»Ð¸ Ð½ÐµÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¹ Ð¶Ð°Ð½Ñ€");
 		break;
 	}
 }
@@ -171,14 +174,14 @@ void AdminMenu::editSong()
 	const MyVector<Song>& songs = m_database->getSongs();
 	if (songs.size() == 0)
 	{
-		std::cout << "Ñïèñîê ïåñåí ïóñò." << std::endl;
+		std::cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿ÐµÑÐµÐ½ Ð¿ÑƒÑÑ‚." << std::endl;
 		return;
 	}
 
 	int song_id;
 	bool song_found = false;
 
-	std::cout << "Ââåäèòå id ïåñíè: ";
+	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ id Ð¿ÐµÑÐ½Ð¸: ";
 	while (!song_found)
 	{
 		song_id = inputInt();
@@ -190,15 +193,15 @@ void AdminMenu::editSong()
 
 		else
 		{
-			std::cout << "Ïåñíè ñ òàêèì id íå ñóùåñòâóåò. Ïîïðîáóéòå åùå ðàç: ";
+			std::cout << "ÐŸÐµÑÐ½Ð¸ Ñ Ñ‚Ð°ÐºÐ¸Ð¼ id Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÐµÑ‰Ðµ Ñ€Ð°Ð·: ";
 		}
 	}
 
-	std::cout << std::endl << "×òî õîòèòå ïîìåíÿòü?" << std::endl;
+	std::cout << std::endl << "Ð§Ñ‚Ð¾ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ Ð¿Ð¾Ð¼ÐµÐ½ÑÑ‚ÑŒ?" << std::endl;
 	std::cout << "+--------------+\n";
-	std::cout << "| 1 - Èìÿ      |\n";
-	std::cout << "| 2 - Àëüáîì   |\n";
-	std::cout << "| 3 - Æàíð     |\n";
+	std::cout << "| 1 - Ð˜Ð¼Ñ      |\n";
+	std::cout << "| 2 - ÐÐ»ÑŒÐ±Ð¾Ð¼   |\n";
+	std::cout << "| 3 - Ð–Ð°Ð½Ñ€     |\n";
 	std::cout << "+--------------+\n";
 
 	Song new_song = m_database->getSong(song_id);
@@ -222,13 +225,13 @@ void AdminMenu::editSong()
 			song_edited = true;
 			break;
 		default:
-			std::cout << "Âûáðàí íåäîïóñòèìûé âàðèàíò. Ââåäèòå êîððåòíîå ÷èñëî: ";
+			std::cout << "Ð’Ñ‹Ð±Ñ€Ð°Ð½ Ð½ÐµÐ´Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ñ‹Ð¹ Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚. Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ñ€Ñ€ÐµÑ‚Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾: ";
 			break;
 		}
 	}
 
 	m_database->editSong(song_id, new_song);
-	std::cout << "Èçìåíåíî." << std::endl;
+	std::cout << "Ð˜Ð·Ð¼ÐµÐ½ÐµÐ½Ð¾." << std::endl;
 }
 
 void AdminMenu::editAuthor()
@@ -236,13 +239,13 @@ void AdminMenu::editAuthor()
 	const MyVector<Author>& authors = m_database->getAuthors();
 	if (authors.size() == 0)
 	{
-		std::cout << "Ñïèñîê àâòîðîâ ïóñò." << std::endl;
+		std::cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð°Ð²Ñ‚Ð¾Ñ€Ð¾Ð² Ð¿ÑƒÑÑ‚." << std::endl;
 		return;
 	}
 
 	int author_id;
 	bool author_found = false;
-	std::cout << "Ââåäèòå id àâòîðà: ";
+	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ id Ð°Ð²Ñ‚Ð¾Ñ€Ð°: ";
 	while (!author_found)
 	{
 		author_id = inputInt();
@@ -254,12 +257,12 @@ void AdminMenu::editAuthor()
 
 		else
 		{
-			std::cout << "Àâòîðà ñ òàêèì id íå ñóùåñòâóåò. Ïîïðîáóéòå åùå ðàç: ";
+			std::cout << "ÐÐ²Ñ‚Ð¾Ñ€Ð° Ñ Ñ‚Ð°ÐºÐ¸Ð¼ id Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÐµÑ‰Ðµ Ñ€Ð°Ð·: ";
 		}
 	}
 
 	Author new_author = m_database->getAuthor(author_id);
-	std::cout << "Ââåäèòå íîâîå èìÿ àâòîðà: ";
+	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð²Ð¾Ðµ Ð¸Ð¼Ñ Ð°Ð²Ñ‚Ð¾Ñ€Ð°: ";
 	std::getline(std::cin, new_author.m_name);
 	m_database->editAuthor(author_id, new_author);
 }
@@ -270,7 +273,7 @@ void AdminMenu::editAlbumsName(Album& new_album) const
 
 	std::string new_name;
 
-	std::cout << "Ââåäèòå íîâîå èìÿ: ";
+	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð²Ð¾Ðµ Ð¸Ð¼Ñ: ";
 	while (!album_is_unique)
 	{
 		std::cin >> new_name;
@@ -288,7 +291,7 @@ void AdminMenu::editAlbumsName(Album& new_album) const
 
 		if (!album_is_unique)
 		{
-			std::cout << "Ó îäíîãî èç èñïîëíèòåëåé óæå åñòü àëüáîì ñ òàêèì íàçâàâàíåì. Ïîïðîáóéòå åùå ðàç: ";
+			std::cout << "Ð£ Ð¾Ð´Ð½Ð¾Ð³Ð¾ Ð¸Ð· Ð¸ÑÐ¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÐµÐ¹ ÑƒÐ¶Ðµ ÐµÑÑ‚ÑŒ Ð°Ð»ÑŒÐ±Ð¾Ð¼ Ñ Ñ‚Ð°ÐºÐ¸Ð¼ Ð½Ð°Ð·Ð²Ð°Ð²Ð°Ð½ÐµÐ¼. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÐµÑ‰Ðµ Ñ€Ð°Ð·: ";
 		}
 	}
 
@@ -297,7 +300,7 @@ void AdminMenu::editAlbumsName(Album& new_album) const
 
 void AdminMenu::editAlbumsAuthors(Album& new_album) const
 {
-	std::cout << "Ââåäèòå íîâûõ àâòîðîâ. Ââåäèòå -1, ÷òîáû çàêîí÷èòü ñïèñîê" << std::endl;
+	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð²Ñ‹Ñ… Ð°Ð²Ñ‚Ð¾Ñ€Ð¾Ð². Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ -1, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð·Ð°ÐºÐ¾Ð½Ñ‡Ð¸Ñ‚ÑŒ ÑÐ¿Ð¸ÑÐ¾Ðº" << std::endl;
 
 	MyVector<int> new_authors;
 	int new_author = 0;
@@ -310,13 +313,13 @@ void AdminMenu::editAlbumsAuthors(Album& new_album) const
 
 		if (!m_database->authorExists(new_author))
 		{
-			std::cout << "Òàêîãî àâòîðà íå ñóùåñòâóåò. Ââåäèòå äðóãîãî àâòîðà" << std::endl;
+			std::cout << "Ð¢Ð°ÐºÐ¾Ð³Ð¾ Ð°Ð²Ñ‚Ð¾Ñ€Ð° Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚. Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð´Ñ€ÑƒÐ³Ð¾Ð³Ð¾ Ð°Ð²Ñ‚Ð¾Ñ€Ð°" << std::endl;
 			continue;
 		}
 
 		if (m_database->albumExists(new_author, new_album.m_name))
 		{
-			std::cout << "Ó ýòîãî àâòîðà óæå åñòü àëüáîì ñ òàêèì íàçâàíèåì. Ââåäèòå äðóãîãî àâòîðà" << std::endl;
+			std::cout << "Ð£ ÑÑ‚Ð¾Ð³Ð¾ Ð°Ð²Ñ‚Ð¾Ñ€Ð° ÑƒÐ¶Ðµ ÐµÑÑ‚ÑŒ Ð°Ð»ÑŒÐ±Ð¾Ð¼ Ñ Ñ‚Ð°ÐºÐ¸Ð¼ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸ÐµÐ¼. Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð´Ñ€ÑƒÐ³Ð¾Ð³Ð¾ Ð°Ð²Ñ‚Ð¾Ñ€Ð°" << std::endl;
 			continue;
 		}
 
@@ -324,7 +327,7 @@ void AdminMenu::editAlbumsAuthors(Album& new_album) const
 		{
 			if (new_authors[i] == new_author)
 			{
-				std::cout << "Ýòîò àâòîð óæå åñòü â íîâîì ñïèñêå. Ââåäèòå äðóãîãî àâòîðà" << std::endl;
+				std::cout << "Ð­Ñ‚Ð¾Ñ‚ Ð°Ð²Ñ‚Ð¾Ñ€ ÑƒÐ¶Ðµ ÐµÑÑ‚ÑŒ Ð² Ð½Ð¾Ð²Ð¾Ð¼ ÑÐ¿Ð¸ÑÐºÐµ. Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð´Ñ€ÑƒÐ³Ð¾Ð³Ð¾ Ð°Ð²Ñ‚Ð¾Ñ€Ð°" << std::endl;
 				continue;
 			}
 		}
@@ -340,7 +343,7 @@ void AdminMenu::editAlbum()
 	int album_id;
 	bool album_found = false;
 
-	std::cout << "Ââåäèòå id àëüáîìà: ";
+	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ id Ð°Ð»ÑŒÐ±Ð¾Ð¼Ð°: ";
 	while (!album_found)
 	{
 		album_id = inputInt();
@@ -352,14 +355,14 @@ void AdminMenu::editAlbum()
 
 		else
 		{
-			std::cout << "Ïåñíè ñ òàêèì id íå ñóùåñòâóåò. Ïîïðîáóéòå åùå ðàç: ";
+			std::cout << "ÐŸÐµÑÐ½Ð¸ Ñ Ñ‚Ð°ÐºÐ¸Ð¼ id Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÐµÑ‰Ðµ Ñ€Ð°Ð·: ";
 		}
 	}
 
-	std::cout << std::endl << "×òî õîòèòå ïîìåíÿòü?" << std::endl;
+	std::cout << std::endl << "Ð§Ñ‚Ð¾ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ Ð¿Ð¾Ð¼ÐµÐ½ÑÑ‚ÑŒ?" << std::endl;
 	std::cout << "+--------------+\n";
-	std::cout << "| 1 - Èìÿ      |\n";
-	std::cout << "| 2 - Àâòîðîâ  |\n";
+	std::cout << "| 1 - Ð˜Ð¼Ñ      |\n";
+	std::cout << "| 2 - ÐÐ²Ñ‚Ð¾Ñ€Ð¾Ð²  |\n";
 	std::cout << "+--------------+\n";
 
 	Album new_album = m_database->getAlbum(album_id);
@@ -379,13 +382,13 @@ void AdminMenu::editAlbum()
 			album_edited = true;
 			break;
 		default:
-			std::cout << "Âûáðàí íåäîïóñòèìûé âàðèàíò. Ââåäèòå êîððåòíîå ÷èñëî: ";
+			std::cout << "Ð’Ñ‹Ð±Ñ€Ð°Ð½ Ð½ÐµÐ´Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ñ‹Ð¹ Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚. Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ñ€Ñ€ÐµÑ‚Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾: ";
 			break;
 		}
 	}
 
 	m_database->editAlbum(album_id, new_album);
-	std::cout << "Èçìåíåíî." << std::endl;
+	std::cout << "Ð˜Ð·Ð¼ÐµÐ½ÐµÐ½Ð¾." << std::endl;
 }
 
 AdminMenu::~AdminMenu()

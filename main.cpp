@@ -13,8 +13,17 @@ int main()
 	std::string login(100, '\0');
 	std::string password(100, '\0');
 
-	database.readUsersFromTxt();
-	// database.readAuthorsFromTxt();
+	try
+	{
+		database.readFromTxt();
+	}
+	catch (const char* message)
+	{
+		std::cerr << message << std::endl;
+	}
+	catch (...)
+	{
+	}
 
 	int user_id = -1;
 
@@ -65,9 +74,8 @@ int main()
 			{
 				error = false;
 				std::cin >> string_selection;
-				//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				std::cin.ignore();
-
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				
 				selection = stoi(string_selection);
 			}
 
@@ -103,6 +111,8 @@ int main()
 		std::cout << "Нажмите любую клавишу, чтобы продолжить";
 		std::cin.get();
 	}
+
+	database.saveToTxt();
 
 	delete menu;
 

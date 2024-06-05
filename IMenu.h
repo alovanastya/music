@@ -1,5 +1,6 @@
 #pragma once
 #include "DataBase.h"
+#include <exception>
 
 enum class Result
 {

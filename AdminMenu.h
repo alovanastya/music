@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Menu.h"
 
 class AdminMenu : public Menu

@@ -1,1 +1,1 @@
-nastya raccoons 
+nastya raccoons new_user new_password 
