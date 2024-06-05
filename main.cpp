@@ -13,17 +13,7 @@ int main()
 	std::string login(100, '\0');
 	std::string password(100, '\0');
 
-	try
-	{
-		database.readFromTxt();
-	}
-	catch (const char* message)
-	{
-		std::cerr << message << std::endl;
-	}
-	catch (...)
-	{
-	}
+	database.readFromTxt();
 
 	int user_id = -1;
 

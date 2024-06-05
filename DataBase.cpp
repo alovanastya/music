@@ -535,8 +535,6 @@ void DataBase::readFromTxt()
 	if (!file.is_open()) { throw "Не удалось открыть файл."; }
 	else if (file.peek() == EOF) { throw "в файле ничего нет"; };
 
-	file.seekg(12, std::ios::cur);
-
 	std::string name;
 	std::string password;
 
@@ -581,7 +579,7 @@ void DataBase::saveToTxt()
 
 	int size = m_name.size();
 
-	for (int i = 0; i < size; i++)
+	for (int i = 1; i < size; i++)
 	{
 		file << m_name[i] << ' ' << m_password[i] << ' ';
 		
@@ -599,7 +597,7 @@ void DataBase::saveToTxt()
 			file << m_authors[i].m_id << ',' << m_authors[i].m_name << ',';
 		}
 
-		file << '|' << ' ';
+		file << "|";
 	}
 
 	file.close();
